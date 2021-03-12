@@ -1,20 +1,30 @@
 %=== FRONT PART ===
 %=== ABSTRCT ===
+\newpage
 \fancypagestyle{addin}{
-\fancyhead[R]{\textsl{ABSTRACT} \vspace{0.1in}}
+\fancyhead[R]{\bf \textsl{ABSTRACT} \vspace{0.1in}}
 }
-%\begin{center}
-\chapter*{Abstract}
+
+\chapter*{\centering Abstract}
+% \vspace{-0.3in}
+
+\begin{spacing}{1.5}
+\setlength{\parskip}{0.3in}
 \thispagestyle{addin}
-%\end{center}
+
 \addcontentsline{toc}{chapter}{Abstract}
 
-Abstract goes here.
+Advanced-driver-assistance system (ADAS) plays an important role in newly designed smart cars to reduce road fatalities by minimizing human error. ADAS systems use in-vehicle cameras to capture the real-time images of roads~\cite{ziebinski2016survey}. Captured images will be handled by detection module, which recognizes lane outlines and road markings, and then respond to drivers accordingly. Current detection algorithms in deep learning are led by CNN-like network, e.g. RCNN~\cite{girshick2014rich} and its variance f-RCNN~\cite{girshick2015fast}. We also start from this structure.
 
-Here.
+There are several common issues in aforementioned detection process. 
 
+First is extreme weather and bad illumination conditions. In raining days, images captured by ADAS’s camera may be blurry or be stained by raindrops, and the water on the road may lead to reflection of lights. In dusk, sun is dim, and the scene is dark-some. The road markings and lane outlines cannot be distinguished from background easily. With such distortions, the detection algorithm cannot see roads accurately. Consequently, taking measures to denoising is of vital importance. 
+
+Second is curved road. Traditional lane detection algorithms usually work well on straight lane but will meet performance drop once the road turns quickly. VPGNet~\cite{lee2017vpgnet} used vanishing point information to solve this problem. Vanishing point is the visual intersection of two parallel lines~\cite{barnard1983interpreting}, here it is treated as the unseen end of the road.  Inspired by the intuition that human eyes utilize the vanishing point to predict the road trending, VPGNet tried to feed this information into neural network by multi-task method. They use multi-task because features employed by VP task, like road curving angle and trending, may also be useful in the detection of lanes and road markings. Based on this, we can expect that with VP information given, the Neural Network can converge better on the other two tasks (lane detection, road marking detection). But VPGNet’s VP feeding scheme is simple, not as efficient as expected. We proposed a new scheme to train with VP information.
 
 \par
+\thispagestyle{addin} % NOTICE: to make another page show!
 \textbf{Keywords:} Dissertation, keywords.
+\end{spacing}
 \newpage
-%=== END OF CHAPTER ONE ===
+%=== END OF ABSTRACT ===

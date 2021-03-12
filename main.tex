@@ -1,18 +1,20 @@
-%\documentclass{article}
-\documentclass[11pt]{report}
+% Re-defined by TIAN ZICHEN
+\documentclass[12pt]{report}
 
 %% Useful packages
-\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in,marginparwidth=1.75cm,headheight=21pt]{geometry}
+\usepackage[a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3cm,marginparwidth=1.75cm,headheight=22pt]{geometry}
 \usepackage{amsmath}
 \usepackage{cite}
 \usepackage{courier}
-\usepackage{caption}
+\usepackage[export]{adjustbox}
+\usepackage[labelfont=bf, textfont=bf]{caption}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{setspace}
 \usepackage{subfigure}
 \usepackage{setspace}
+\usepackage{lipsum}
 \usepackage{fancyhdr} % Fancy header
 \usepackage{url}
 \usepackage{tabularx}
@@ -24,49 +26,58 @@
 % Clear the header and footer
 \fancypagestyle{plain}{
 \fancyhf{} % Clear header footer
-\fancyhead[R]{\textsl{\leftmark} \vspace{0.1in}}
-% Set the right side of the footer to be the page number
+\fancyhead[R]{\bf \textsl{\leftmark} \vspace{0.1in}}
 \fancyfoot[R]{\thepage}
+% Set the right side of the footer to be the page number
 \renewcommand{\headrulewidth}{2pt}
 }
 % For those Chapter* (Can't use \leftmark to call their chapter name directly)
 \fancypagestyle{addin}{
 \fancyhf{} % Clear header footer
-\fancyhead[R]{\textsl{\leftmark} \vspace{0.1in}}
+\fancyhead[R]{\bf \textsl{\leftmark} \vspace{0.1in}}
 % Set the right side of the footer to be the page number
 \fancyfoot[R]{\thepage}
 \renewcommand{\headrulewidth}{2pt}
 }
-%
+
+
+
+%==== Overall Config ====
+\setlength{\parindent}{0in}
+% \setlength{\fboxsep}{-0.3in}%
+\setlength{\fboxrule}{0.5pt}%
 \pagestyle{plain}
 
+
 \begin{document}
-
-
 %==== FRONT PART====
 \include{Title/titlepage}
 
+%\begingroup
+%\let\cleardoublepage\clearpage
+
 \pagenumbering{roman}
+
+\renewcommand*\contentsname{\centering Table of Contents}
+\tableofcontents
+\newpage
+
 \include{Front/Abstract}
 \include{Front/Acknowledgement}
 \include{Front/Acronyms}
 \include{Front/Symbols}
 
-\listoffigures 
+
+\renewcommand{\listfigurename}{\centering List of Figures}
+\listoffigures
 \addcontentsline{toc}{chapter}{Lists of Figures}
 \newpage
 
+\renewcommand{\listtablename}{\centering List of Tables}
 \listoftables 
 \addcontentsline{toc}{chapter}{Lists of Tables}
 \newpage
 
-
-%\begingroup
-%\let\cleardoublepage\clearpage
-
-\renewcommand*\contentsname{Table of Contents}
-\tableofcontents
-\newpage
 %\endgroup
 
 %==== MAIN PART ====
@@ -81,7 +92,9 @@
 %==== ENDING PART ===
 
 \bibliographystyle{unsrt}
+\begin{spacing}{1.5}
 \bibliography{Ref/References}
+\end{spacing}
 \newpage
 
 \include{Appendix/appendix}
