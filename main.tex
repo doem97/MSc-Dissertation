@@ -50,8 +50,13 @@
 
 
 \begin{document}
+\fontdimen2\font=0.4em% inter word space
 %==== FRONT PART====
-\include{Title/titlepage}
+\include{Title/coverpage} % Coverpage
+\include{Title/titlepage} % Titlepage
+\include{Title/SoO} % Titlepage
+\include{Title/SDS} % Titlepage
+\include{Title/AAS} % Titlepage
 
 %\begingroup
 %\let\cleardoublepage\clearpage
@@ -91,12 +96,16 @@
 \include{Chapter6/Chapter6}
 %==== ENDING PART ===
 
+% The biographies
+\renewcommand\bibname{References}
 \bibliographystyle{unsrt}
 \begin{spacing}{1.5}
 \bibliography{Ref/References}
+\addcontentsline{toc}{chapter}{References}
 \end{spacing}
 \newpage
 
+% The appendix
 \include{Appendix/appendix}
 %==== END OF ALL ===
 \end{document}

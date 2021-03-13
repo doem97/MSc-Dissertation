@@ -5,38 +5,23 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-\section{Related Work}
+Then comes the main part of your work. To lay the ground, there should first be a chapter on what has been done before on the problem - a Literature Review. This is an important section because it shows that you do not narrowly focus only on what you do, but are aware of the
+related work elsewhere, some of which might be instructive to your solving the problem. It can also explain why you are taking the direction you do.
 
-\subsection{Benchmarks}
+\section{An Overview}
 
-Some well-labeled datasets for lanes and road marking were collected in work \cite{caltech, lee2017vpgnet}
 
-First, the caltech lane detection dataset \cite{caltech} has 1,225 photos captured in two cities, washington and cordova. It features various types of lanes (straight, curved, paralleled). But this dataset has no label for traffic symbols, and no much photo under extreme weather conditions. Later on, VPGNet \cite{lee2017vpgnet} made improvements on benchmark building. They collected 20,386 images under various weather and illumination conditions. Besides, VPGNet has more information on road markings and vanishing points. It uses 1 channel to label 18 classes of lanes and road markings, and 1 channel for vanishing point information.
 
-\subsection{Classical Lane Detection}
+\section{Fully Convolution Networks}
 
-There are several ways to get the information for lane detection and prediction usage, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high resolution digital maps. \cite{hillel2014recent}. In our work we focus on Monocular vision (Single camera).
 
-In previous work, researchers found relation between wheeling and gaze direction when driving. Human employs the distant region to estimate the road curvature \cite{land1995parts}. Also, the gaze direction relies on the 'tangent point' on the inside of each curve when driving on curvature of the road ahead \cite{land1994we}. This gives possible to utilize the unseen vanishing point in lane prediction.
 
-\subsection{Deep-learning based Object Detection}
+\section{Object Detection}
 
-Lane and road marking detection tasks are within the scope of object detection, so algorithms popular in object detection have been implemented in lane detection \cite{tang2020review}. 
 
-Recent years, with the DCNN like AlexNet \cite{krizhevsky2012imagenet} being brought up, deep learning has been driving significant progress in the object detection area. Later RCNN and its variants \cite{girshick2014rich, girshick2015fast, ren2015faster} integrates CNN with the region proposal selective search; GoogLeNet \cite{szegedy2015going} and VGGNet \cite{simonyan2014very} gained improvement with deeper encoder. With the network going deeper, computational efficiency becomes the main problem. More powerful network architectures such as ResNets \cite{he2016deep}, DenseNets \cite{huang2017densely} and Inception \cite{ioffe2015batch} have been proposed, which combine path blocks to reduce the number of parameters while improving the accuracy. Most recently, DETR \cite{carion2020end} combined the CNN with transformer architecture, taking the object detection problem as a set-set mapping and achieved promising results on big-object detection.
 
-Lanes are thin and small objects, thus general methods sometimes work bad \cite{tang2020review}. There are some researches featured in picking out small items. U-Net \cite{ronneberger2015unet} extracts the feature map from encoding path and attach it with the decoding path, by which method the network can keep context for local features.
+\section{Vanishing Points in Neural Networks}
 
-Efforts to use the neural network in lane detection tasks have also been proved solid. Work \cite{borji2016vanishing} first used the CNN structure to predict the vanishing point, and VPGNet \cite{lee2017vpgnet} employed vanishing point information by multi-task method to enhance the prediction of the lanes.
-
-\section{One}
-(Co-localization methods of auto-drawing bbox)
-
-\section{Two}
-(Propagate bbox by co-segmentation)
-
-\section{Three}
-(Suggesting images to users)
 
 
 %=== END OF CHAPTER TWO ===
