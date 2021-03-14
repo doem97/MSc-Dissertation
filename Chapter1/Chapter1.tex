@@ -5,9 +5,10 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-The first chapter of the dissertation is almost invariably the Introduction. Generally, its purpose is to lead the readers into the problem you intend to attack in the project, to set the scene. The main points here consist of the background to the problem and your motivation in solving it. This then leads into the objectives and the scope of the project. It is good to conclude your Introduction with a section on the layout of the dissertation. It prepares the readers for what is to come.
+In this chapter, I will give the background of the problem that will focus on. In \autoref{sec:IN_background}, I will describe the situation of smart car driving and ADAS system utilization, and state the importance of lane and road marking detection in ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce the contributions I have done in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
 
 \section{Background}
+\label{sec:IN_background}
 
 In this section, I will explain the background of my purposed problems. I will describe how the smart cars assistant the human drivers by using the Advanced-driver-assistance system (ADAS) system, and how object-detection methods helps ADAS system to perform better.
 
@@ -29,7 +30,7 @@ To improve the performance of ADAS system is an object detection task. ADAS syst
 This dissertation work wants to solve the problems raised in the aforementioned background, and the lane-detection method described in this report can be used to improve the performance of ADAS system. 
 
 \section{Motivation}
-\label{sec:motivation}
+\label{sec:IN_motivation}
 
 In this section, I will explain why I want to do such a research by describing the specific problems that I want to solve. Example images in this section are selected from VPG database~\cite{lee2017vpgnet}.
 
@@ -97,7 +98,7 @@ VPGNet~\cite{lee2017vpgnet} used vanishing point information to solve this probl
 The motivation of this research work is to solve above mentioned problems. By solving those problems, ADAS system can perform better in lane detection and road marking recognizing, thus make auto-driving safer.
 
 \section{Objectives and Specifications}
-\label{sec:objectives}
+\label{sec:IN_objectives}
 
 In this section, I will claim the aim of my dissertation project and its specifications.
 
@@ -125,6 +126,7 @@ Index & Lane Type          & Index & Road Marking Type   \\ \hline
 The training data mainly comes from two sources. The first is the VPG data set~\cite{lee2017vpgnet}, and the second is the Caltech data set~\cite{aly2008real}.
 
 \section{Major contribution of the Dissertation}
+\label{sec:IN_contribution}
 
 This dissertation researched about a pixel-level lane detection and road marking classification Neural Network architecture, which is based on the Fully Convolution Network and multi-task training method. It employs the vanishing points to improve the performance of the lane detection and road marking classification accuracy.
 
@@ -135,12 +137,13 @@ In the network architecture part, two brand new combination layers are described
 After the training process, I discussed the threshold of confidential and data point extension method, which will affect the efficiency of the model when applied in practice.
 
 \section{Organisation of the Dissertation}
+\label{sec:IN_organisation}
 
 The following chapters will be organized as below.
 
 {\large\textbf{Chapter 2: Literature Review}}
 
-In the \autoref{cha:literature}, I review some of the background theories and algorithms related to 'object detection in lane and road marking detection tasks'. In \autoref{sec:LR_overview}, I give an over view of history of deep learning networks used in object detection. In \autoref{sec:LR_FCN}, I described the basic theory of Fully Convolution Network and its working mechanism. In \autoref{sec:LR_objectdetection} I discussed the history of object detection algorithms and introduced some of famous ones. In \autoref{sec:LR_vpinNN} I introduced the concept of Vanishing Point and its usage in other lane detection tasks.
+In the \autoref{cha:literature}, I review some of the background theories and algorithms related to object detection in lane and road marking recognition. In \autoref{sec:LR_overview}, I give an over view of history of deep learning networks used in object detection. In \autoref{sec:LR_FCN}, I described the basic theory of Fully Convolution Network and its working mechanism. In \autoref{sec:LR_objectdetection} I discussed the history of object detection algorithms and introduced some of famous ones. In \autoref{sec:LR_vpinNN} I introduced the concept of Vanishing Point and its usage in other lane detection tasks.
 
 {\large\textbf{Chapter 3: Vanishing Point Directed Lane Detection}}
 
@@ -148,15 +151,15 @@ In the \autoref{cha:model}, I introduced the network architecture of my proposed
 
 {\large\textbf{Chapter 4: Improvements}}
 
-In the \autoref{cha:improvements} I introduced some improvements done based on the base network. In \autoref{sec:IM_2D} I introduced a new scheme which uses 2-D Gaussian function to make the single point data being fed into the model efficiently and why I have to do so. In \autoref{sec:IM_resblock} I  introduced how to imply residual blocks to increase the FCN network learning accuracy. In \autoref{sec:IM_Enet} I introduced the E-Net and the part that being used in our model.
+In the \autoref{cha:improvements}, I introduced some improvements done based on the base network. In \autoref{sec:IM_2D} I introduced a new scheme which uses 2-D Gaussian function to make the single point data being fed into the model efficiently and why I have to do so. In \autoref{sec:IM_resblock} I  introduced how to imply residual blocks to increase the FCN network learning accuracy. In \autoref{sec:IM_Enet} I introduced the E-Net and the part that being used in our model.
 
 {\large\textbf{Chapter 5: Experimental Results and Discussion}}
 
-In the \autoref{cha:experiments} I discussed the experiment results of the model. I gave the mathematical equations of the test metrics. After that, I introduced a visualization tool that can be used to annotate the pixel-level classification images. Then, I analyzed the experimental outputs in normal condition and in rainy condition. Finally, I discussed the confidential threshold selection of the prediction result.
+In the \autoref{cha:experiments}, I discussed the experiment results of the model. I gave the mathematical equations of the test metrics. After that, I introduced a visualization tool that can be used to annotate the pixel-level classification images. Then, I analyzed the experimental outputs in normal condition and in rainy condition. Finally, I discussed the confidential threshold selection of the prediction result.
 
 {\large\textbf{Chapter 6: Conclusion and Recommendations}}
 
-In the \autoref{cha:conclusion} I summarized my work and gave the conclusion. I also gave some future work recommendation in the last section.
+In the \autoref{cha:conclusion}, I summarized my work and gave the conclusion. I also gave some future work recommendation in the last section.
 
 \end{spacing}
 %=== END OF CHAPTER ONE ===
