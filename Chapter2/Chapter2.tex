@@ -12,12 +12,46 @@ related work elsewhere, some of which might be instructive to your solving the p
 \section{An Overview}
 \label{sec:LR_overview}
 
+In the past few years, the lane detection method have been developed from classical ones to novel deep-learning based ones. In this section, I will give a brief review of the classical lane detection methods proposed, and also give a brief overview of the developments in the field of object detection.
 
+\subsection{Classical Lane Detection}
+
+There are several ways to get the information for lane detection and prediction usage, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high resolution digital maps. \cite{hillel2014recent}. In this work I focus on Monocular vision (Single camera).
+
+In previous work, researchers found relation between wheeling and gaze direction when driving. Human employs the distant region to estimate the road curvature \cite{land1995parts}. Also, the gaze direction relies on the 'tangent point' on the inside of each curve when driving on curvature of the road ahead \cite{land1994we}. This gives possible to utilize the unseen vanishing point in lane prediction.
+
+\subsection{Deep-learning based Lane Detection}
+
+Lane and road marking detection tasks are within the scope of object detection, so algorithms popular in object detection have been implemented in lane detection \cite{tang2020review}. 
+
+Recent years, with the DCNN like AlexNet \cite{krizhevsky2012imagenet} being brought up, deep learning has been driving significant progress in the object detection area. Later RCNN and its variants \cite{girshick2014rich, girshick2015fast, ren2015faster} integrates CNN with the region proposal selective search; GoogLeNet \cite{szegedy2015going} and VGGNet \cite{simonyan2014very} gained improvement with deeper encoder. With the network going deeper, computational efficiency becomes the main problem. More powerful network architectures such as ResNets \cite{he2016deep}, DenseNets \cite{huang2017densely} and Inception \cite{ioffe2015batch} have been proposed, which combine path blocks to reduce the number of parameters while improving the accuracy. Most recently, DETR \cite{carion2020end} combined the CNN with transformer architecture, taking the object detection problem as a set-set mapping and achieved promising results on big-object detection.
+
+Lanes are thin and small objects, thus general methods sometimes work bad \cite{tang2020review}. There are some researches featured in picking out small items. U-Net \cite{ronneberger2015unet} extracts the feature map from encoding path and attach it with the decoding path, by which method the network can keep context for local features.
+
+Efforts to use the neural network in lane detection tasks have also been proved solid. Work \cite{borji2016vanishing} first used the CNN structure to predict the vanishing point, and VPGNet \cite{lee2017vpgnet} employed vanishing point information by multi-task method to enhance the prediction of the lanes.
+
+\section{Neural Network Basis}
+
+Neural Network is the most distinguish deep learning architecture based on Neural units recent years. Compared with conventional machine learning and human-designed mathematical classification algorithms, deep learning on the Neural Network have many advantages. In this section, I will give the theoretical basis of the Neural Networks, and also explain how it works by introducing the back propagation mechanism.
+
+\subsection{Machine Learning}
+
+Compared with specific mathematical equations designed for different kinds of problems, the conventional machine learning are based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on the that \textit{experience} for any inputs, whether have seen or unseen before.~\cite{mohri2018foundations}.
+
+The process of learning the features can be seen as a clustering process. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. Clustering is to group data points into different clusters in the hyperspace, and draw the hyperplane between such clusters. 
+
+\subsection{Supervised Learning}
+
+\subsection{Neural Unit}
+
+\subsection{Back Propagation and Feedforward Network}
 
 \section{Fully Convolution Networks}
 \label{sec:LR_FCN}
 
+\subsection{Convolutional Layer}
 
+\subsection{Convolutional Neural Networks}
 
 \section{Object Detection}
 \label{sec:LR_objectdetection}
