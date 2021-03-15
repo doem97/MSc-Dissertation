@@ -38,7 +38,46 @@ Neural Network is the most distinguish deep learning architecture based on Neura
 
 Compared with specific mathematical equations designed for different kinds of problems, the conventional machine learning are based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on the that \textit{experience} for any inputs, whether have seen or unseen before.~\cite{mohri2018foundations}.
 
-The process of learning the features can be seen as a clustering process. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. Clustering is to group data points into different clusters in the hyperspace, and draw the hyperplane between such clusters. 
+The process of learning the features can be seen as a clustering operation. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. \autoref{fig:2dcluster} and \autoref{fig:3dcluster} shows the $2D$ and $3D$ clustering process. Clustering is to group data points into different clusters in the hyperspace, and draw the hyperplane between such clusters. This hyperplane is the interface between classes. For example, in figure \autoref{fig:2dcluster}, 2 groups of data were divided by a linear line, and in figure \autoref{fig:3dcluster}, 2 groups of data were divided by a non-linear curved surface.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/2dcluster.eps}
+\caption{$2D$ Clustering}
+\label{fig:2dcluster} 
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth, fbox]{Chapter2/3dcluster.eps}
+\caption{$3D$ Clustering}
+\label{fig:3dcluster} 
+\end{figure}
+
+Above mentioned examples only calculate linear or non-linear division between two classes, but normally in real world applications, what needed are not limited to binary classification but usually multi-classification. In the machine learning, there are two solutions on multi-classification problem: 
+
+1) \textit{Uncombined algorithms} will treat the multi-classification as a whole and finish training in only one phase, such as $N$-class SVM, decision trees. 
+
+2) \textit{Aggregated algorithms} will split $N$ class classification into many binary classification, thus need multiple training phase. There are two types of aggregated algorithms: a) \textit{One-versus-one} calculate boundaries for every pair of classes, thus for $N$ class, it needs $N!=N*(N-1)*...*2*1$ calculations, as shown in \autoref{fig:121}. b) \textit{One-versus-others} calculate the boundary between the target class and all other data, thus for $N$ class, it needs to calculate $N$ boundaries, as shown in \autoref{fig:12all}. 
+
+\begin{figure}[th]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/1to1.eps}
+        \caption{One-to-one Multi-classification}
+        \label{fig:121} 
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/1toall.eps}
+        \caption{One-to-all Multi-classification}
+        \label{fig:12all} 
+    \end{subfigure}
+    \caption{Two Aggregated Algorithms}
+\end{figure}
+
 
 \subsection{Supervised Learning}
 
