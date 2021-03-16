@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{cite}
 \usepackage{courier}
+% \usepackage[nottoc,numbib]{tocbibind}
 \usepackage[export]{adjustbox}
 \usepackage[labelfont=bf, textfont=bf]{caption}
 \usepackage{graphicx}
@@ -65,14 +66,14 @@
 
 \pagenumbering{roman}
 
-\renewcommand*\contentsname{\centering Table of Contents}
-\tableofcontents
-\newpage
-
 \include{Front/Abstract}
 \include{Front/Acknowledgement}
 \include{Front/Acronyms}
 \include{Front/Symbols}
+
+\renewcommand*\contentsname{\centering Table of Contents}
+\tableofcontents
+\newpage
 
 
 \renewcommand{\listfigurename}{\centering List of Figures}
@@ -93,18 +94,20 @@
 \include{Chapter1/Chapter1}
 \include{Chapter2/Chapter2}
 \include{Chapter3/Chapter3}
-\include{Chapter4/Chapter4}
+% \include{Chapter4/Chapter4}
 \include{Chapter5/Chapter5}
 \include{Chapter6/Chapter6}
 %==== ENDING PART ===
 
 % The biographies
+\clearpage
+\addcontentsline{toc}{chapter}{References}
 \renewcommand\bibname{References}
 \bibliographystyle{unsrt}
 \begin{spacing}{1.5}
 \bibliography{Ref/References}
 \label{cha:ref}
-\addcontentsline{toc}{chapter}{References}
+
 \end{spacing}
 \newpage
 

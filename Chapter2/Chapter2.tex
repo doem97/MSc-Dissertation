@@ -6,6 +6,8 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
+\section{Introduction}
+
 Then comes the main part of your work. To lay the ground, there should first be a chapter on what has been done before on the problem - a Literature Review. This is an important section because it shows that you do not narrowly focus only on what you do, but are aware of the
 related work elsewhere, some of which might be instructive to your solving the problem. It can also explain why you are taking the direction you do.
 
@@ -79,11 +81,51 @@ Above mentioned examples only calculate linear or non-linear division between tw
 \end{figure}
 
 
+\subsection{Representation Learning and Deep Learning}
+
+The main drawback of conventional machine-learning techniques is that they can not extract the features automatically and precisely from the raw input data. When using machine learning, engineers and researchers have to transform the raw data into normalized vectors that is suitable for training~\cite{ongsulee2017artificial}. Form the normalized vectors, the machine learning model can classify and do detection on the classify patterns.
+
+Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. Based on this, the concept of deep learning was originally proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Basically, deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the features vectors from the first layer but also can go deeper, get more abstract high-level features. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep-learning.
+
+For example, for a chemical substances classification task, the input is percentage number of each components in a chemical mixture. When using machine learning algorithms like SVM, researchers have to re-form and normalize the input data, into a sparse data space, and should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}), such raw data will be mapped to high-dimension space by non-linear neural units. When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.99\textwidth}
+        \centering
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Machine-Learing.eps}
+        \caption{Machine Learning: Human Data Centering}
+        \label{fig:mldiagram} 
+    \end{subfigure}%
+    \\
+    \begin{subfigure}[b]{0.99\textwidth}
+        \centering
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Represent-Learing.eps}
+        \caption{Representation Learning: Auto Extraction}
+        \label{fig:representdiagram} 
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.99\textwidth}
+        \centering
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Deep-Learing.eps}
+        \caption{Deep Learning: Further Extraction of Features}
+        \label{fig:dldiagram} 
+    \end{subfigure}%
+    \caption{Comparison between Three Learning}
+\end{figure}
+
+Deep learning~\cite{lecun2015deep} is composed by simple non-linear \textit{Neural Unit} in each level. \textit{Neural Unit} is described in \autoref{subsec:neural_unit}. Deep learning uses the back propagation and feedforward mechanism to optimize the non-linear parameters of \textit{Neural Unit} from front to end. Propagation and feedforwad are described in \autoref{subsec:back_propagation}.
+
+
 \subsection{Supervised Learning}
 
 \subsection{Neural Unit}
+\label{subsec:neural_unit}
 
 \subsection{Back Propagation and Feedforward Network}
+\label{subsec:back_propagation}
+
+\subsection{Application}
 
 \section{Fully Convolution Networks}
 \label{sec:LR_FCN}
@@ -100,7 +142,7 @@ Above mentioned examples only calculate linear or non-linear division between tw
 \section{Vanishing Points in Neural Networks}
 \label{sec:LR_vpinNN}
 
-
+\section{Concluding Remarks}
 
 %=== END OF CHAPTER TWO ===
 \end{spacing}

@@ -5,6 +5,8 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
+\section{Introduction}
+
 In this chapter, I will give the background of the problem that will focus on. In \autoref{sec:IN_background}, I will describe the situation of smart car driving and ADAS system utilization, and state the importance of lane and road marking detection in ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce the contributions I have done in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
 
 \section{Background}
@@ -149,15 +151,13 @@ In the \autoref{cha:literature}, I review some of the background theories and al
 
 In the \autoref{cha:model}, I introduced the network architecture of my proposed Neural Network, and also the detailed specifications in training. In \autoref{sec:MD_model}, I introduced the main network structure and its multi-task configuration. In \autoref{sec:MD_CAFFE}, I introduced the training process of the CAFFE implementation, its environment configuration and some user-defined layers used. In \autoref{sec:MD_PyTorch}, I introduced the PyTorch implementation of this network and data transition procedure.
 
-{\large\textbf{Chapter 4: Improvements}}
+In the \autoref{sec:MD_improvement}, I introduced some improvements done based on the base network. In \autoref{subsec:IM_2D} I introduced a new scheme which uses 2-D Gaussian function to make the single point data being fed into the model efficiently and why I have to do so. In \autoref{subsec:IM_resblock} I  introduced how to imply residual blocks to increase the FCN network learning accuracy. In \autoref{subsec:IM_Enet} I introduced the E-Net and the part that being used in our model.
 
-In the \autoref{cha:improvements}, I introduced some improvements done based on the base network. In \autoref{sec:IM_2D} I introduced a new scheme which uses 2-D Gaussian function to make the single point data being fed into the model efficiently and why I have to do so. In \autoref{sec:IM_resblock} I  introduced how to imply residual blocks to increase the FCN network learning accuracy. In \autoref{sec:IM_Enet} I introduced the E-Net and the part that being used in our model.
-
-{\large\textbf{Chapter 5: Experimental Results and Discussion}}
+{\large\textbf{Chapter 4: Experimental Results and Discussion}}
 
 In the \autoref{cha:experiments}, I discussed the experiment results of the model. I gave the mathematical equations of the test metrics. After that, I introduced a visualization tool that can be used to annotate the pixel-level classification images. Then, I analyzed the experimental outputs in normal condition and in rainy condition. Finally, I discussed the confidential threshold selection of the prediction result.
 
-{\large\textbf{Chapter 6: Conclusion and Recommendations}}
+{\large\textbf{Chapter 5: Conclusion and Recommendations}}
 
 In the \autoref{cha:conclusion}, I will summarize my work. I will give the conclusion of experimental results, and also the conclusion of work I have done. I also give some future work recommendation in the last section.
 
