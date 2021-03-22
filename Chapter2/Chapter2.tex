@@ -44,7 +44,7 @@ The process of learning the features can be seen as a clustering operation. Each
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.99\textwidth, fbox]{Chapter2/2dcluster.eps}
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/2dcluster.pdf}
 \caption{$2D$ Clustering}
 \label{fig:2dcluster} 
 \end{figure}
@@ -60,7 +60,7 @@ The process of learning the features can be seen as a clustering operation. Each
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.6\textwidth, fbox]{Chapter2/3dcluster.eps}
+\includegraphics[width=0.6\textwidth, fbox]{Chapter2/3dcluster.pdf}
 \caption{$3D$ Clustering}
 \label{fig:3dcluster} 
 \end{figure}
@@ -75,14 +75,14 @@ Above mentioned examples only calculate linear or non-linear division between tw
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=2.7in, fbox]{Chapter2/1to1.eps}
+        \includegraphics[width=2.7in, fbox]{Chapter2/1to1.pdf}
         \caption{One-to-one Multi-classification}
         \label{fig:121} 
     \end{subfigure}%
     ~
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
-        \includegraphics[width=2.7in, fbox]{Chapter2/1toall.eps}
+        \includegraphics[width=2.7in, fbox]{Chapter2/1toall.pdf}
         \caption{One-to-all Multi-classification}
         \label{fig:12all} 
     \end{subfigure}
@@ -100,21 +100,21 @@ Representation learning allows the machine to discover the best representation f
     \centering
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
-        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Machine-Learing.eps}
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Machine-Learing.pdf}
         \caption{Machine Learning: Human Data Centering}
         \label{fig:mldiagram} 
     \end{subfigure}%
     \\
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
-        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Represent-Learing.eps}
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Represent-Learing.pdf}
         \caption{Representation Learning: Auto Extraction}
         \label{fig:representdiagram} 
     \end{subfigure}
     \\
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
-        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Deep-Learing.eps}
+        \includegraphics[width=0.98\textwidth, fbox]{Chapter2/Deep-Learing.pdf}
         \caption{Deep Learning: Further Extraction of Features}
         \label{fig:dldiagram} 
     \end{subfigure}%
@@ -141,7 +141,14 @@ Supervised learning is trained on labeled input and output~\cite{sen2020supervis
 
 Unsupervised learning is to cluster unlabeled data set into different groups according to their feature\cite{meena2019survey}. It analyzes the bounding of a given vector set $\{D_1, D_2, ...,D_n\}$ (the training data), divide the set into $n$ groups $\{G_1, G_2, ..., G_n\}$, and tell if a new unseen data $d_i$ belongs to or not belongs to certain class $G_i$.
 
-Reinforcement learning is to make the agent to play a game, or to perform a series of actions to reach to a certain goal~\cite{barto2004reinforcement}. The model will face a game-like situation, and make a consequence of decision to achieve the highest game score. First, the agent will observe the environment $\{\vec{E_i}\}$, which is a set of vectors representing the surrounding conditions. Second, the agent will conduct some action $\vec{a_i}$, and receive the reward/punishment score $\tau_i$. The aim of reinforcement learning is to find set of actions $\{\vec{a_i}\}, i \in (1,N)$, and such actions should satisfy the condition as described in~\autoref{eq:reinforce}.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/reinforcement.pdf}
+\caption{Reinforcement Learning: Maze Game Decisions}
+\label{fig:reinforcement} 
+\end{figure}
+
+Reinforcement learning is to make the agent to play a game, or to perform a series of actions to reach to a certain goal~\cite{barto2004reinforcement}. The model will face a game-like situation, and make a consequence of decision to achieve the highest game score, as shown in~\autoref{fig:reinforcement}. First, the agent will observe the environment $\{\vec{E_i}\}$, which is a set of vectors representing the surrounding conditions. Second, the agent will conduct some action $\vec{a_i}$, and receive the reward/punishment score $\tau_i$. The aim of reinforcement learning is to find set of actions $\{\vec{a_i}\}, i \in (1,N)$, and such actions should satisfy the condition as described in~\autoref{eq:reinforce}.
 
 \begin{equation}
 \label{eq:reinforce}
@@ -152,6 +159,35 @@ Semi-supervised learning is to train the model on partially labelled data set~\c
 
 \subsection{Neural Unit}
 \label{subsec:neural_unit}
+
+The most basic unit that constructs the neural network is rather simple that is only a non-linear function with $n$ inputs and 1 output~\cite{bengio2017deep}, as shown in~\autoref{fig:neuralunit}. 
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth, fbox]{Chapter2/neuralunit.pdf}
+\caption{Neural Unit}
+\label{fig:neuralunit} 
+\end{figure}
+
+
+\begin{equation}
+\label{eq:neuralunit}
+    f(x)=b+V \cdot \Phi (c+W \vec{x})
+\end{equation}
+
+
+The function of input and output is as~\autoref{eq:neuralunit} shown. The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid}, \textit{ReLu} or \textit{Tanh}. The activation function maps the input to a non-linear distribution thus the classifier located at end of neural network can do classification linearly, as shown in~\autoref{fig:activation}. The $W_i$ is the weight of the $i$-th neural unit, which is the main parameter adjusted by back propagation process.
+
+
+\begin{figure}[th]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/activation.pdf}
+\caption{Activation Kernal: Map to Nonlinear Data for Linear Decision}
+\label{fig:activation} 
+\end{figure}
+
+For the single layer, 
 
 \subsection{Back Propagation and Feedforward Network}
 \label{subsec:back_propagation}
