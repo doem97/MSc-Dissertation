@@ -179,9 +179,10 @@ The function of input and output is as~\autoref{eq:neuralunit} shown.
 The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid} (\autoref{eq:sigmoid}), \textit{ReLU} (\autoref{eq:relu}) or \textit{Tanh} (\autoref{eq:tanh}). The image for the activation functions are shown in~\autoref{fig:activationfunc}. The activation function maps the input to another data space which is easier to perform classification. 
 
 \begin{gather}
+% \vspace{-0.3in}
    \Phi_{Sigmoid}(x)=\frac{1}{1+e^{-x}} \label{eq:sigmoid}\\
    \Phi_{ReLu}(x)=max(0,x) \label{eq:relu}\\
-   \Phi_{Tanh}(x)=tanh(x) \label{eq:tanh}
+   \Phi_{Tanh}(x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}} \label{eq:tanh}
 \end{gather}
 
 \begin{figure}[th]
@@ -216,7 +217,7 @@ The $\Phi (\cdot)$ is the activation function, which could be some non-linear fu
     \label{fig:activationfunc} 
 \end{figure}
 
-For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer are the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line). The image is edited based on the Christopher Olah's origin version in  \href{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}{http://colah.github.io}. The author has posted many insightful images, and these images are broadly used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}. The $W_i$ is the weight of the $i$-th neural unit, which is the main parameter adjusted by back propagation process.
+For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer represents the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line). The image is edited based on the Christopher Olah's origin version in  \href{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}{http://colah.github.io}. The author has posted many insightful images, and these images are broadly used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}. The $W_i$ is the weight of the $i$-th neural unit, which is the main parameter adjusted by back propagation process.
 
 
 \begin{figure}[th]
@@ -237,6 +238,44 @@ Any single layer in deep learning are made up by the non-linear neural units. As
 
 \subsection{Back Propagation and Feedforward Network}
 \label{subsec:back_propagation}
+
+Back propagation and feedforward is based on the chain rule of derivatives. Below shows the basic chain rule. Given \autoref{eq:chainrule1} and \autoref{eq:chainrule2},
+
+\begin{align}
+    \Delta z=\frac{\partial z}{\partial y}\Delta y \label{eq:chainrule1}\\
+    \Delta y=\frac{\partial y}{\partial x}\Delta x \label{eq:chainrule2}
+\end{align}
+
+The \autoref{eq:chainrule3} can be get.
+
+\begin{equation}
+\label{eq:chainrule3}
+    \frac{\partial z}{\partial x}=\frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}
+\end{equation}
+
+One most common and basic feed forward and back propagation is shown in~\autoref{fig:backpropagation}. It has four layers, the input layer $i$, the hidden layer $j,k$ and the output layer $l$. We use this diagram to explain the feed forward and back propagation process.
+
+When feed forward, the input data pass through the activation functions shown in~\autoref{eq:neuralunit} and calculate the output $y_l$. In the back propagation process, it utilizes the chain rule. The most beginning error gradient is $\frac{\partial E}{\partial y_l}=\Delta y$, and with the chain rule we can see: the error was accumulated along the training path, thus with given activation function, gradient in each level $G_t,t \in \{i,j,k\}$ can be derived as in~\autoref{eq:backprop} and in~\autoref{fig:backpropagation}.
+
+\begin{equation}
+\label{eq:backprop}
+    G_t = \frac{\partial E}{\partial z_i},\frac{\partial E}{\partial y_k},\frac{\partial E}{\partial z_k},\frac{\partial E}{\partial y_j},\frac{\partial E}{\partial z_j}
+\end{equation}
+
+\begin{figure}[th]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/backpropagation.pdf}
+\caption{Feed Forward and Back Propagation Process}
+\label{fig:backpropagation} 
+\end{figure}
+
+Notice that the each $G_t(w_{xy})$ is a linear function for weights $w_{xy}$. The aim of model is to minimize the \textit{Error} $E$. To achieve this goal, it is best to go the direction where the gradient $G_t$ decreases fastest, thus the distance $\Delta y=y_t-y_p$ between the ground-truth $y_t$ and the predicted value $y_p$ will shrink in the fastest speed.
+
+To a conclusion, the back propagation can be described as a process $\mathbb{P}$ that
+
+\begin{equation}
+    \mathbb{P}=\argmax_{\{w\}}G_t
+\end{equation}
 
 \subsection{Application}
 
