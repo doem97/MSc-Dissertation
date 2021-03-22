@@ -143,7 +143,7 @@ Unsupervised learning is to cluster unlabeled data set into different groups acc
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.99\textwidth, fbox]{Chapter2/reinforcement.pdf}
+\includegraphics[width=0.75\textwidth, fbox]{Chapter2/reinforcement.pdf}
 \caption{Reinforcement Learning: Maze Game Decisions}
 \label{fig:reinforcement} 
 \end{figure}
@@ -160,9 +160,6 @@ Semi-supervised learning is to train the model on partially labelled data set~\c
 \subsection{Neural Unit}
 \label{subsec:neural_unit}
 
-The most basic unit that constructs the neural network is rather simple that is only a non-linear function with $n$ inputs and 1 output~\cite{bengio2017deep}, as shown in~\autoref{fig:neuralunit}. 
-
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.5\textwidth, fbox]{Chapter2/neuralunit.pdf}
@@ -170,24 +167,73 @@ The most basic unit that constructs the neural network is rather simple that is 
 \label{fig:neuralunit} 
 \end{figure}
 
+The most basic unit that constructs the neural network is rather simple that is only a non-linear function with $n$ inputs and 1 output~\cite{bengio2017deep}, as shown in~\autoref{fig:neuralunit}. 
+
+The function of input and output is as~\autoref{eq:neuralunit} shown. 
 
 \begin{equation}
 \label{eq:neuralunit}
     f(x)=b+V \cdot \Phi (c+W \vec{x})
 \end{equation}
 
+The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid} (\autoref{eq:sigmoid}), \textit{ReLU} (\autoref{eq:relu}) or \textit{Tanh} (\autoref{eq:tanh}). The image for the activation functions are shown in~\autoref{fig:activationfunc}. The activation function maps the input to another data space which is easier to perform classification. 
 
-The function of input and output is as~\autoref{eq:neuralunit} shown. The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid}, \textit{ReLu} or \textit{Tanh}. The activation function maps the input to a non-linear distribution thus the classifier located at end of neural network can do classification linearly, as shown in~\autoref{fig:activation}. The $W_i$ is the weight of the $i$-th neural unit, which is the main parameter adjusted by back propagation process.
+\begin{gather}
+   \Phi_{Sigmoid}(x)=\frac{1}{1+e^{-x}} \label{eq:sigmoid}\\
+   \Phi_{ReLu}(x)=max(0,x) \label{eq:relu}\\
+   \Phi_{Tanh}(x)=tanh(x) \label{eq:tanh}
+\end{gather}
+
+\begin{figure}[th]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/linear.pdf}
+        \caption{Linear}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/sigmoid.pdf}
+        \caption{Sigmoid}
+        % \label{fig:sigfunc} 
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/ReLu.pdf}
+        \caption{Rectified Linear Unit (ReLU)}
+        % \label{fig:relufunc} 
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter2/tanh.pdf}
+        \caption{Hyperbolic Tangent (Tanh)}
+        \label{fig:tanhfunc} 
+    \end{subfigure}
+    \caption{Four Common Activation Functions}
+    \label{fig:activationfunc} 
+\end{figure}
+
+For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer are the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line). The image is edited based on the Christopher Olah's origin version in  \href{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}{http://colah.github.io}. The author has posted many insightful images, and these images are broadly used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}. The $W_i$ is the weight of the $i$-th neural unit, which is the main parameter adjusted by back propagation process.
 
 
 \begin{figure}[th]
 \centering
 \includegraphics[width=0.99\textwidth, fbox]{Chapter2/activation.pdf}
-\caption{Activation Kernal: Map to Nonlinear Data for Linear Decision}
-\label{fig:activation} 
+\caption{Activation Kernal: Map to Nonlinear Data for Linear Decision~\cite{olah2014neural}}
+\label{fig:activationlayer} 
 \end{figure}
 
-For the single layer, 
+Any single layer in deep learning are made up by the non-linear neural units. As shown in~\autoref{fig:simplenn}, the input layer consists two neural units; the hidden layer (defined as those nodes not input either output), and it consists 9 nodes; the output layer consists only one node. Usually the output layer may consist of many nodes, in which case the \textit{flatten layer}, \textit{softmax layer} or other logistic regression functions are needed at the end of neural network, to make the output match with real-world case. And the parameter $W_i$, the weight of nodes, is the main part adjusted in the training process. This process is called feed-forward back propagation, which will be discussed in~\autoref{subsec:back_propagation}
+
+\begin{figure}[th]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/simplenn.pdf}
+\caption{Simple Neural Network}
+\label{fig:simplenn} 
+\end{figure}
 
 \subsection{Back Propagation and Feedforward Network}
 \label{subsec:back_propagation}
