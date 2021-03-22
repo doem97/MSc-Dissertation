@@ -5,8 +5,6 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-\section{Introduction}
-
 In this chapter, I will give the background of the problem that will focus on. In \autoref{sec:IN_background}, I will describe the situation of smart car driving and ADAS system utilization, and state the importance of lane and road marking detection in ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce the contributions I have done in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
 
 \section{Background}
@@ -130,7 +128,7 @@ The training data mainly comes from two sources. The first is the VPG data set~\
 \section{Major contribution of the Dissertation}
 \label{sec:IN_contribution}
 
-This dissertation researched about a pixel-level lane detection and road marking classification Neural Network architecture, which is based on the Fully Convolution Network and multi-task training method. It employs the vanishing points to improve the performance of the lane detection and road marking classification accuracy.
+This dissertation researched about a pixel-level lane detection and road marking classification Neural Network architecture, which is based on the Fully Convolution Network and multi-task training method. It employs the vanishing points to improve the performance of the lane detection and road marking classification accuracy. The network is implemented in both CAFFE~\cite{jia2014caffe} framework in C++ and PyTorch~\cite{NEURIPS2019_9015} framework in Python3~\cite{python3}.
 
 In the data pre-processing, I proposed a data format transition algorithm between two lane data set (VPG data set \cite{lee2017vpgnet} and Caltech data set \cite{aly2008real}), thus the two data set can be translated into same data format, by which format can be fed into either the CAFFE or the PyTorch framework. In the data post-processing, I proposed a multi-class visualization algorithm which gives each class distinguishable color and annotate each pixel with its corresponding color.
 

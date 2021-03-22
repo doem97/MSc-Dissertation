@@ -6,10 +6,12 @@
 \usepackage{amsmath}
 \usepackage{cite}
 \usepackage{courier}
-% \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{svg}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
 \usepackage[export]{adjustbox}
 \usepackage[labelfont=bf, textfont=bf]{caption}
 \usepackage{graphicx}
+\usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{setspace}
@@ -50,7 +52,8 @@
 \renewcommand{\arraystretch}{1.5}
 \setlength{\fboxrule}{0.5pt}%
 \pagestyle{plain}
-
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \begin{document}
 \fontdimen2\font=0.4em% inter word space
@@ -100,9 +103,9 @@
 %==== ENDING PART ===
 
 % The biographies
-\clearpage
-\addcontentsline{toc}{chapter}{References}
-\renewcommand\bibname{References}
+% \clearpage
+% \addcontentsline{toc}{chapter}{References} % Nolonger used, with tocbibind
+% \renewcommand\bibname{References}
 \bibliographystyle{unsrt}
 \begin{spacing}{1.5}
 \bibliography{Ref/References}

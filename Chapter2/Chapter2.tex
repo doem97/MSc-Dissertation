@@ -49,6 +49,15 @@ The process of learning the features can be seen as a clustering operation. Each
 \label{fig:2dcluster} 
 \end{figure}
 
+% \begin{figure}[ht]
+% \centering
+% \fbox{
+% \includesvg[width=0.97\textwidth]{Chapter2/3dcluster.svg}
+% }
+% \caption{$2D$ Clustering}
+% % \label{fig:2dcluster} 
+% \end{figure}
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.6\textwidth, fbox]{Chapter2/3dcluster.eps}
@@ -85,11 +94,9 @@ Above mentioned examples only calculate linear or non-linear division between tw
 
 The main drawback of conventional machine-learning techniques is that they can not extract the features automatically and precisely from the raw input data. When using machine learning, engineers and researchers have to transform the raw data into normalized vectors that is suitable for training~\cite{ongsulee2017artificial}. Form the normalized vectors, the machine learning model can classify and do detection on the classify patterns.
 
-Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. Based on this, the concept of deep learning was originally proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Basically, deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the features vectors from the first layer but also can go deeper, get more abstract high-level features. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep-learning.
+Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. For example, if the input is a gray-scale image, the output matrix after first representation layer would represent the position of edges and corners.
 
-For example, for a chemical substances classification task, the input is percentage number of each components in a chemical mixture. When using machine learning algorithms like SVM, researchers have to re-form and normalize the input data, into a sparse data space, and should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}), such raw data will be mapped to high-dimension space by non-linear neural units. When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
-
-\begin{figure}[ht]
+\begin{figure}[th]
     \centering
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
@@ -114,10 +121,34 @@ For example, for a chemical substances classification task, the input is percent
     \caption{Comparison between Three Learning}
 \end{figure}
 
+Based on representation learning, the concept of deep learning was originally proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Basically, deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the features vectors from the first layer but also can go deeper, get more abstract high-level features. For example, if the input is a gray-scale image, the first layer of deep learning is just like the representation learning, extracting the position of edges and corners. The second layer of deep learning would extract the relative positions between the edges and corners, and the third layer of deep learning would treat edges and corners in similar shape as a group. With the network go deeper, such high-level abstract features can be sensed. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep-learning.
+
+Give an example to illustrate the difference between the machine learning, representation learning and deep learning. For a chemical substances classification task, the input is the percentage of each components in a chemical mixture. When using machine learning algorithms like SVM, researchers have to re-form and normalize the input data, into a sparse data space, and should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}), such raw data will be mapped to high-dimension space by non-linear neural units. When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
+
 Deep learning~\cite{lecun2015deep} is composed by simple non-linear \textit{Neural Unit} in each level. \textit{Neural Unit} is described in \autoref{subsec:neural_unit}. Deep learning uses the back propagation and feedforward mechanism to optimize the non-linear parameters of \textit{Neural Unit} from front to end. Propagation and feedforwad are described in \autoref{subsec:back_propagation}.
 
 
-\subsection{Supervised Learning}
+\subsection{Supervised, Unsupervised and Reinforcement Learning}
+
+Machine learning algorithms can be classified into three main categories, according to the training data form and the learning mechanism of the algorithm: the supervised learning, the unsupervised learning and the reinforcement learning \cite{mohri2018foundations}. Between supervised learning and unsupervised learning, there are also semi-supervised learning.
+
+Supervised learning is trained on labeled input and output~\cite{sen2020supervised, kotsiantis2007supervised}. Each input data $D_i$ is paired with a label or ground-truth value $L_i$, thus the training data should be in the format: $(D_i, L_i), i \in \mathbb{Z}$. The supervised learning aims to predict the corresponding label $l_i$ for each new input $d_i$. Supervised learning can be divided into two types: 
+
+\begin{enumerate}
+    \item Regression, when the label set $\{L_i\} = \mathbb{R}$, in which $\mathbb{R}$ is continuous real number set.
+    \item Classification, when the label set $\{L_i\} = \mathbb{A}$, in which $\mathbb{A}$ is a set of discrete values $\{\alpha_1, \alpha_2, ...\}$ representing different classes.
+\end{enumerate}
+
+Unsupervised learning is to cluster unlabeled data set into different groups according to their feature\cite{meena2019survey}. It analyzes the bounding of a given vector set $\{D_1, D_2, ...,D_n\}$ (the training data), divide the set into $n$ groups $\{G_1, G_2, ..., G_n\}$, and tell if a new unseen data $d_i$ belongs to or not belongs to certain class $G_i$.
+
+Reinforcement learning is to make the agent to play a game, or to perform a series of actions to reach to a certain goal~\cite{barto2004reinforcement}. The model will face a game-like situation, and make a consequence of decision to achieve the highest game score. First, the agent will observe the environment $\{\vec{E_i}\}$, which is a set of vectors representing the surrounding conditions. Second, the agent will conduct some action $\vec{a_i}$, and receive the reward/punishment score $\tau_i$. The aim of reinforcement learning is to find set of actions $\{\vec{a_i}\}, i \in (1,N)$, and such actions should satisfy the condition as described in~\autoref{eq:reinforce}.
+
+\begin{equation}
+\label{eq:reinforce}
+   z = \argmax_{\{\vec{a_i}\}} \sum_{i=1}^{N} \tau_i
+\end{equation}
+
+Semi-supervised learning is to train the model on partially labelled data set~\cite{zhu2009introduction, zhu2005semi}. This method is a intermediate product of supervised learning and unsupervised learning. It addresses the problem that the fully labelled training data is hard to get, usually taking a lot of time to annotating all the data manually. If given a small set of labelled data set $\mathbb{D}_{label} = \{(D,L)\}$ along with a large set of unlabeled data set $\mathbb{D}_{unlabel} = \{D\}$, the semi-supervised learning can utilize the $\mathbb{D}_{label}$ to get the center of clusters, and utilize the $\mathbb{D}_{unlabel}$ to make the problem into a clustering problem.
 
 \subsection{Neural Unit}
 \label{subsec:neural_unit}
@@ -126,6 +157,8 @@ Deep learning~\cite{lecun2015deep} is composed by simple non-linear \textit{Neur
 \label{subsec:back_propagation}
 
 \subsection{Application}
+
+GPT-3~\cite{brown2020language}
 
 \section{Fully Convolution Networks}
 \label{sec:LR_FCN}
