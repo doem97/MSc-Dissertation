@@ -178,6 +178,8 @@ The function of input and output is as~\autoref{eq:neuralunit} shown.
 
 The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid} (\autoref{eq:sigmoid}), \textit{ReLU} (\autoref{eq:relu}) or \textit{Tanh} (\autoref{eq:tanh}). The image for the activation functions are shown in~\autoref{fig:activationfunc}. The activation function maps the input to another data space which is easier to perform classification. 
 
+
+
 \begin{gather}
 % \vspace{-0.3in}
    \Phi_{Sigmoid}(x)=\frac{1}{1+e^{-x}} \label{eq:sigmoid}\\
@@ -271,15 +273,44 @@ When feed forward, the input data pass through the activation functions shown in
 
 Notice that the each $G_t(w_{xy})$ is a linear function for weights $w_{xy}$. The aim of model is to minimize the \textit{Error} $E$. To achieve this goal, it is best to go the direction where the gradient $G_t$ decreases fastest, thus the distance $\Delta y=y_t-y_p$ between the ground-truth $y_t$ and the predicted value $y_p$ will shrink in the fastest speed.
 
-To a conclusion, the back propagation can be described as a process $\mathbb{P}$ that
+To a conclusion, the back propagation can be described as a function $\mathbb{P}$ that
 
 \begin{equation}
     \mathbb{P}=\argmax_{\{w\}}G_t
 \end{equation}
 
-\subsection{Application}
+\subsection{Application and }
 
-GPT-3~\cite{brown2020language}
+Deep learning is confirmed to be solid in a variety of applications. Due to its good adaption to different domains of source data, it can fit to a any research area rapidly. Some attempt in using deep learning to address the image recognition problem go well above the previous records~\cite{krizhevsky2012imagenet, farabet2012learning, tompson2014joint, szegedy2015going}. Other areas like speech recognition~\cite{mikolov2011strategies, hinton2012deep, sainath2013deep}, natural language understanding (\textit{NLP})~\cite{collobert2011natural}, especially in recognition intelligence, like question responding~\cite{bordes2014question} and translation~\cite{jean2014using, sutskever2014sequence} also have gain surprising results. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter2/paramnum.pdf}
+\caption{Parameters of Large Scale Networks}
+\label{fig:paramnum} 
+\end{figure}
+
+Besides, areas in biomedical, physics and mathematics are also using deep learning to drive their research. For example, use deep learning to find out the medical related drug components~\cite{ma2015deep}, to explore the brain circuits~\cite{helmstaedter2013connectomic} and fit the accelerator parameters~\cite{ciodaro2012online}.
+
+The improvements of neural networks is going beyond imagination. Nowadays, researchers are not satisfied with only changing the structure of the network, but are exploring the possibility of extreme-large scale networks. ~\autoref{tab:paramnn} shows recent years development of frontier models, and their neural units used. (More neural units used, more GPU calculation resources needed.) Most recent GPT-3 consists of $1750 \times {10}^8$ parameters, which consumes OpenAI company \textit{12 Million U.S. dollars} for training. It is not realizable for any personal researcher conduct such a great amount of network. Will the future of Neural Network will fall into the 
+control of few big IT companies who can afford such great cost?
+
+\begin{table}[ht]
+\caption{Parameter No. of Art-of-state Neural Networks}
+\label{tab:paramnn}
+\begin{tabular}{cccc}
+\hline
+\textbf{Network} & \textbf{Number of Parameters} & \textbf{Area}        & \textbf{Year} \\ \hline
+AlexNet~\cite{krizhevsky2012imagenet}     & $0.6 \times {10}^{8}$ & Image Classification & 2011     \\
+BERT~\cite{Jacob2018BERT}        & $3 \times {10}^{8}$   & Language Model       & 2018     \\
+GPT-2~\cite{radford2019language}       & $15 \times {10}^{8}$  & Language Model       & 2019     \\
+Megatron-LM~\cite{Shoebi2019MegatronLM} & $80 \times {10}^{8}$  & Language Model       & 2019     \\
+Turing-NLG~\cite{tnlg}  & $170 \times {10}^{8}$ & Language Model       & 2020.02 \\
+GPT-3~\cite{brown2020language}       & $1750 \times {10}^{8}$  & Language Model       & 2020.06 \\ \hline
+\end{tabular}
+\end{table}
+
+According to DistilBERT~\cite{sanh2019distilbert}, small networks are still more flexible for more application scenarios. \autoref{fig:paramnum} shows the growth of numbers of neural parameters in recent years.
 
 \section{Fully Convolution Networks}
 \label{sec:LR_FCN}
