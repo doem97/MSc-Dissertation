@@ -1,7 +1,7 @@
 %=== CHAPTER THREE (3) ===
 %=== (Actual work done and contribution, including literature survey) ===
 
-\chapter{Vanishing Point Directed Lane Detection}
+\chapter{RVPG: Refined VP Guided Lane Detection}
 \label{cha:model}
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
@@ -13,12 +13,27 @@ The next few chapters should describe the work you have done in tackling the pro
 
 say something why its strange
 
-\section{Vanishing Point Directed Neural Network}
+\section{Improved Vanishing Point Directed Neural Network}
 \label{sec:MD_model}
 
-say something
+\subsection{Overview}
+The network in my work is called \textbf{RVPG Net (Refined Vanishing Point Guided Network)}. It was developed based on the VPGNet~\cite{lee2017vpgnet} and has several improvements. The network aims at detecting and classify the lanes and the road markings simultaneously, on the pixel-level. The lanes are predicted with on the guide of vanishing point. 
+
+Multi-task combined with Convolutional Neural Network is a solid solution in traffic-sign prediction. In a research about traffic-sign design in 2016~\cite{zhu2016traffic, huval2015empirical}, researchers proposed a deep Convolutional Neural Network (CNN) structure to detect and classification those small-scaled road markings. Besides, they proposed a benchmark containing a variety of traffic signs and road markings. Because this network is good at small object detection, it can extracts the high-level features from the image, thus are more resistant to the distortion in a small area. This stability can be extended to application in rainy conditions, that the rain drop's negative effects will be offset. Based on their work, RVPG net also uses the CNN structure and multi-task method to resist the distortion of rain drop and bad illumination.
+
+Vanishing point can direct the prediction of the curved roads. Vanishing point is the visual intersection of two parallel lines, in our case the vanishing point is the end of two converging lanes, as shown in TBC. This Vanishing Point information is utilized by human eyes, usually unconsciously, to guess the trend of the curved road. By this mechanism, human is able to predict the tendency for a long distance rather than focus only on the short distance in front of the car.
+
+The main feature of the RVPG is the multi-task and the VP feeding. With these two design of structure, the RVPG can extract the features from the original image significantly, and it shows high accuracy \& F1-Score in the detection and classification of road markings.
 
 \subsection{Architecture}
+
+The architecture of the RVPG is shown in TBC. It mainly consists three stages:
+
+\begin{enumerate}
+    \item The convolution layers stack
+    \item The feature combination layers stack
+    \item The multi-branch
+\end{enumerate}
 
 \subsection{Multi-task Structure}
 

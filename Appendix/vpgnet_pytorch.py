@@ -100,4 +100,6 @@ if __name__=='__main__':
 		    {batch['image'].shape}, 
 		    multiLabel: {batch['multiLabel'].shape}, 
 		    objectMask: {batch['objectMask'].shape}")
-		op = np.array(batch['multiLabel'][0][12:15].mul(255.).clamp(0,255)).transpose(1,2,0)
+		op = np.array(
+		    batch['multiLabel'][0][12:15].mul(255.).clamp(0,255)
+		    ).transpose(1,2,0)
