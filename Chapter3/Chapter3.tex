@@ -103,13 +103,33 @@ The fourth branch is pixel-wise classification task. For each class, the network
 \section{Caffe Implementation}
 \label{sec:MD_CAFFE}
 
-As the original VPGNet author implements the network using CAFFE\footnote{\url{https://github.com/SeokjuLee/VPGNet}}, I also use CAFFE as my start point. But judge from the results, CAFFE is not suitable to conduct quick deep learning experiments, and I would recommend follower researchers not using CAFFE but start with PyTorch or Keras. 
+As the original VPGNet author implements the network using CAFFE\footnote{\url{https://github.com/SeokjuLee/VPGNet}}, I also use CAFFE as my start point. But judge from the results, CAFFE is not suitable to conduct quick deep learning experiments, and I would recommend follower researchers not using CAFFE but start with PyTorch or Keras based on our code.
 
 
 \subsection{Database and Extraction}
 
-Data source: VPG Benchmark Database and Cordova database.
-VPG database is .mat file, extract
+Two sets of labeled lane data are used: 1) Caltech~\cite{caltech} lanes database; 2) VPGNet~\cite{lee2017vpgnet} Lanes and road marking database. 
+
+First and mainly used is the VPG database. In VPG database, the image are not labeled pixel-wise, but labeled with $8 \times 8$ pixels block, which complies with the output size $120 \times 160$, 
+
+\begin{table}[ht]
+\centering
+\caption{Classes Specification and its Index}
+\label{tab:classes}
+\begin{tabular}{clcl}
+\toprule
+Index & Lane Type          & Index & Road Marking Type   \\ \midrule
+0     & Background         & 9     & Stop Line           \\
+1     & Lane Solid White   & 10    & Arrow Left          \\
+2     & Lane Broken White  & 11    & Arrow Right         \\
+3     & Lane Double White  & 12    & Arrow Go Straight   \\
+4     & Lane Solid Yellow  & 13    & Arrow U Turn        \\
+5     & Lane Broken Yellow & 14    & Speed Bump          \\
+6     & Lane Double Yellow & 15    & Cross Walk          \\
+7     & Lane Broken Blue   & 16    & Safety Zone         \\
+8     & Lane Slow          & 17    & Other Road Markings \\ \bottomrule
+\end{tabular}
+\end{table}%
 
 \subsection{Environment Configuration}
 

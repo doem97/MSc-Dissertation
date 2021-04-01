@@ -104,25 +104,6 @@ In this section, I will claim the aim of my dissertation project and its specifi
 
 This project aims at developing a Neural Network architecture that can detect the lanes and the road markings on the images, which can be captured by in-vehicle cameras. The input would be 3-channel RGB image, and the output would be a pixel-level classification of the objects in the target image. Totally there are 17 classes of objects, as being listed in \autoref{tab:classes}. Besides, it will predict the vanishing point, which will also guide the prediction of the curving lane. The architecture was implemented both in CAFFE and PyTorch.
 
-\begin{table}[ht]
-\centering
-\caption{Classes Specification and its Index}
-\label{tab:classes}
-\begin{tabular}{clcl}
-\toprule
-Index & Lane Type          & Index & Road Marking Type   \\ \midrule
-0     & Background         & 9     & Stop Line           \\
-1     & Lane Solid White   & 10    & Arrow Left          \\
-2     & Lane Broken White  & 11    & Arrow Right         \\
-3     & Lane Double White  & 12    & Arrow Go Straight   \\
-4     & Lane Solid Yellow  & 13    & Arrow U Turn        \\
-5     & Lane Broken Yellow & 14    & Speed Bump          \\
-6     & Lane Double Yellow & 15    & Cross Walk          \\
-7     & Lane Broken Blue   & 16    & Safety Zone         \\
-8     & Lane Slow          & 17    & Other Road Markings \\ \bottomrule
-\end{tabular}
-\end{table}%
-
 The training data mainly comes from two sources. The first is the VPG data set~\cite{lee2017vpgnet}, and the second is the Caltech data set~\cite{aly2008real}.
 
 \section{Major contribution of the Dissertation}
