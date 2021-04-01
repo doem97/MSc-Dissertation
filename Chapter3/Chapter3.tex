@@ -42,7 +42,7 @@ The architecture of the RVPG is shown in \autoref{fig:structure}. It mainly cons
 \label{fig:structure} 
 \end{figure}
 
-The first stage is a convolutional layer stack structure, it is aimed at extracting features. The input image is of size $480 \times 640 \times 3$\footnote{Because the relative fixde structure of network, in RVPG only 480*640 can be accepted as input. However, do re-design on network convolutional layer configuration will fit to any other size.}, in which $3$ is the RGB three color channel. Just like the CNN, the first stage of RVPG use different sizes of $2-D$ convolutional kernel to convolve the input image. In RSVP, I use the ReLU (Rectified Linear Unit, shown in \autoref{fig:relufunc}) activation function to do non-linear mapping in neutron, and the max-pooling layer to reduce the feature maps size. The target of this fist stage is to extract higher dimension of feature maps. For example, the first convolution layers' output represents the existence of the continuous edges around the object; the second convolution layers' output represents the relative position between those extracted edge features; the third convolution layers' output represents the group information of edges that are non-intersected; and so on... With deeper of the convolutional operation go, the more abstract the feature extracted are. In RVPG, five continuous convolutional layers are used in first stage.
+The first stage is a convolutional layer stack structure, it is aimed at extracting features. The input image is of size $480 \times 640 \times 3$\footnote{Because the relative fixde structure of network, in RVPG only 480*640 can be accepted as input. However, do re-design on network convolutional layer configuration will fit to any other size.}, in which $3$ is the RGB three color channel. Just like the CNN, the first stage of RVPG use different sizes of $2-D$ convolutional kernel to convolve the input image. In RSVP, we use the ReLU (Rectified Linear Unit, shown in \autoref{fig:relufunc}) activation function to do non-linear mapping in neutron, and the max-pooling layer to reduce the feature maps size. The target of this fist stage is to extract higher dimension of feature maps. For example, the first convolution layers' output represents the existence of the continuous edges around the object; the second convolution layers' output represents the relative position between those extracted edge features; the third convolution layers' output represents the group information of edges that are non-intersected; and so on... With deeper of the convolutional operation go, the more abstract the feature extracted are. In RVPG, five continuous convolutional layers are used in first stage.
 
 The second stage is the multi-branch which will split the task into four different tasks simultaneously, the parameters behind the bifurcation would be shared by all tasks, but the parameters after the bifurcation would belong to each task separately. This design of multi-task have two advantages: 1) Let the different task share information. 2) Do multi-task prediction. This structure will be explained in \autoref{subsec:multitask}.
 
@@ -103,7 +103,7 @@ The fourth branch is pixel-wise classification task. For each class, the network
 \section{Caffe Implementation}
 \label{sec:MD_CAFFE}
 
-As the original VPGNet author implements the network using CAFFE\footnote{\url{https://github.com/SeokjuLee/VPGNet}}, I also use CAFFE as my start point. But judge from the results, CAFFE is not suitable to conduct quick deep learning experiments, and I would recommend follower researchers not using CAFFE but start with PyTorch or Keras based on our code.
+As the original VPGNet author implements the network using CAFFE\footnote{\url{https://github.com/SeokjuLee/VPGNet}}, we also use CAFFE as my start point. But judge from the results, CAFFE is not suitable to conduct quick deep learning experiments, and I would recommend follower researchers not using CAFFE but start with PyTorch or Keras based on our code.
 
 
 \subsection{Database and Extraction}
@@ -248,7 +248,20 @@ The code of this conversion function is given in \autoref{apx:pytorchdataloader}
 
 \subsection{4-Tilling: Redesigned Tilling Layer}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\textwidth, fbox]{Chapter3/fourtiling.pdf}
+\caption{4-Tiling Combination V.S. Concatenate}
+\label{fig:fourtiling} 
+\end{figure}
 
+In the RVPG, a re-designed combination layer called 4-tiling are proposed and implemented, and it has some advantages over traditional concatenation layer, as shown in \autoref{fig:fourtiling}.
+
+Traditional concatenation layer has some drawbacks. It simply concatenate $N$ numbers of $(W \times H)$ figures into a $(W \times H \times N)$ stack. If people want to reduce the depth of the output feature maps, it has be to passed through a convolutional kernel of size $(1 \times 1 \times N)$. The convolutional kernel will result in more computational resources be allocated.
+
+To reduce the computational consumption, the 4-Tiling layer is used. 4-Tiling is like aliasing and diffusion for four different sub-figures. The main advantage of 4-Tiling is not increasing the depth of stack. After the 4-tiling, four $(W \times H)$ sub-figures are combined into one $(W \times H)$ figure. Compared with the concatenation laye, 4-tiling layer don't need to use convolutional kernel to reduce the output depth, thus is computation-economical.
+
+As a result, using 4-Tiling layer can reduce the computational resources needed by $N$ times.
 
 \section{Improvements}
 \label{sec:MD_improvement}
@@ -257,12 +270,12 @@ The code of this conversion function is given in \autoref{apx:pytorchdataloader}
 \subsection{2-D Gaussian}
 \label{subsec:IM_2D}
 
+say something
+
 \subsection{Res Blocks}
 \label{subsec:IM_resblock}
 
-\subsection{E-Net}
-\label{subsec:IM_Enet}
-
+say something
 
 
 \section{Concluding Remarks}
