@@ -5,7 +5,7 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-In this chapter, I will give the background of the problem that will focus on. In \autoref{sec:IN_background}, I will describe the situation of smart car driving and ADAS system utilization, and state the importance of lane and road marking detection in ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce the contributions I have done in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
+In this chapter, I will give the background of the problem that will focus on. In \autoref{sec:IN_background}, I will describe the scene where smart car driving and ADAS system are applied, and state the importance of lane and road marking detection in ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce the contributions I have done in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
 
 \section{Background}
 \label{sec:IN_background}
@@ -100,9 +100,7 @@ The motivation of this research work is to solve above mentioned problems. By so
 \section{Objectives and Specifications}
 \label{sec:IN_objectives}
 
-In this section, I will claim the aim of my dissertation project and its specifications.
-
-This project aims at developing a Neural Network architecture that can detect the lanes and the road markings on the images, which can be captured by in-vehicle cameras. The input would be 3-channel RGB image, and the output would be a pixel-level classification of the objects in the target image. Totally there are 17 classes of objects, as being listed in \autoref{tab:classes}. Besides, it will predict the vanishing point, which will also guide the prediction of the curving lane. The architecture was implemented both in CAFFE and PyTorch.
+This project aims at developing a Neural Network architecture that can detect the lanes and the road markings from the images. The images should be captured by in-vehicle cameras. The input is 3-channel RGB image, and the output is a pixel-level classification of the objects in the target image. Totally there are 17 classes of objects, as being listed in \autoref{tab:classes}. Besides, it will predict the vanishing point, which will also guide the prediction of the curving lane. The architecture was implemented both in CAFFE and PyTorch.
 
 The training data mainly comes from two sources. The first is the VPG data set~\cite{lee2017vpgnet}, and the second is the Caltech data set~\cite{aly2008real}.
 
@@ -124,19 +122,17 @@ The following chapters will be organized into 6 chapters: Literature Review, Van
 
 {\large\textbf{Chapter 2: Literature Review}}
 
-In the \autoref{cha:literature}, I review some of the background theories and algorithms related to object detection in lane and road marking recognition. In \autoref{sec:LR_overview}, I give an over view of history of deep learning networks used in object detection. In \autoref{sec:LR_FCN}, I described the basic theory of Fully Convolution Network and its working mechanism. 
+In the \autoref{cha:literature}, I will review some of the background theories and algorithms related to object detection in lane and road marking recognition. In \autoref{sec:LR_overview}, I will give an over view of history of deep learning networks used in object detection. In \autoref{sec:LR_FCN}, I will describe the basic theory of Fully Convolution Network and its working mechanism. 
 % In \autoref{sec:LR_objectdetection} I discussed the history of object detection algorithms and introduced some of famous ones. 
 % In \autoref{sec:LR_vpinNN} I introduced the concept of Vanishing Point and its usage in other lane detection tasks.
 
 {\large\textbf{Chapter 3: RVPG: Refined Vanishing Point Guided Lane Detection}}
 
-In the \autoref{cha:model}, I introduced the network architecture of my proposed Neural Network, and also the detailed specifications in training. In \autoref{sec:MD_model}, I introduced the main network structure and its multi-task configuration. In \autoref{sec:MD_CAFFE}, I introduced the training process of the CAFFE implementation, its environment configuration and some user-defined layers used. In \autoref{sec:MD_PyTorch}, I introduced the PyTorch implementation of this network and data transition procedure.
-
-In the \autoref{sec:MD_improvement}, I introduced some improvements done based on the base network. In \autoref{subsec:IM_2D} I introduced a new scheme which uses 2-D Gaussian function to make the single point data being fed into the model efficiently and why I have to do so. In \autoref{subsec:IM_resblock} I  introduced how to imply residual blocks to increase the FCN network learning accuracy.
+In the \autoref{cha:model}, I will introduce the network architecture of my proposed Neural Network, and also the detailed specifications in training. In \autoref{sec:MD_model}, I will introduce the main network structure and its multi-task configuration. In \autoref{sec:MD_CAFFE}, I will introduce the training process of the CAFFE implementation, its environment configuration and some user-defined layers used. In \autoref{sec:MD_PyTorch}, I will introduce the PyTorch implementation of this network and data transition procedure. In the \autoref{sec:MD_2D}, I will introduce a new improvement to feed the training data: the 2-D Gaussian feeding. I will introduce the mathematical theory of 1-D and 2-D Gaussian function, and explain why the training should be more  efficient in this way.
 
 {\large\textbf{Chapter 4: Experimental Results and Discussion}}
 
-In the \autoref{cha:experiments}, I discussed the experiment results of the model. I gave the mathematical equations of the test metrics. After that, I introduced a visualization tool that can be used to annotate the pixel-level classification images. Then, I analyzed the experimental outputs in normal condition and in rainy condition. Finally, I discussed the confidential threshold selection of the prediction result.
+In the \autoref{cha:experiments}, I will discuss the experiment results of the model. I give the mathematical equations of the test metrics. After that, I will introduce a visualization tool that can be used to annotate the pixel-level classification images. Then, I will analyze the experimental outputs in normal situation and in rainy situation. Finally, I will discuss the confidential threshold selection of the prediction result.
 
 {\large\textbf{Chapter 5: Conclusion and Recommendations}}
 

@@ -17,6 +17,7 @@
 \usepackage[export]{adjustbox}
 \usepackage[labelfont=bf, textfont=bf]{caption}
 \usepackage{graphicx}
+\usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{float}
@@ -78,7 +79,7 @@
 \include{Front/Abstract}
 \include{Front/Acknowledgement}
 \include{Front/Acronyms}
-\include{Front/Symbols}
+% \include{Front/Symbols}
 
 \renewcommand*\contentsname{\centering Table of Contents}
 \tableofcontents
@@ -113,11 +114,10 @@
 % \addcontentsline{toc}{chapter}{References} % Nolonger used, with tocbibind
 % \renewcommand\bibname{References}
 \bibliographystyle{unsrt}
-\begin{spacing}{1.5}
+% \begin{spacing}{1.5}
 \bibliography{Ref/References}
 \label{cha:ref}
-
-\end{spacing}
+% \end{spacing}
 \newpage
 
 % The appendix

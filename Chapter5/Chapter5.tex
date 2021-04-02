@@ -8,9 +8,12 @@
 
 \section{Introduction}
 
-Saysomething I am giving up on you..
+In this chapter, I will show the experiment results and analysis them.
+
+In \autoref{sec:EX_testmetric}, I will describe the metrics used in evaluation the network performance. In \autoref{sec:EX_multivisual} I will show a tool developed by me to visualize each class in different color and transparency, and it should be valuable for other researchers to use. In \autoref{sec:EX_multiclass}, I give the experimental results of RVPG by accuracy and loss. It achieves as high as $97.19\%$ multi-class accuracy. In \autoref{sec:EX_rainy}, I show that the performance of the network in rainy conditions is stable, as good as $99.73\%$ $F_1$ score results. In \autoref{sec:EX_threshold}, I show how to select the confidential threshold for the output.
 
 \section{Test Metrics}
+\label{sec:EX_testmetric}
 
 We use F1 Score and Accuracy as the test metrics.
 
@@ -37,11 +40,12 @@ The standard $F_1$ score is given in \autoref{eq:f1score}
 
 Specially, when there's no positive pixel in ground truth and the predicted feature map are all-negative, $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So we set $F_1$ score as $1$ in this special case.
 
-Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' center and sampled lane points. 2) If the minimum distance is smaller then a boundary value $R$, the sampled lane points are marked as positive. This is for complying with the output size and the $8 \times 8$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
+Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' center and sampled lane points. 2) If the minimum distance is smaller then a boundary value $R$, the sampled lane points are marked as positive. This is for complying with the output size and the $(8 \times 8)$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
 
 \section{Multi-class Visualization Tool}
+\label{sec:EX_multivisual}
 
-\begin{figure}[!p]
+\begin{figure}[!ht]
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
@@ -86,7 +90,7 @@ Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet}
 In our work, we developed an automatic annotation tool for visualization the lane detection result. It can show different classes in different color. As shown in \autoref{fig:annotation}, different classes are given colors that are easy to distinguish from each other, and the transparency of the annotation label can be adjusted by factor $\alpha$. This tool can also be used in other multi-label classification tasks, so the code are included in \autoref{apx:extraction}.
 
 \section{Multi-class Performance}
-
+\label{sec:EX_multiclass}
 
 \begin{figure}[ht]
     \centering
@@ -101,12 +105,12 @@ In our work, we developed an automatic annotation tool for visualization the lan
         \includegraphics[width=0.98\textwidth, fbox]{Chapter5/testloss100000.pdf}
         \caption{Loss of $100,000$ Epoch}
     \end{subfigure}
-    \caption{Loss of different Epochs in CAFFE}
+    \caption{Loss of Training Epochs in CAFFE}
     \label{fig:testloss}
 \end{figure}
 
 
-First, we conducted experiments on CAFFE with different epochs. The training result are shown in \autoref{tab:cafferesult}. The raw data line is accompanied with a regression curved line to show the tendency, and for clearer show the tend of decreasing, the $Y$-axis is set as Log scale.
+First, we conducted experiments on CAFFE with different epochs. The training result are shown in \autoref{tab:cafferesult}. The $Acc_{mask}$ is the masking task accuracy, and the $Acc_{class}$ is the multi-label classification accuracy.
 
 \begin{table}[ht]
 \centering
@@ -124,7 +128,9 @@ First, we conducted experiments on CAFFE with different epochs. The training res
 \end{tabular}
 \end{table}
 
-To avoid over fitting, we plot the $20,000$ epochs and $100,000$ epochs experiment loss as in \autoref{fig:testloss}, with a regression curve and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. In our experiment, because the loss decreasing rate for different branches are different, as shown in \autoref{fig:testlossbranch}, we set $3:1:1$ weight for grid, masking and pixel classification tasks. The combined loss is shown in \autoref{eq:combineloss}
+To avoid over fitting, we plot the $20,000$ epochs and $100,000$ epochs experiment loss as in \autoref{fig:testloss}, with a regression curve and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. After comparing the training evaluation score with the test score, we think the network converge at around $100,000$ epochs. If go further, over-fitting may happen.
+
+In our experiment, we found the loss decreasing rate for different branches are different. As shown in \autoref{fig:testlossbranch}, the loss of grid box is much higher than the other two. So, we set $3:1:1$ weight for grid, masking and pixel classification tasks. The combined loss is shown in \autoref{eq:combineloss}
 
 \begin{equation}
 \label{eq:combineloss}
@@ -140,7 +146,7 @@ in which $w_1=\frac{3}{3+1+1}=0.6$, $w_2=w_3=\frac{1}{3+1+1}=0.2$.
 \label{fig:testlossbranch} 
 \end{figure}
 
-The accuracy of the multi-label pixel classification task and masking task are shown in \autoref{fig:testacc}. Notice that the Y-axis range is $(0,1)$ and is in Logit scale, because they are close to each other when close to $1$.
+The accuracy curve of the multi-label pixel classification task and masking task are shown in \autoref{fig:testacc}. Notice that because they are close to each other when close to $1$, I use the Logit scale Y-axis in $(0,1)$.
 
 \begin{figure}[ht]
 \centering
@@ -150,21 +156,171 @@ The accuracy of the multi-label pixel classification task and masking task are s
 \end{figure}
 
 \section{Rainy Condition}
+\label{sec:EX_rainy}
 
-Select severe pictures dedicated.
+To test the network performance under extreme weather, we pick out five samples. They have very hard-to-recognize features: 
 
-\section{Post-processing}
+\begin{table}[p]
+\centering
+\caption{Multi-class $F_1$ Score in Extreme Weather Condition}
+\label{tab:rainyf1}
+\begin{tabular}{@{}lllllllll@{}}
+\toprule
+\multicolumn{9}{c}{\texttt{scene\_3/20160809\_1423\_33/000091}} \\ \midrule
+1.0 & 0.7743 & 1.0 & 0.8925 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 \\
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 0.5074 &  \\
+ &  &  &  &  &  &  & Average & 95.14\% \\ \midrule
+\multicolumn{9}{c}{\texttt{scene\_3/20160809\_1425\_34/000091}} \\ \midrule
+1.0 & 0.6675 & 1.0 & 0.7170 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 \\
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 0.4854 &  \\
+ &  &  &  &  &  &  & Average & 93.35\% \\ \midrule
+\multicolumn{9}{c}{\texttt{scene\_2/20160510\_1302\_22/000181}} \\ \midrule
+0.3626 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 0.7151 \\
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 0.8603 & 1.0 & 1.0 &  \\
+ &  &  &  &  &  &  & Average & 93.75\% \\ \midrule
+\multicolumn{9}{c}{\texttt{scene\_4/20160518\_2015\_42/000031}} \\ \midrule
+0.7362 & 0.4944 & 1.0 & 0.8310 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 \\
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 &  \\
+ &  &  &  &  &  &  & Average & 94.48\% \\ \midrule
+\multicolumn{9}{c}{\texttt{scene\_4/20160805\_2122\_57/000241}} \\ \midrule
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 1.0 \\
+1.0 & 1.0 & 1.0 & 1.0 & 1.0 & 0.9537 & 1.0 & 1.0 &  \\
+ &  &  &  &  &  &  & Average & 99.73\% \\ \bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{Selection of Confidential Threshold}
 
-Compare of Threshold results
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/scene_2-20160510_1302_22-000181.png}
+        \caption{Heavy Light Reflection}
+        \label{fig:heavylight}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/scene_3-20160809_1423_33-000091.png}
+        \caption{Blurred by Rain}
+        \label{fig:blurbyrain}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/scene_3-20160809_1425_34-000091.png}
+        \caption{Blurred due to Wiper}
+        \label{fig:blurbywiper}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/scene_4-20160518_2015_42-000031.png}
+        \caption{Low Luminance}
+        \label{lowluminance}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.98\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/scene_4-20160805_2122_57-000241.png}
+        \caption{Complicated Situation}
+        \label{fig:complicated}
+    \end{subfigure}%
+    \caption{Selected Images under Bad Weather Condition}
+    \label{fig:rainyimg}
+\end{figure}
 
-\subsection{Contour}
+\begin{enumerate}
+    \item \texttt{scene\_2/20160510\_1302\_22/000181}, the heavy reflection situation, as shown in \autoref{fig:heavylight}.
+    \item \texttt{scene\_3/20160809\_1423\_33/000091}, the camera is blurred by heavy rain, as shown in \autoref{fig:blurbyrain}.
+    \item \texttt{scene\_3/20160809\_1425\_34/000091}, the camera is blurred because the wiper has been just brushed on the glass, as shown in \autoref{fig:blurbywiper}.
+    \item \texttt{scene\_4/20160518\_2015\_42/000031}, the light intensity is very low in dark night, as shown in \autoref{lowluminance}.
+    \item \texttt{scene\_4/20160805\_2122\_57/000241}, crossroad in night with complicated road markings, pedestrian and heavy reflection, as shown in \autoref{fig:complicated}.
+\end{enumerate}
 
+They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have much images captured under extreme weather condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
+
+
+\section{Selection of Confidential Threshold}
+\label{sec:EX_threshold}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/Picture3an.jpg}
+        \caption{Ground Truth}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic1conf0.png}
+        \caption{$\theta = 0.0\%$}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic1conf31.png}
+        \caption{$\theta = 31.37\%$}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic1conf99.png}
+        \caption{$\theta = 94.11\%$}
+    \end{subfigure}
+    \caption{Different Confidential Value for Sample 1}
+    \label{fig:threshold1}
+\end{figure}
+
+
+The output of multi-label classification is pixel-level confidential map. It will give a confidential value $C_i \in [0,100\%]$ for each pixel in each class. If the confidential value $C_{(x,y,c)}$ of certain pixel $(x,y)$ belonging to certain class $c$ is higher then threshold $\theta$, it is taken as $1$. Otherwise, it is taken as $0$, as shown in \autoref{eq:confidential}. Confidential threshold $\theta$ can be set manually. Higher $\theta$ will make the pixel label more confidential but may limited the imagination of the network, while lower $\theta$ may make image full of un-related classes, as shown in \autoref{fig:threshold1} and \autoref{fig:threshold2}.
+
+\begin{equation}
+\label{eq:confidential}
+    f(C_{(x,y,c)})= 
+    \begin{dcases}
+        1, & \text{if } C_{(x,y)} \geq \theta\\
+        0, & \text{otherwise}
+    \end{dcases},\; \theta \in (0,1) 
+\end{equation}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/Picture1an.jpg}
+        \caption{Ground Truth}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic2con0.png}
+        \caption{$\theta = 0.0\%$}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic2con23.png}
+        \caption{$\theta = 23.52\%$}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=2.7in, fbox]{Chapter5/pic2con70.png}
+        \caption{$\theta = 70.59\%$}
+    \end{subfigure}
+    \caption{Different Confidential Value for Sample 2}
+    \label{fig:threshold2}
+\end{figure}
+
+A recommended value based on empirical data is $\theta \in (20,30)$.
 
 \section{Concluding Remarks}
 
-something conclusion.
+In this section, we discussed the experimental results of RVPG and specially talked about bad-weather condition. The network can achieve as high as $97.19\%$ accuracy, and can achieve the highest $99.73\%$ $F_1$ score under bad weather condition.
+
+In the next section, I will give a conclusion of my work and its highlights. Also, I will explain some disadvantages in my work, and give some directions in further research.
 
 %=== END OF CHAPTER FIVE ===
 \end{spacing}

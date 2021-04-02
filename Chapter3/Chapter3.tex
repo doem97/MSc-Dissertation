@@ -5,13 +5,10 @@
 \label{cha:model}
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
-%  (Actual work done and contribution, including literature survey)
-
-The next few chapters should describe the work you have done in tackling the problem. There might be a chapter on the fundamental theories relevant to the solution you are pursuing, or the supporting technologies you need in implementing the solution. Then there should be a chapter on the solution itself, followed by a chapter on the results and analysis of the results.
 
 \section{Introduction}
 
-say something why its strange
+In this chapter, I will describe the network structure of my work, and how I implement it in both CAFFE and PyTorch. In \autoref{sec:MD_model}, I give the overview of entire network and explain the multi-task used in it. In \autoref{sec:MD_CAFFE}, I discuss the details of implementation in CAFFE, including data format, compiling environment and the 4-Map VP feeding scheme. In \autoref{sec:MD_PyTorch}, I explain why PyTorch is better then CAFFE, and how I implement the network in PyTorch. In \autoref{sec:MD_2D}, I describes the 2-D Gaussian algorithm, which is an improvement in utilizing the vanishing point.
 
 \section{Improved Vanishing Point Directed Neural Network}
 \label{sec:MD_model}
@@ -263,25 +260,49 @@ To reduce the computational consumption, the 4-Tiling layer is used. 4-Tiling is
 
 As a result, using 4-Tiling layer can reduce the computational resources needed by $N$ times.
 
-\section{Improvements}
-\label{sec:MD_improvement}
-\setlength{\parskip}{0.3in}
+\section{2-D Gaussian for VP Feeding}
+\label{sec:MD_2D}
 
-\subsection{2-D Gaussian}
-\label{subsec:IM_2D}
+A better way to feed the vanishing point information to the network is the 2-D Gaussian. The formula of 1-D Gaussian is shown in \autoref{eq:1dgaussian}, in which $a,b,c \neq 0$ are constants.
 
-say something
+\begin{equation}
+\label{eq:1dgaussian}
+    f(x)=\frac{1}{\sigma \sqrt{2 \pi }} \cdot e^{-\frac{(x- \mu )^2}{2 \sigma^2}}
+\end{equation}
 
-\subsection{Res Blocks}
-\label{subsec:IM_resblock}
+The 2-D Gaussian is like conduct Gaussian distribution both on $X$-axis and $Y$-axis. Its formula is shown in \autoref{eq:2dgaussian}. Its plot is shown in \autoref{fig:2dgaussian}.
 
-say something
+\begin{equation}
+\label{eq:2dgaussian}
+    f(x,y)= A \cdot e^{-\left(\frac{(x- \mu_x )^2}{2 \sigma_{X}^{2}}+\frac{(y- \mu_y )^2}{2 \sigma_{Y}^{2}}\right)}
+\end{equation}
 
+\begin{figure}[!ht]
+\begin{adjustbox}{minipage=0.98\linewidth,fbox}
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[height=2.3in]{Chapter3/gaussian2d.pdf}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[height=2.3in]{Chapter3/gaussian3d.pdf}
+    \end{subfigure}
+\end{adjustbox}
+\caption{2-D Gaussian Example}
+\label{fig:2dgaussian}
+\end{figure}
+
+We can set the mean value $(\mu_x,\mu_y)$ as the vanishing point coordinate $(x,y)$, and the variance $(\sigma_X,\sigma_Y)$ differ according to the view point of the in-vehicle camera. Compared the single frame or 4-Map scheme, the 2-D Gaussian can provide more context to the network, thus the VP information are expected to be learnt better.
 
 \section{Concluding Remarks}
 
-say something
+In this chapter, I described the detail of network structure of RVPG. I talked about how multi-task make the network efficient, and why vanishing point is hard to learn in nature. I also give the details of CAFFE and PyTorch implementation.
 
+Besides, three user-defined layers are described: the 4-Map, the 4-Tiling and the 2-D Gaussian layers. They are not common deep-learning layers but designed and implemented specially for this network. They make the network grab information more efficiently.
+
+In next chapter, I will analysis the experimental results and some tools developed by me in experiments.
 
 %=== END OF CHAPTER THREE ===
 \end{spacing}
