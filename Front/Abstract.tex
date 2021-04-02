@@ -11,13 +11,17 @@
 \setlength{\parskip}{0.3in}
 \thispagestyle{addin}
 
+Recent years, the auto-driving is becoming a hot topic. Auto-driving cars utilizes the in-vehicle cameras to capture the surrounding environment images, and use algorithms to extract useful information from images. One of the most important issues to be solved in auto-driving is the lane detection and road marking recognition. By implementing lane and road marking detection algorithms, surrounding traffic symbols can be recognized, and be used to assist the human driver to avoid accidents. 
 
+Two main problems are faced in such process: 1) the curved road is not easy to detect; 2) the extreme weather condition may distort the image captured by cameras, thus hard to recognize.
 
-The Abstract should be a short and concise passage on the important work and contributions of the project: the motivation and the problem pursued, the method you employed and the results obtained, highlighting the significant achievements. It should not contain peripheral things like summary of literature review, and it is not good enough to say that a certain issue has been studied without stating the results of the study. Generally, one page is about the right length for the Abstract.
+In this paper, a network structure RVPGNet, based on previous work VPGNet, are described to address above mentioned problems. It employs  multi-task to do lane detection and road marking classification tasks simultaneously, and utilizes the vanishing point to guide the lane prediction. To save computational resources, a new 4-tiling layer is proposed. To better utilize the vanishing point and avoid training being trapped at saddle point, a new feeding scheme are proposed. The network are implemented and experimented in CAFFE framework, and are transplanted to PyTorch framework. In the CAFFE implementation, a $97.19\%$ accuracy are achieved in multi-label classification. In the test of extreme weather conditions, the network achieves as high as $93.35\%$ to $99.73\%$ $F_1$ score in rainy and low-brightness situation.
 
-\par
-\thispagestyle{addin} % NOTICE: to make another page show!
-\textbf{Keywords:} Dissertation, keywords.
+% The PyTorch implementation still needs improvements. It is available on GitHub now waiting for further researchers and contributors.
+
+% \par
+% \thispagestyle{addin} % NOTICE: to make another page show!
+% \textbf{Keywords:} Dissertation, keywords.
 \end{spacing}
 \newpage
 %=== END OF ABSTRACT ===
