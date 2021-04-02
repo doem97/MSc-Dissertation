@@ -8,41 +8,41 @@
 
 \section{Introduction}
 
-In this chapter, I will review the theory basis related to lane detection. In \autoref{sec:LR_overview}, I briefly review the development in the lane detection task from two perspectives: classical one, and deep-learning one. In \autoref{sec:LR_NNB}, I compare the machine learning and different types of deep-learning, and describe the neural network working mechanism from foundation. I explain how the back-propagation/feed-forward/neutron-calculation work with clear diagrams. In \autoref{sec:LR_FCN}, I describes how the Fully Convolutional Network work and the advantage of it. Specially, I describe how the convolutional layer is related to neutrons, to which even many textbooks don't give the detail.
+In this chapter, I will review the theory basis related to lane detection. In \autoref{sec:LR_overview}, I briefly review the development in the lane detection task from two perspectives: the classical one and the deep-learning one. In \autoref{sec:LR_NNB}, I compare the machine learning and different types of deep-learning and describe the neural network working mechanism from the foundation. I explain how the back-propagation/feed-forward/neutron-calculation works with clear diagrams. In \autoref{sec:LR_FCN}, I describe how the Fully Convolutional Network work and its advantage. Especially, I describe how the convolutional layer is related to neutrons, to which even many textbooks do not give the detail.
 
 \section{An Overview}
 \label{sec:LR_overview}
 
-In the past few years, the lane detection method have been developed from classical ones to novel deep-learning based ones. In this section, I will give a brief review of the classical lane detection methods proposed, and also give a brief overview of the developments in the field of object detection.
+The lane detection method has been developed from classical ones to novel deep-learning-based ones in the past few years. In this section, I will give a brief review of the classical lane detection methods proposed and give a brief overview of the developments in object detection.
 
 \subsection{Classical Lane Detection}
 
-There are several ways to get the information for lane detection and prediction usage, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high resolution digital maps. \cite{hillel2014recent}. In this work we focus on Monocular vision (Single camera).
+There are several ways to get the information for lane detection and prediction usages, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high-resolution digital maps. \cite{hillel2014recent}. In this work, we focus on Monocular vision (Single camera).
 
-In previous work, researchers found relation between wheeling and gaze direction when driving. Human employs the distant region to estimate the road curvature \cite{land1995parts}. Also, the gaze direction relies on the `tangent point' on the inside of each curve when driving on curvature of the road ahead \cite{land1994we}. This gives possible to utilize the unseen vanishing point in lane prediction.
+In previous work, researchers found a relationship between wheeling and gaze direction when driving. Human employs the distant region to estimate the road curvature \cite{land1995parts}. Also, the gaze direction relies on the `tangent point' on the inside of each curve when driving on the curvature of the road ahead \cite{land1994we}. This gives possible to utilize the unseen vanishing point in lane prediction.
 
 \subsection{Deep-learning based Lane Detection}
 
 Lane and road marking detection tasks are within the scope of object detection, so algorithms popular in object detection have been implemented in lane detection \cite{tang2020review}. 
 
-Object detection, is the process to determine whether the instances of objects exist in image~\cite{liu2020deep}. Object detection can be stated as two different tasks: specific object detection, which detects unchanged certain object~\cite{zhang2013object}, such as Barack Obama’s face, MacBook Pro, and Eiffel Tower; and generic object detection, which detect all the objects in a general category (have been seen or unseen before), such as lanes, road markings, and dogs. 
+Object detection is the process to determine whether the instances of objects exist in image~\cite{liu2020deep}. Object detection can be stated as two different tasks: specific object detection, which detects unchanged certain object~\cite{zhang2013object}, such as Barack Obama’s face, MacBook Pro, and Eiffel Tower; and generic object detection, which detect all the objects in a general category (have been seen or unseen before), such as lanes, road markings, and dogs. 
 
-Recent years, with the DCNN like AlexNet \cite{krizhevsky2012imagenet} being brought up, deep learning has been driving significant progress in the object detection area. Later RCNN and its variants \cite{girshick2014rich, girshick2015fast, ren2015faster} integrates CNN with the region proposal selective search; GoogLeNet \cite{szegedy2015going} and VGGNet \cite{simonyan2014very} gained improvement with deeper encoder. With the network going deeper, computational efficiency becomes the main problem. More powerful network architectures such as ResNets \cite{he2016deep}, DenseNets \cite{huang2017densely} and Inception \cite{ioffe2015batch} have been proposed, which combine path blocks to reduce the number of parameters while improving the accuracy. Most recently, DETR \cite{carion2020end} combined the CNN with transformer architecture, taking the object detection problem as a set-set mapping and achieved promising results on big-object detection.
+In recent years, with the DCNN like AlexNet \cite{krizhevsky2012imagenet} being brought up, deep learning has been driving significant progress in the object detection area. Later RCNN and its variants \cite{girshick2014rich, girshick2015fast, ren2015faster} integrates CNN with the region proposal selective search; GoogLeNet \cite{szegedy2015going} and VGGNet \cite{simonyan2014very} gained improvement with deeper encoder. With the network going deeper, computational efficiency becomes the main problem. More powerful network architectures such as ResNets \cite{he2016deep}, DenseNets \cite{huang2017densely}, and Inception \cite{ioffe2015batch} have been proposed, which combine path blocks to reduce the number of parameters while improving the accuracy. Most recently, DETR \cite{carion2020end} combined the CNN with transformer architecture, taking the object detection problem as a set-set mapping and achieved promising results on big-object detection.
 
-Lanes are thin and small objects, thus general methods sometimes work bad \cite{tang2020review}. There are some researches featured in picking out small items. U-Net \cite{ronneberger2015unet} extracts the feature map from encoding path and attach it with the decoding path, by which method the network can keep context for local features.
+Lanes are thin and small objects; thus, general methods sometimes work poorly \cite{tang2020review}. There are some researches featured in picking out tiny items. U-Net \cite{ronneberger2015unet} extracts the feature map from the encoding path and attaches it with the decoding path, by which method the network can keep context for local features.
 
 Efforts to use the neural network in lane detection tasks have also been proved solid. Work \cite{borji2016vanishing} first used the CNN structure to predict the vanishing point, and VPGNet \cite{lee2017vpgnet} employed vanishing point information by multi-task method to enhance the prediction of the lanes.
 
 \section{Neural Network Basis}
 \label{sec:LR_NNB}
 
-Neural Network is the most distinguish deep learning architecture based on Neural units (neuron) recent years. Compared with conventional machine learning and human-designed mathematical classification algorithms, deep learning on the Neural Network have many advantages. In this section, I will give the theoretical basis of the Neural Networks, and also explain how it works by introducing the back propagation mechanism.
+Neural Network is the most distinguished deep learning architecture based on Neural units (neurons) in recent years. Compared with conventional machine learning and human-designed mathematical classification algorithms, deep learning on the Neural Network have many advantages. This section will give the theoretical basis of the Neural Networks and explain how it works by introducing the backpropagation mechanism.
 
 \subsection{Machine Learning}
 
-Compared with specific mathematical equations designed for different kinds of problems, the conventional machine learning are based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on the that \textit{experience} for any inputs, whether have seen or unseen before.~\cite{mohri2018foundations}.
+Compared with specific mathematical equations designed for different kinds of problems, conventional machine learning is based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on that \textit{experience} for any inputs, whether the new input data has been seen or unseen before.~\cite{mohri2018foundations}.
 
-The process of learning the features can be seen as a clustering operation. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. \autoref{fig:2dcluster} and \autoref{fig:3dcluster} shows the $2D$ and $3D$ clustering process. Clustering is to group data points into different clusters in the hyperspace, and draw the hyperplane between such clusters. This hyperplane is the interface between classes. For example, in figure \autoref{fig:2dcluster}, 2 groups of data were divided by a linear line, and in figure \autoref{fig:3dcluster}, 2 groups of data were divided by a non-linear curved surface.
+The process of learning the features can be seen as a clustering operation. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. \autoref{fig:2dcluster} and \autoref{fig:3dcluster} shows the $2D$ and $3D$ clustering process. Clustering is to group data points into different clusters in the hyperspace and draw the hyperplane between such clusters. This hyperplane is the interface between classes. For example, in figure \autoref{fig:2dcluster}, two data groups were divided by a linear line. In figure \autoref{fig:3dcluster}, two groups of data were divided by a non-linear curved surface.
 
 \begin{figure}[ht]
 \centering
@@ -67,7 +67,7 @@ The process of learning the features can be seen as a clustering operation. Each
 \label{fig:3dcluster} 
 \end{figure}
 
-Above mentioned examples only calculate linear or non-linear division between two classes, but normally in real world applications, what needed are not limited to binary classification but usually multi-classification. In the machine learning, there are two solutions on multi-classification problem: 
+Above mentioned examples only calculate linear or non-linear division between two classes. Generally, in real-world applications, what is needed is not limited to binary classification but usually multi-classification. In machine learning, there are two solutions to the multi-classification problem: 
 
 1) \textit{Uncombined algorithms} will treat the multi-classification as a whole and finish training in only one phase, such as $N$-class SVM, decision trees. 
 
@@ -94,9 +94,9 @@ Above mentioned examples only calculate linear or non-linear division between tw
 
 \subsection{Representation Learning and Deep Learning}
 
-The main drawback of conventional machine-learning techniques is that they can not extract the features automatically and precisely from the raw input data. When using machine learning, engineers and researchers have to transform the raw data into normalized vectors that is suitable for training~\cite{ongsulee2017artificial}. Form the normalized vectors, the machine learning model can classify and do detection on the classify patterns.
+The main drawback of conventional machine-learning techniques is that they can not extract the features automatically and precisely from the raw input data. When using machine learning, engineers and researchers have to transform the raw data into normalized vectors that are suitable for training~\cite{ongsulee2017artificial}. From the normalized vectors, the machine learning model can classify and do detection on the classify patterns.
 
-Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. For example, if the input is a gray-scale image, the output matrix after first representation layer would represent the position of edges and corners.
+Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. For example, if the input is a gray-scale image, the output matrix would represent the position of edges and corners after the first representation layer.
 
 \begin{figure}[th]
     \centering
@@ -123,18 +123,18 @@ Representation learning allows the machine to discover the best representation f
     \caption{Comparison between Three Learning}
 \end{figure}
 
-Based on representation learning, the concept of deep learning was originally proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Basically, deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the features vectors from the first layer but also can go deeper, get more abstract high-level features. For example, if the input is a gray-scale image, the first layer of deep learning is just like the representation learning, extracting the position of edges and corners. The second layer of deep learning would extract the relative positions between the edges and corners, and the third layer of deep learning would treat edges and corners in similar shape as a group. With the network go deeper, such high-level abstract features can be sensed. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep-learning.
+Based on representation learning, the concept of deep learning was initially being proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the feature vectors from the first layer but also can go deeper, get more abstract high-level features. For example, if the input is a gray-scale image, the first layer of deep learning is just like representation learning, extracting the position of edges and corners. The second layer of deep learning would extract the relative positions between the edges and corners, and the third layer of deep learning would treat edges and corners in similar shapes as a group. With the network go deeper, such high-level abstract features can be sensed. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep learning.
 
-Give an example to illustrate the difference between the machine learning, representation learning and deep learning. For a chemical substances classification task, the input is the percentage of each components in a chemical mixture. When using machine learning algorithms like SVM, researchers have to re-form and normalize the input data, into a sparse data space, and should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}), such raw data will be mapped to high-dimension space by non-linear network basic units (the Neurons). When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
+Give an example to illustrate the difference between machine learning, representation learning, and deep learning. For a chemical substances classification task, the input is the percentage of each component in a chemical mixture. Researchers have to re-form and normalize the input data into a sparse data space when using machine learning algorithms like SVM. They should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}). Such raw data will be mapped to high-dimension space by non-linear network basic units (the Neurons). When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
 
 Deep learning~\cite{lecun2015deep} is composed by simple non-linear \textit{Neuron} in each level. \textit{Neuron} is described in \autoref{subsec:neural_unit}. Deep learning uses the back propagation and feedforward mechanism to optimize the non-linear parameters of \textit{Neuron} from front to end. Propagation and feedforwad are described in \autoref{subsec:back_propagation}.
 
 
 \subsection{Supervised, Unsupervised and Reinforcement Learning}
 
-Machine learning algorithms can be classified into three main categories, according to the training data form and the learning mechanism of the algorithm: the supervised learning, the unsupervised learning and the reinforcement learning \cite{mohri2018foundations}. Between supervised learning and unsupervised learning, there are also semi-supervised learning.
+Machine learning algorithms can be classified into three main categories, according to the training data form and the algorithm's learning mechanism: supervised learning, unsupervised learning, and reinforcement learning \cite{mohri2018foundations}. Between supervised learning and unsupervised learning, there is also semi-supervised learning.
 
-Supervised learning is trained on labeled input and output~\cite{sen2020supervised, kotsiantis2007supervised}. Each input data $D_i$ is paired with a label or ground-truth value $L_i$, thus the training data should be in the format: $(D_i, L_i), i \in \mathbb{Z}$. The supervised learning aims to predict the corresponding label $l_i$ for each new input $d_i$. Supervised learning can be divided into two types: 
+Supervised learning is trained on labeled input and output~\cite{sen2020supervised, kotsiantis2007supervised}. Each input data $D_i$ is paired with a label or ground-truth value $L_i$. Thus the training data should be in the format: $(D_i, L_i), i \in \mathbb{Z}$. The supervised learning aims to predict the corresponding label $l_i$ for each new input $d_i$. Supervised learning can be divided into two types: 
 
 \begin{enumerate}
     \item Regression, when the label set $\{L_i\} = \mathbb{R}$, in which $\mathbb{R}$ is continuous real number set.
@@ -157,7 +157,7 @@ Reinforcement learning is to make the agent to play a game, or to perform a seri
    z = \argmax_{\{\vec{a_i}\}} \sum_{i=1}^{N} \tau_i
 \end{equation}
 
-Semi-supervised learning is to train the model on partially labelled data set~\cite{zhu2009introduction, zhu2005semi}. This method is a intermediate product of supervised learning and unsupervised learning. It addresses the problem that the fully labelled training data is hard to get, usually taking a lot of time to annotating all the data manually. If given a small set of labelled data set $\mathbb{D}_{label} = \{(D,L)\}$ along with a large set of unlabeled data set $\mathbb{D}_{unlabel} = \{D\}$, the semi-supervised learning can utilize the $\mathbb{D}_{label}$ to get the center of clusters, and utilize the $\mathbb{D}_{unlabel}$ to make the problem into a clustering problem.
+Reinforcement learning is to make the agent play a game or perform a series of actions to reach a certain goal~\cite{barto2004reinforcement}. The model will face a game-like situation and make a consequence of decisions to achieve the highest game score, as shown in~\autoref{fig:reinforcement}. First, the agent will observe the environment $\{\vec{E_i}\}$, which is a set of vectors representing the surrounding conditions. Second, the agent will conduct some action $\vec{a_i}$, and receive the reward/punishment score $\tau_i$. Reinforcement learning aims to find a set of actions $\{\vec{a_i}\}, i \in (1,N)$, and such actions should satisfy the condition as described in~\autoref{eq:reinforce}.
 
 \subsection{Network Unit: Neuron}
 \label{subsec:neural_unit}
@@ -169,7 +169,7 @@ Semi-supervised learning is to train the model on partially labelled data set~\c
 \label{fig:neuralunit} 
 \end{figure}
 
-The most basic unit that constructs the neural network, the ``neuron", is rather simple that is only a non-linear function with $n$ inputs and 1 output~\cite{bengio2017deep}, as shown in~\autoref{fig:neuralunit}. 
+The most basic unit that constructs the neural network, the ``neuron", is relatively simple that is only a non-linear function with $n$ inputs and one output~\cite{bengio2017deep}, as shown in~\autoref{fig:neuralunit}. 
 
 The function of input and output is as~\autoref{eq:neuralunit} shown. 
 
@@ -221,7 +221,7 @@ The $\Phi (\cdot)$ is the activation function, which could be some non-linear fu
     \label{fig:activationfunc} 
 \end{figure}
 
-For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer represents the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line)\footnote{This image is edited based on the Christopher Olah's origin version at  \url{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}. The author has posted many insightful images, and these images are broadly used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}.}
+For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer represent the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line)\footnote{This image is edited based on the Christopher Olah's origin version at  \url{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}. The author has posted many insightful images, and these images are used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}.}
 
 
 \begin{figure}[th]
@@ -231,7 +231,7 @@ For example, as shown in~\autoref{fig:activationlayer}, the blue line and red li
 \label{fig:activationlayer} 
 \end{figure}
 
-Any single layer in deep learning are made up by the non-linear neurons. As shown in~\autoref{fig:simplenn}, the input layer consists two neurons; the hidden layer (defined as those nodes not input either output), and it consists 9 nodes; the output layer consists only one node. Usually the output layer may consist of many nodes, in which case the \textit{flatten layer}, \textit{softmax layer} or other logistic regression functions are needed at the end of neural network, to make the output match with real-world case. And the parameter $W_i$, the weight of the $i$-th neuron, is the main part adjusted in the training process. This process is called feed-forward back propagation, which will be discussed in~\autoref{subsec:back_propagation}
+Any single layer in deep learning is made up of non-linear neurons. As shown in~\autoref{fig:simplenn}, the input layer consists of two neurons; the hidden layer (defined as those nodes not input either output) consists of 9 nodes; the output layer consists of only one node. Usually, the output layer may consist of many nodes, in which case the \textit{flatten layer}, \textit{softmax layer} or other logistic regression functions are needed at the end of the neural network to make the output match with the real-world case. Furthermore, the parameter $W_i$, the weight of the $i$-th neuron, is the central part adjusted in the training process. This process is called feed-forward backpropagation, which will be discussed in~\autoref{subsec:back_propagation}.
 
 \begin{figure}[th]
 \centering
@@ -243,7 +243,7 @@ Any single layer in deep learning are made up by the non-linear neurons. As show
 \subsection{Back Propagation and Feedforward Network}
 \label{subsec:back_propagation}
 
-Back propagation and feedforward is based on the chain rule of derivatives. Below shows the basic chain rule. Given \autoref{eq:chainrule1} and \autoref{eq:chainrule2},
+Backpropagation and feedforward are based on the chain rule of derivatives. Below is the basic chain rule. Given \autoref{eq:chainrule1} and \autoref{eq:chainrule2},
 
 \begin{align}
     \Delta z=\frac{\partial z}{\partial y}\Delta y \label{eq:chainrule1}\\
@@ -257,9 +257,9 @@ The \autoref{eq:chainrule3} can be get.
     \frac{\partial z}{\partial x}=\frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}
 \end{equation}
 
-One most common and basic feed forward and back propagation is shown in~\autoref{fig:backpropagation}. It has four layers, the input layer $i$, the hidden layer $j,k$ and the output layer $l$. We use this diagram to explain the feed forward and back propagation process.
+One most common and basic feedforward and backpropagation are shown in~\autoref{fig:backpropagation}. It has four layers, the input layer $i$, the hidden layer $j,k$, and the output layer $l$. We use this diagram to explain the feedforward and backpropagation process.
 
-When feed forward, the input data pass through the activation functions shown in~\autoref{eq:neuralunit} and calculate the output $y_l$. In the back propagation process, it utilizes the chain rule. The most beginning error gradient is $\frac{\partial E}{\partial y_l}=\Delta y$, and with the chain rule we can see: the error was accumulated along the training path, thus with given activation function, gradient in each level $G_t,t \in \{i,j,k\}$ can be derived as in~\autoref{eq:backprop} and in~\autoref{fig:backpropagation}.
+When feeding forward, the input data pass through the activation functions shown in~\autoref{eq:neuralunit} and calculate the output $y_l$. The backpropagation process utilizes the chain rule. The most beginning error gradient is $\frac{\partial E}{\partial y_l}=\Delta y$. With the chain rule, we can see: the error was accumulated along the training path, thus with given activation function, the gradient in each level $G_t,t \in \{i,j,k\}$ can be derived as in~\autoref{eq:backprop} and in~\autoref{fig:backpropagation}.
 
 \begin{equation}
 \label{eq:backprop}
@@ -275,7 +275,7 @@ When feed forward, the input data pass through the activation functions shown in
 
 Notice that the each $G_t(w_{xy})$ is a linear function for weights $w_{xy}$. The aim of model is to minimize the \textit{Error} $E$. To achieve this goal, it is best to go the direction where the gradient $G_t$ decreases fastest, thus the distance $\Delta y=y_t-y_p$ between the ground-truth $y_t$ and the predicted value $y_p$ will shrink in the fastest speed.
 
-To a conclusion, the back propagation can be described as a function $\mathbb{P}$ that
+In conclusion, the backpropagation can be described as a function $\mathbb{P}$ that
 
 \begin{equation}
     \mathbb{P}=\argmax_{\{w\}}G_t
@@ -283,7 +283,7 @@ To a conclusion, the back propagation can be described as a function $\mathbb{P}
 
 \subsection{Application and Growth}
 
-Deep learning is confirmed to be solid in a variety of applications. Due to its good adaption to different domains of source data, it can fit to a any research area rapidly. Some attempt in using deep learning to address the image recognition problem go well above the previous records~\cite{krizhevsky2012imagenet, farabet2012learning, tompson2014joint, szegedy2015going}. Other areas like speech recognition~\cite{mikolov2011strategies, hinton2012deep, sainath2013deep}, natural language understanding (\textit{NLP})~\cite{collobert2011natural}, especially in recognition intelligence, like question responding~\cite{bordes2014question} and translation~\cite{jean2014using, sutskever2014sequence} also have gain surprising results. 
+Deep learning is confirmed to be solid in a variety of applications. Due to its good adaption to different source data domains, it can fit any research area rapidly. Some attempts in using deep learning to address the image recognition problem go well above the previous records~\cite{krizhevsky2012imagenet, farabet2012learning, tompson2014joint, szegedy2015going}. Other areas like speech recognition~\cite{mikolov2011strategies, hinton2012deep, sainath2013deep}, natural language understanding (\textit{NLP})~\cite{collobert2011natural}, especially in recognition intelligence, like question responding~\cite{bordes2014question} and translation~\cite{jean2014using, sutskever2014sequence} also have gain surprising results. 
 
 \begin{figure}[ht]
 \centering
@@ -292,10 +292,9 @@ Deep learning is confirmed to be solid in a variety of applications. Due to its 
 \label{fig:paramnum} 
 \end{figure}
 
-Besides, areas in biomedical, physics and mathematics are also using deep learning to drive their research. For example, use deep learning to find out the medical related drug components~\cite{ma2015deep}, to explore the brain circuits~\cite{helmstaedter2013connectomic} and fit the accelerator parameters~\cite{ciodaro2012online}.
+Besides, areas in biomedical, physics, and mathematics are also using deep learning to drive their research. For example, use deep learning to find out the medical-related drug components~\cite{ma2015deep}, to explore the brain circuits~\cite{helmstaedter2013connectomic} and fit the accelerator parameters~\cite{ciodaro2012online}.
 
-The improvements of neural networks is going beyond imagination. Nowadays, researchers are not satisfied with only changing the structure of the network, but are exploring the possibility of extreme-large scale networks. ~\autoref{tab:paramnn} shows recent years development of frontier models, and their neurons used. (More neurons used, more GPU calculation resources needed.) Most recent GPT-3 consists of $1750 \times {10}^8$ parameters, which consumes OpenAI company \textit{12 Million U.S. dollars} for training. It is not realizable for any personal researcher conduct such a great amount of network. Will the future of Neural Network will fall into the 
-control of few big IT companies who can afford such great cost?
+The improvements of neural networks are going beyond imagination. Nowadays, researchers are not satisfied with only changing the network structure but are exploring the possibility of extreme-large scale networks. ~\autoref{tab:paramnn} shows recent years' development of frontier models and their neurons used. (More neurons used, more GPU calculation resources needed.) Most recent GPT-3 consists of $1750 \times {10}^8$ parameters, which consumes OpenAI company \textit{12 Million U.S. dollars} for training. It is not realizable for any personal researcher to conduct such a great amount of network. Will the Neural Network's future fall into the control of few big IT companies who can afford such great cost?
 
 \begin{table}[ht]
 \caption{Parameter No. of Art-of-state Neural Networks}
@@ -317,15 +316,15 @@ According to DistilBERT~\cite{sanh2019distilbert}, small networks are still more
 \section{Fully Convolution Networks}
 \label{sec:LR_FCN}
 
-Convolutional network is suitable for those deep learning problems related to images.
+A convolutional network is suitable for those deep learning problems related to images.
 
-Traditional Neural Networks perform bad in image related area. In traditional Artificial Neural Networks (ANNs), one neuron in the $n+1$-th layer will be connected to all neurons in the $n$-th layer. When the network scale is small, this can work. But when the input of network is images, the ANN's method of full-connection is inefficient and calculation consuming. For example, a single RGB image of size $(480 \times 640)$ contains 1,228,800 data units, and each neuron in the hidden layer should have 1,228,800 weights to be calculated.
+Traditional Neural Networks perform poorly in image-related areas. In traditional Artificial Neural Networks (ANNs), one neuron in the $n+1$-th layer will be connected to all neurons in the $n$-th layer. When the network scale is small, this can work. However, when the network's input is images, the ANN's full-connection method is inefficient and calculation-consuming. For example, a single RGB image of size $(480 \times 640)$ contains 1,228,800 data units, and each neuron in the hidden layer should have 1,228,800 weights to be calculated.
 
-Convolutional network uses \textit{Convolutional Layer} to avoid above mentioned problem. With Convolutional Layer, each neuron only focus on a limited area on the previous layer, thus reduces the number of weights in the back-propagation process.
+The convolutional network uses \textit{Convolutional Layer} to avoid the above-mentioned problem. With Convolutional Layer, each neuron only focuses on a limited area on the previous layer, thus reducing the weights in the back-propagation process.
 
 \subsection{Convolutional Layer}
 
-The basic concept of convolutions network was first proposed by Yann Lecun and Yoshua Bengio in around 1990s~\cite{bengio1997convolutional, lecun1989backpropagation}. In 2012, the propose of AlexNet~\cite{krizhevsky2012imagenet} raises the new heat in convolutions networks. Some important progress are used in AlexNet~\cite{kaiming2014learning}, which makes the convolutional network so effective. Those progresses include proposal of Rectified Linear Unit (ReLU)~\cite{nair2010rectified}, which makes the activation of neuron in convolutional layer more effective, and the collection of large scale data set~\cite{deng2009imagenet}, which make the networks being fully trained.
+The basic concept of convolutions network was first proposed by Yann Lecun and Yoshua Bengio around 1990s~\cite{bengio1997convolutional, lecun1989backpropagation}. In 2012, the proposal of AlexNet~\cite{krizhevsky2012imagenet} raised the new heat in convolutions networks. Some vital progress is used in AlexNet~\cite{kaiming2014learning}, which makes the convolutional network so effective. That progress includes the proposal of Rectified Linear Unit (ReLU)~\cite{nair2010rectified}, which makes the activation of neurons in the convolutional layer more effective, and the collection of large scale data set~\cite{deng2009imagenet}, which make the networks being fully trained.
 
 
 \begin{figure}[ht]
@@ -335,7 +334,7 @@ The basic concept of convolutions network was first proposed by Yann Lecun and Y
 \label{fig:2dconv} 
 \end{figure}
 
-Convolutional layers are mainly used to address the pattern recognition and classification problems related with images~\cite{o2015introduction}. Basically, the convolutional layer does $2-D$ convolution to the given input image, and the convolutional kernel will become the weights of the neurons. When training the convolutional network with back propagation, the weights (parameters in the convolutional kernel) are optimized time to time.
+Convolutional layers are mainly used to address the pattern recognition and classification problems related to images~\cite{o2015introduction}. The convolutional layer does $2-D$ convolution to the given input image, and the convolutional kernel will become the weights of the neurons. When training the convolutional network with backpropagation, the weights (parameters in the convolutional kernel) are optimized from time to time.
 
 Begin with a 1-channel $2-D$ convolution. $2-D$ convolution is given in~\autoref{eq:2dconv}.
 
@@ -372,11 +371,11 @@ The convolution layer is constructed by the neurons described in~\autoref{subsec
 
 \section{Concluding Remarks}
 
-In this chapter, I first reviewed the history and recent progress in lane detection algorithms. Second, I introduced several machine learning types and their differences. Third, I introduced main kinds of deep learnings and their differences. 
+In this chapter, I first reviewed the history and recent progress in lane detection algorithms. Second, I introduced several machine learning types and their differences. Third, I introduced the main kinds of deep learnings and their differences. 
 
-After introduction, I explained theory basis of neural network from most basic structure: neurons to high-level structure: convolutional layers.
+After the introduction, I explained the theoretical basis of neural networks from the most basic structure: neurons to high-level structure: convolutional layers.
 
-In the next section, I will focus on the RVPG lane detection algorithm based on FCN network.
+In the next section, I will focus on the RVPG lane detection algorithm based on the FCN network.
 
 %=== END OF CHAPTER TWO ===
 \end{spacing}
