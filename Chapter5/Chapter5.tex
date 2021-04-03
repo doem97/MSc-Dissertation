@@ -10,14 +10,14 @@
 
 In this chapter, I will show the experiment results and analysis them.
 
-In \autoref{sec:EX_testmetric}, I will describe the metrics used in evaluation the network performance. In \autoref{sec:EX_multivisual} I will show a tool developed by me to visualize each class in different color and transparency, and it should be valuable for other researchers to use. In \autoref{sec:EX_multiclass}, I give the experimental results of RVPG by accuracy and loss. It achieves as high as $97.19\%$ multi-class accuracy. In \autoref{sec:EX_rainy}, I show that the performance of the network in rainy conditions is stable, as good as $99.73\%$ $F_1$ score results. In \autoref{sec:EX_threshold}, I show how to select the confidential threshold for the output.
+In \autoref{sec:EX_testmetric}, I will describe the metrics used to evaluate network performance. In \autoref{sec:EX_multivisual} I will show a tool developed by me to visualize each class in different colour and transparency, and it should be valuable for other researchers to use. In \autoref{sec:EX_multiclass}, I give the experimental results of RVPG by accuracy and loss. It achieves as high as $97.19\%$ multi-class accuracy. In \autoref{sec:EX_rainy}, I show that the network's performance in rainy conditions is stable, as good as $99.73\%$ $F_1$ score results. In \autoref{sec:EX_threshold}, I show how to select the output's confidential threshold.
 
 \section{Test Metrics}
 \label{sec:EX_testmetric}
 
-We use F1 Score and Accuracy as the test metrics.
+We use $F_1$ Score and Accuracy as the test metrics.
 
-Accuracy is given in \autoref{eq:acc}. The symbols in the equation means: TP for true positive, which is correctly predicted positive pixel number; TN for true negative, which is correctly predicted negative pixel number; FP for false positive, which is number of positive pixels being predicted as negative; FN for false negative, which is number of negative pixels being predicted as positive. \autoref{fig:testtp} gives clearer interpretation.
+Accuracy is given in \autoref{eq:acc}. The symbols in the equation means: TP for true positive, which is correctly predicted positive pixel number; TN for true negative, which is correctly predicted negative pixel number; FP for false positive, which is the number of positive pixels being predicted as negative; FN for false negative, which is the number of negative pixels being predicted as positive. \autoref{fig:testtp} gives clearer interpretation.
 
 \begin{equation}
 \label{eq:acc}
@@ -38,9 +38,9 @@ The standard $F_1$ score is given in \autoref{eq:f1score}
     F_1=\frac{TP}{TP+\frac{1}{2}(FP+FN)}
 \end{equation}
 
-Specially, when there's no positive pixel in ground truth and the predicted feature map are all-negative, $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So we set $F_1$ score as $1$ in this special case.
+Especially when there's no positive pixel in the ground truth, and the predicted feature map are all-negative, the $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So we set the $F_1$ score as $1$ in this particular case.
 
-Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' center and sampled lane points. 2) If the minimum distance is smaller then a boundary value $R$, the sampled lane points are marked as positive. This is for complying with the output size and the $(8 \times 8)$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
+Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' centre and sampled lane points. 2) If the minimum distance is smaller than a boundary value $R$, the sampled lane points are marked as positive. This complies with the output size and the $(8 \times 8)$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
 
 \section{Multi-class Visualization Tool}
 \label{sec:EX_multivisual}
@@ -87,7 +87,7 @@ Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet}
 \end{figure}
 
 
-In our work, we developed an automatic annotation tool for visualization the lane detection result. It can show different classes in different color. As shown in \autoref{fig:annotation}, different classes are given colors that are easy to distinguish from each other, and the transparency of the annotation label can be adjusted by factor $\alpha$. This tool can also be used in other multi-label classification tasks, so the code are included in \autoref{apx:extraction}.
+In our work, we developed an automatic annotation tool for visualization of the lane detection result. It can show different classes in a different colour. As shown in \autoref{fig:annotation}, different classes are given colours that are easy to distinguish from each other, and the transparency of the annotation label can be adjusted by a factor $\alpha$. Researchers can also use this tool in other multi-label classification tasks, so the code is included in \autoref{apx:extraction}.
 
 \section{Multi-class Performance}
 \label{sec:EX_multiclass}
@@ -110,7 +110,7 @@ In our work, we developed an automatic annotation tool for visualization the lan
 \end{figure}
 
 
-First, we conducted experiments on CAFFE with different epochs. The training result are shown in \autoref{tab:cafferesult}. The $Acc_{mask}$ is the masking task accuracy, and the $Acc_{class}$ is the multi-label classification accuracy.
+First, we conducted experiments on CAFFE with different epochs. The training result is shown in \autoref{tab:cafferesult}. The $Acc_{mask}$ is the masking task accuracy, and the $Acc_{class}$ is the multi-label classification accuracy.
 
 \begin{table}[ht]
 \centering
@@ -128,9 +128,9 @@ First, we conducted experiments on CAFFE with different epochs. The training res
 \end{tabular}
 \end{table}
 
-To avoid over fitting, we plot the $20,000$ epochs and $100,000$ epochs experiment loss as in \autoref{fig:testloss}, with a regression curve and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. After comparing the training evaluation score with the test score, we think the network converge at around $100,000$ epochs. If go further, over-fitting may happen.
+To avoid overfitting, we plot the $20,000$ epochs and $100,000$ epochs experiment loss as in \autoref{fig:testloss}, with a regression curve and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. After comparing the training evaluation score with the test score, we think the network converge at around $100,000$ epochs. If training continues, the over-fitting may happen.
 
-In our experiment, we found the loss decreasing rate for different branches are different. As shown in \autoref{fig:testlossbranch}, the loss of grid box is much higher than the other two. So, we set $3:1:1$ weight for grid, masking and pixel classification tasks. The combined loss is shown in \autoref{eq:combineloss}
+In our experiment, we found the loss decreasing rate for different branches is different. As shown in \autoref{fig:testlossbranch}, the grid box's loss is much higher than the other two. So, we set $3:1:1$ weight for grid, masking and pixel classification tasks. The combined loss is shown in \autoref{eq:combineloss}.
 
 \begin{equation}
 \label{eq:combineloss}
@@ -238,7 +238,7 @@ To test the network performance under extreme weather, we pick out five samples.
     \item \texttt{scene\_4/20160805\_2122\_57/000241}, crossroad in night with complicated road markings, pedestrian and heavy reflection, as shown in \autoref{fig:complicated}.
 \end{enumerate}
 
-They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have much images captured under extreme weather condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
+They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have many images captured under extreme weather condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
 
 
 \section{Selection of Confidential Threshold}
@@ -274,7 +274,7 @@ They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't 
 \end{figure}
 
 
-The output of multi-label classification is pixel-level confidential map. It will give a confidential value $C_i \in [0,100\%]$ for each pixel in each class. If the confidential value $C_{(x,y,c)}$ of certain pixel $(x,y)$ belonging to certain class $c$ is higher then threshold $\theta$, it is taken as $1$. Otherwise, it is taken as $0$, as shown in \autoref{eq:confidential}. Confidential threshold $\theta$ can be set manually. Higher $\theta$ will make the pixel label more confidential but may limited the imagination of the network, while lower $\theta$ may make image full of un-related classes, as shown in \autoref{fig:threshold1} and \autoref{fig:threshold2}.
+The output of multi-label classification is a pixel-level confidential map. It will give a confidential value $C_i \in [0,100\%]$ for each pixel in each class. If the confidential value $C_{(x,y,c)}$ of certain pixel $(x,y)$ belonging to certain class $c$ is higher then threshold $\theta$, it is taken as $1$. Otherwise, it is taken as $0$, as shown in \autoref{eq:confidential}. Confidential threshold $\theta$ can be set manually. Higher $\theta$ will make the pixel label more confidential but may limit the network's imagination, while lower $\theta$ may make the image full of un-related classes, as shown in \autoref{fig:threshold1} and \autoref{fig:threshold2}.
 
 \begin{equation}
 \label{eq:confidential}
@@ -318,9 +318,9 @@ A recommended value based on empirical data is $\theta \in (20,30)$.
 
 \section{Concluding Remarks}
 
-In this section, we discussed the experimental results of RVPG and specially talked about bad-weather condition. The network can achieve as high as $97.19\%$ accuracy, and can achieve the highest $99.73\%$ $F_1$ score under bad weather condition.
+In this section, we discussed the experimental results of RVPG and especially talked about bad-weather condition. The network can achieve as high as $97.19\%$ accuracy and achieve the highest $99.73\%$ $F_1$ score under bad weather condition.
 
-In the next section, I will give a conclusion of my work and its highlights. Also, I will explain some disadvantages in my work, and give some directions in further research.
+In the next section, I will give a conclusion of my work and its highlights. Also, I will explain some disadvantages in my work and offer some directions for further research.
 
 %=== END OF CHAPTER FIVE ===
 \end{spacing}

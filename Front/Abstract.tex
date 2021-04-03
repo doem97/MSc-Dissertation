@@ -7,7 +7,7 @@
 \chapter*{\centering Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 % \vspace{-0.3in}
-\begin{spacing}{1.5}
+\begin{spacing}{1.3}
 \setlength{\parskip}{0.3in}
 \thispagestyle{addin}
 
@@ -16,6 +16,8 @@ In recent years, auto-driving is becoming a hot topic. Auto-driving cars utilize
 Two central problems are in such process: 1) the curved road is not easy to detect; 2) the extreme weather condition may distort the image captured by cameras, thus hard to recognize.
 
 In this paper, a network structure RVPGNet, based on previous work VPGNet, is described to address above mentioned problems. It employs multi-task to do lane detection and road marking classification tasks simultaneously and utilizes the vanishing point to guide the lane prediction. To save computational resources, we use an innovative 4-tiling layer. We use a new feeding scheme to utilize the vanishing point better and avoid training being trapped at the saddle point. The network is implemented and experimented with the CAFFE framework and is transplanted to the PyTorch framework. In the CAFFE implementation, a $97.19\%$ accuracy is achieved in multi-label classification. In the test of extreme weather conditions, the network achieves as high as $93.35\%$ to $99.73\%$ $F_1$ score in the rainy and low-brightness situation.
+
+All the diagrams are drawn in vector graph format, so readers can zoom-in to check the details.
 
 % The PyTorch implementation still needs improvements. It is available on GitHub now waiting for further researchers and contributors.
 

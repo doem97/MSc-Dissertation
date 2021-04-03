@@ -74,7 +74,7 @@ Conv 8 & (1, 1, 0) & $-$ & Branched & 355 \\ \bottomrule
 }
 \end{table}
 
-The combination of three stages can achieve four tasks at one prediction, besides, for each branch, the information learned from other branches maybe helpful to know the context of input images.
+The combination of three stages can achieve four tasks at one prediction. Besides, for each branch, the information learned from other branches may help network to know the context of input images.
 
 \subsection{Multi-task Structure}
 \label{subsec:multitask}
@@ -89,13 +89,13 @@ Multi-task structure is the main highlight of the RVPG net. The training network
     B = \frac{P_{bg}}{H \times W} \times 100\% \label{eq:bg}
 \end{equation}
 
-The first branch is the object mask task, basically a semantic detection of target object. Its output is of size $120 \times 160 \times 2$, containing 2 feature maps. In the $1$st feature map, the foreground pixels (detected objects) are set to be $1$, and other pixels are $0$. In the $2$nd feature map, the foreground pixels are set to be $0$, and the background is set to be $1$. This scheme is better than only using $1$ frame for background/foreground, because only detect the background or foreground maybe instability when either of them not easy to detect. By using both foreground and background, results can be combined for post-processing. For example, if using all-background, when the object is very small, the percentage of \autoref{eq:bg} will be very large, and the network will tend to predict all the pixels as background to achieve lower loss. In this situation, the foreground frame is very important. By using loss function like F1 score, even a small area in foreground will affect the result effectively. Thus, by combining the foreground and background 2 frames, the model will not converge at all-back or all-fore.
+The first branch is the object mask task, basically a semantic detection of the target object. Its output is of size $120 \times 160 \times 2$, containing two feature maps. In the $1$st feature map, the foreground pixels (detected objects) are set as $1$, and other pixels are $0$. In the $2$nd feature map, the foreground pixels are set to be $0$, and the background is set to be $1$. This scheme is better than only using a $1$ frame for background/foreground because only detect the background or foreground may be unstable when either of them is not easy to detect. By using both foreground and background, results can be combined for post-processing. For example, if using all-background, when the object is tiny, the percentage of \autoref{eq:bg} will be large, and the network will tend to predict all the pixels as background to achieve lower loss. In this situation, the foreground frame is essential. Using a loss function like the $F_1$ score, even a tiny area in the foreground will effectively affect the result. Thus, the model will not converge at all-back or all-fore by combining the foreground and background two frames.
 
-The second branch is the grid box branch, which is additional information for locating the objects, but finally proved to be useless. This branch is originated from VPGNet~\cite{lee2017vpgnet}. It just feeds low-definition grid boxes to the network, hopefully the network will learn to locate the object on a rough coordinate. The experimental results without this branch do not have much difference, thus we remove it in RVPG.
+The second branch is the grid box branch, which is additional information for locating the objects, but finally proved useless. This branch is originated from VPGNet~\cite{lee2017vpgnet}. It just feeds low-definition grid boxes to the network. Hopefully, the network will learn to locate the object on a rough coordinate. The experimental results without this branch do not differ; thus, we remove it in RVPG.
 
-The third branch is Vanishing Point prediction task, in which the network will predict a $(X,Y)$ coordinate of Vanishing Point based on given image. This branch will output $120 \times 160 \times 5$ feature map. It uses $5$ channels, as 1) First channel is the VP foreground map; 2) Second channel has all pixels on the left upper corner to Vanishing point as $1$ and other pixels $0$; 3) Third channel has all pixels on the right upper corner to Vanishing point as $1$ and other pixels $0$; 4) Fourth channel has all pixels on the left lower corner to Vanishing point as $1$ and other pixels $0$; 4) Fifth channel has all pixels on the right lower corner to Vanishing point as $1$ and other pixels $0$. Details are described in \autoref{subsec:fourmap}
+The third branch is the Vanishing Point prediction task, in which the network will predict a $(X, Y)$ coordinate of Vanishing Point based on the given image. This branch will output $120 \times 160 \times 5$ feature map. It uses $5$ channels, as 1) the First channel is the VP foreground map; 2) Second channel has all pixels on the left upper corner to the Vanishing point as $1$ and other pixels $0$; 3) Third channel has all pixels on the right upper corner to the Vanishing point as $1$ and other pixels $0$; 4) Fourth channel has all pixels on the left lower corner to the Vanishing point as $1$ and other pixels $0$; 4) Fifth channel has all pixels on the right lower corner to the Vanishing point as $1$ and other pixels $0$. Details are described in \autoref{subsec:fourmap}
 
-The fourth branch is pixel-wise classification task. For each class, the network will give a confidential value of each pixel belonging to this class. The output size is $60 \times 80 \times 64$, in which $64$ means it can predict maximum $64$ types of road markings and lanes. In the RVPG, we uses the VPG data set and Cordova data set, in which only $17$ of road markings (including lane type) types are annotated. The classes and its index are listed in \autoref{tab:classes}.
+The fourth branch is the pixel-wise classification task. For each class, the network will give a confidential value of each pixel belonging to this class. The output size is $60 \times 80 \times 64$, in which $64$ means it can predict a maximum of $64$ types of road markings and lanes. In the RVPG, we use the VPG data set and Cordova data set, in which only $17$ of road markings (including lane type) types are annotated. The classes and their index are listed in \autoref{tab:classes}.
 
 \section{Caffe Implementation}
 \label{sec:MD_CAFFE}
@@ -134,7 +134,7 @@ VPG database & Scene 1 & 13387 & 8 & 9 \\
 \label{fig:gridbox} 
 \end{figure}
 
-First is VPG data set, the mainly used data source in RVPG. It is recorded in the Korean by Seokju Lee's team. In VPG database, the image are not labeled pixel-wise, but labeled with grids in size of $(8 \times 8)$ pixels. This is to comply with the network output size. As can be seen in \autoref{fig:structure}, Because the size of ground-truth is set to be $(120 \times 160)$ , each pixel in the ground-truth represents $4 \times 4 = 16$ pixels from the original $(480 \times 640)$ RGB-image ($480/120 = 4, 640/160 =  4$). So, although seems re-scaling the pixel-level annotation to $(8\times 8)$ pixels will lose some resolution, it is in fact not obvious in the $(120 \times 160)$ ground-truth, as shown in \autoref{fig:gridbox}. There are totally $18$ classes used in VPG data, as shown in \autoref{tab:classes}. The $1$st class is for background, and other $17$ classes are lanes and road markings. This data set's label is saved in \texttt{.mat} file in MATLAB matrix format.
+First is the VPG data set, the mainly used data source in RVPG. It is recorded in Korean by Seokju Lee's team. In the VPG database, the image is not labeled pixel-wise but labeled with grids in size of $(8 \times 8)$ pixels. This is to comply with the network output size. As can be seen in \autoref{fig:structure}, Because the size of ground-truth is set to be $(120 \times 160)$ , each pixel in the ground-truth represents $4 \times 4 = 16$ pixels from the original $(480 \times 640)$ RGB-image ($480/120 = 4, 640/160 =  4$). So, although re-scaling the pixel-level annotation to $(8\times 8)$ pixels will lose some resolution, it is in fact not obvious in the $(120 \times 160)$ ground-truth, as shown in \autoref{fig:gridbox}. There are a total of $18$ classes used in VPG data, as shown in \autoref{tab:classes}. The $1$st class is for background, and the other $17$ classes are lanes and road markings. This data set's label is saved in \texttt{.mat} file in MATLAB matrix format.
 
 
 \begin{table}[!ht]
@@ -171,9 +171,9 @@ Index & Lane Type          & Index & Road Marking Type   \\ \midrule
 \end{table}%
 
 
-Second is the Caltech-lanes Database, recorded with in-vehicle cameras in two cities: the Cordova and the Washington. Image from each city is divided into two groups, as shown in \autoref{tab:dataset}. It contains five classes of lanes only, and no road markings involved, as shown in \autoref{tab:caltech}
+Second is the Caltech-lanes Database, recorded with in-vehicle cameras in two cities: Cordova and Washington. Image from each city is divided into two groups, as shown in \autoref{tab:dataset}. It contains five classes of lanes only, and no road markings involved, as shown in \autoref{tab:caltech}
 
-VPG data and Caltech data are saved in different formats. When they are fed into RVPG network, they will be transformed to a CAFFE database format\footnote{the HDF5 format database and blob, as described in \url{https://caffe.berkeleyvision.org/tutorial}}. I provide the script in \autoref{apx:extraction}.
+VPG data and Caltech data are saved in different formats. When they are fed into the RVPG network, they will be transformed to a CAFFE database format\footnote{the HDF5 format database and blob, as described in \url{https://caffe.berkeleyvision.org/tutorial}}. I provide the script in \autoref{apx:extraction}.
 
 \subsection{Environment Configuration}
 
@@ -195,7 +195,7 @@ hdf5 & 1.10.4 & hb1b8bf9\_0 &  &  &  \\ \bottomrule
 }
 \end{table}
 
-The main trouble in using CAFFE is the environment compiling, so in case anyone want to re-produce the experimental results in CAFFE, the compiling details are given in \autoref{tab:caffeenv}.
+The main trouble in using CAFFE is the environment compiling, so in case anyone wants to reproduce the experimental results in CAFFE, the compiling details are given in \autoref{tab:caffeenv}.
 
 My hardware environment is: Google Cloud Platform\footnote{\url{https://cloud.google.com/gcp}} n1-standard-4 (4 vCPUs, 15GB memory), $1 \times$ NVIDIA Tesla P4 GPU.
 
@@ -210,26 +210,26 @@ My hardware environment is: Google Cloud Platform\footnote{\url{https://cloud.go
 \end{figure}
 
 
-Single point ground truth performs badly. When feeding the vanishing point information to the model (the  $3$rd branch in \autoref{fig:structure}), single frame with single vanishing point is difficult for network to learn from. The vanishing point is just a single pixel on the feature map, occupying only $\frac{1}{640*480}$ percent. When fed into the network directly, the vanishing point is so small that network would just ignore it, and predict an all-background (no vanishing point exists). Network would reduce much more loss if work on other paths, so according to the rule of back propagation (\autoref{subsec:back_propagation}), the network will just ignore this branch until it can put down loss anymore on other branches.
+Single point ground truth performs badly. When feeding the vanishing point information to the model (the  $3$rd branch in \autoref{fig:structure}), a single frame with a single vanishing point is difficult for the network to learn from. The vanishing point is just a single pixel on the feature map, occupying only $\frac{1}{640*480}$ percent. When fed into the network directly, the vanishing point is so small that the network would just ignore it and predict an all-background (no vanishing point exists). The network would reduce much more loss if work on other paths, so according to the rule of backpropagation (\autoref{subsec:back_propagation}), the network will just ignore this branch until it can put down loss anymore on other branches.
 
-In RVPG, a 4-map scheme is being proposed. The intuition is that rather than single pixel, a 4-map design would provide more information to the network. The ground truth used to training the network would be five channels. The first channel is still the single pixel frame. The other four channels represents four corners of the vanishing point, as shown in \autoref{fig:fourmap}
+In RVPG, a 4-map scheme is being proposed. The intuition is that rather than a single pixel, a 4-map design would provide more information to the network. The ground truth used to training the network would be five channels. The first channel is still the single-pixel frame. The other four channels represent four corners of the vanishing point, as shown in \autoref{fig:fourmap}
 
-This 4-map scheme can avoid the single point dilemma. The network are provided with much more information about the relative position of vanishing point in four directions. If just ignore or predict wrongly, the network will be punished by loss function severely. Thus, The network will converge on this branch.
+This 4-map scheme can avoid the single-point dilemma. The network is provided with much more information about the relative position of the vanishing point in four directions. If just ignore or predict wrongly, the network will be punished by loss function severely. Thus, The network will converge on this branch.
 
 \section{PyTorch Implementation}
 \label{sec:MD_PyTorch}
 
 \subsection{Motivation}
 
-After implementation on the CAFFE, we move on to the PyTorch\footnote{\url{https://github.com/PrabhuSM16/VPGNet-Pytorch}}, a better place to conduct experiments. There are many four draw backs in CAFFE: 
+After implementation on the CAFFE, we move on to the PyTorch\footnote{\url{https://github.com/PrabhuSM16/VPGNet-Pytorch}}, a better place to conduct experiments. There are many four drawbacks in CAFFE: 
 
 \begin{enumerate}
 
-    \item CAFFE needs C++ debugging, which takes long time to compile every time. As a large network like VPGNet, it usually takes more than $10$ mins per compilation.
+    \item CAFFE needs C++ debugging, which takes a long time to compile every time. As a large network like VPGNet, it usually takes more than $10$ mins per compilation.
 
-    \item CAFFE is not friendly in document support, and lacks the user-friendly API, thus you need to go into all the C++ underlying code before do any change, even the most basic layer definition change. 
+    \item CAFFE is not friendly in document support and lacks the user-friendly API. Thus you need to go into all the C++ underlying code before making any change, even the most basic layer definition change. 
 
-    \item CAFFE's support of GPU and CUDA suite is out-of-date, thus sometimes with the newest computer with RTX 3080 GPU, you may even not able to call the GPU support with CAFFE. 
+    \item CAFFE's support of GPU and CUDA suite is out-of-date, thus sometimes, with the newest computer with RTX 3080 GPU, you may even not able to call the GPU support with CAFFE. 
 
     \item The last but the most important, the whole community is moving on to the PyTorch and leave CAFFE back now. So code work in CAFFE will not be further used by any other researchers.
     
@@ -239,7 +239,7 @@ After implementation on the CAFFE, we move on to the PyTorch\footnote{\url{https
 
 In PyTorch, we transform the data into the format that is applicable to Torch tensors\footnote{Tensors are data vectors flowing in PyTorch graph during training. It is defined by PyTorch.} and Numpy\footnote{Numpy is a common matrix calculation package in Python.}. 
 
-PyTorch uses pixel-wise annotation. Because the labels can be read directly from \texttt{.mat} and \texttt{.ccvl} files to Numpy, there is no need to do $8 \times 8$ grid scheme. In PyTorch, all the pixels are given an annotation without re-scaling or estimation. As a consequence, the model trained in PyTorch should be more precise than the one trained in CAFFE.
+PyTorch uses pixel-wise annotation. Because the labels can be read directly from \texttt{.mat} and \texttt{.ccvl} files to Numpy, there is no need to do an $8 \times 8$ grid scheme. In PyTorch, all the pixels are given an annotation without re-scaling or estimation. As a consequence, the model trained in PyTorch should be more precise than the one trained in CAFFE.
 
 The code of this conversion function is given in \autoref{apx:pytorchdataloader}.
 
@@ -252,13 +252,13 @@ The code of this conversion function is given in \autoref{apx:pytorchdataloader}
 \label{fig:fourtiling} 
 \end{figure}
 
-In the RVPG, a re-designed combination layer called 4-tiling are proposed and implemented, and it has some advantages over traditional concatenation layer, as shown in \autoref{fig:fourtiling}.
+In the RVPG, a re-designed combination layer called 4-tiling is proposed and implemented, and it has some advantages over the traditional concatenation layer, as shown in \autoref{fig:fourtiling}.
 
-Traditional concatenation layer has some drawbacks. It simply concatenate $N$ numbers of $(W \times H)$ figures into a $(W \times H \times N)$ stack. If people want to reduce the depth of the output feature maps, it has be to passed through a convolutional kernel of size $(1 \times 1 \times N)$. The convolutional kernel will result in more computational resources be allocated.
+The traditional concatenation layer has some drawbacks. It simply concatenate $N$ numbers of $(W \times H)$ figures into a $(W \times H \times N)$ stack. If people want to reduce the depth of the output feature maps, it has to be passed through a convolutional kernel of size $(1 \times 1 \times N)$. The convolutional kernel will result in more computational resources be allocated.
 
-To reduce the computational consumption, the 4-Tiling layer is used. 4-Tiling is like aliasing and diffusion for four different sub-figures. The main advantage of 4-Tiling is not increasing the depth of stack. After the 4-tiling, four $(W \times H)$ sub-figures are combined into one $(W \times H)$ figure. Compared with the concatenation laye, 4-tiling layer don't need to use convolutional kernel to reduce the output depth, thus is computation-economical.
+To reduce the computational consumption, a 4-Tiling layer is designed. 4-Tiling is like aliasing and diffusion for four different sub-figures. The main advantage of 4-Tiling is not increasing the depth of the stack. After the 4-tiling, four $(W \times H)$ sub-figures are combined into one $(W \times H)$ figure. Compared with the concatenation layer, the 4-tiling layer doesn't need to use a convolutional kernel to reduce the output depth; thus, it is computation-economical.
 
-As a result, using 4-Tiling layer can reduce the computational resources needed by $N$ times.
+As a result, using the 4-Tiling layer can reduce the computational resources needed by $N$ times.
 
 \section{2-D Gaussian for VP Feeding}
 \label{sec:MD_2D}
@@ -294,15 +294,15 @@ The 2-D Gaussian is like conduct Gaussian distribution both on $X$-axis and $Y$-
 \label{fig:2dgaussian}
 \end{figure}
 
-We can set the mean value $(\mu_x,\mu_y)$ as the vanishing point coordinate $(x,y)$, and the variance $(\sigma_X,\sigma_Y)$ differ according to the view point of the in-vehicle camera. Compared the single frame or 4-Map scheme, the 2-D Gaussian can provide more context to the network, thus the VP information are expected to be learnt better\footnote{2-D Gaussian is currently constructed with Numpy. Source code available on GitHub \url{https://github.com/PrabhuSM16/VPGNet-Pytorch}.}.
+We can set the mean value $(\mu_x,\mu_y)$ as the vanishing point coordinate $(x,y)$, and the variance $(\sigma_X,\sigma_Y)$ differ according to the viewpoint of the in-vehicle camera. Compared to the single frame or 4-Map scheme, the 2-D Gaussian can provide more context to the network; thus, the VP information is expected to be learned better\footnote{2-D Gaussian is currently constructed with Numpy. Source code available on GitHub \url{https://github.com/PrabhuSM16/VPGNet-Pytorch}.}.
 
 \section{Concluding Remarks}
 
-In this chapter, I described the detail of network structure of RVPG. I talked about how multi-task make the network efficient, and why vanishing point is hard to learn in nature. I also give the details of CAFFE and PyTorch implementation.
+In this chapter, I described the detail of the network structure of RVPG. I talked about how multi-task makes the network efficient and why the vanishing point is hard to learn in nature. I also give the details of CAFFE and PyTorch implementation.
 
-Besides, three user-defined layers are described: the 4-Map, the 4-Tiling and the 2-D Gaussian layers. They are not common deep-learning layers but designed and implemented specially for this network. They make the network grab information more efficiently.
+Besides, three user-defined layers are described: the 4-Map, the 4-Tiling, and the 2-D Gaussian layers. They are not common deep-learning layers but designed and implemented especially for this network. They make the network grab information more efficiently.
 
-In next chapter, I will analysis the experimental results and some tools developed by me in experiments.
+In the next chapter, I will analyze the experimental results and some tools developed by me in experiments.
 
 %=== END OF CHAPTER THREE ===
 \end{spacing}
