@@ -8,9 +8,9 @@
 
 \section{Introduction}
 
-In this chapter, I will show the experiment results and analysis them.
+This chapter will show the experiment results and the analysis of them.
 
-In \autoref{sec:EX_testmetric}, I will describe the metrics used to evaluate network performance. In \autoref{sec:EX_multivisual} I will show a tool developed by me to visualize each class in different colour and transparency, and it should be valuable for other researchers to use. In \autoref{sec:EX_multiclass}, I give the experimental results of RVPG by accuracy and loss. It achieves as high as $97.19\%$ multi-class accuracy. In \autoref{sec:EX_rainy}, I show that the network's performance in rainy conditions is stable, as good as $99.73\%$ $F_1$ score results. In \autoref{sec:EX_threshold}, I show how to select the output's confidential threshold.
+\autoref{sec:EX_testmetric} will describe the metrics used to evaluate network performance. \autoref{sec:EX_multivisual} will show a tool developed by me to visualize each class in different colour and transparency, and it should be valuable for other researchers to use. \autoref{sec:EX_multiclass} will give the experimental results of RVPGNet by accuracy and loss. It achieves as high as $97.19\%$ multi-class accuracy. \autoref{sec:EX_rainy} will show that the network's performance in rainy conditions is stable, as good as $99.73\%$ $F_1$ score results. \autoref{sec:EX_threshold} will show how to select the output's confidential threshold.
 
 \section{Test Metrics}
 \label{sec:EX_testmetric}
@@ -38,9 +38,9 @@ The standard $F_1$ score is given in \autoref{eq:f1score}
     F_1=\frac{TP}{TP+\frac{1}{2}(FP+FN)}
 \end{equation}
 
-Especially when there's no positive pixel in the ground truth, and the predicted feature map are all-negative, the $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So we set the $F_1$ score as $1$ in this particular case.
+Especially when there's no positive pixel in the ground truth, and the predicted feature map are all-negative, the $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So the $F_1$ score is setted as $1$ in this particular case.
 
-Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' centre and sampled lane points. 2) If the minimum distance is smaller than a boundary value $R$, the sampled lane points are marked as positive. This complies with the output size and the $(8 \times 8)$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
+Besides, the RVPGNet uses the metric described in Section 5.3 of VPGNet~\cite{lee2017vpgnet} to calculate the $F_1$ score: 1) calculate the minimum distance between grids' centre and sampled lane points. 2) If the minimum distance is smaller than a boundary value $R$, the sampled lane points are marked as positive. This complies with the output size and the $(8 \times 8)$ grid size in VPGNet. The python code of $F_1$ score calculation are given in \autoref{apx:testmetrics}.
 
 \section{Multi-class Visualization Tool}
 \label{sec:EX_multivisual}
@@ -87,7 +87,7 @@ Besides, we use the metric described in Section 5.3, VPGNet~\cite{lee2017vpgnet}
 \end{figure}
 
 
-In our work, we developed an automatic annotation tool for visualization of the lane detection result. It can show different classes in a different colour. As shown in \autoref{fig:annotation}, different classes are given colours that are easy to distinguish from each other, and the transparency of the annotation label can be adjusted by a factor $\alpha$. Researchers can also use this tool in other multi-label classification tasks, so the code is included in \autoref{apx:extraction}.
+In this dissertation, an automatic annotation tool was developed to visualize the lane detection result. It can show different classes in a different colour. As shown in \autoref{fig:annotation}, different classes are given colours that are easy to distinguish from each other, and the transparency of the annotation label can be adjusted by a factor $\alpha$. Researchers can also use this tool in other multi-label classification tasks, so the code is included in \autoref{apx:extraction}.
 
 \section{Multi-class Performance}
 \label{sec:EX_multiclass}
@@ -97,28 +97,28 @@ In our work, we developed an automatic annotation tool for visualization of the 
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
         \includegraphics[width=0.98\textwidth, fbox]{Chapter5/testloss20000.pdf}
-        \caption{Loss of $20,000$ Epoch}
+        \caption{Loss of $20,000$ iteration}
     \end{subfigure}
     \\
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
         \includegraphics[width=0.98\textwidth, fbox]{Chapter5/testloss100000.pdf}
-        \caption{Loss of $100,000$ Epoch}
+        \caption{Loss of $100,000$ iteration}
     \end{subfigure}
-    \caption{Loss of Training Epochs in CAFFE}
+    \caption{Loss of Training iterations in Caffe}
     \label{fig:testloss}
 \end{figure}
 
 
-First, we conducted experiments on CAFFE with different epochs. The training result is shown in \autoref{tab:cafferesult}. The $Acc_{mask}$ is the masking task accuracy, and the $Acc_{class}$ is the multi-label classification accuracy.
+First, we conducted experiments on Caffe with different iterations. The training result is shown in \autoref{tab:Cafferesult}. The $Acc_{mask}$ is the masking task accuracy, and the $Acc_{class}$ is the multi-label classification accuracy.
 
 \begin{table}[ht]
 \centering
-\caption{Training Result on CAFFE}
-\label{tab:cafferesult}
+\caption{Training Result on Caffe}
+\label{tab:Cafferesult}
 \begin{tabular}{@{}cccc@{}}
 \toprule
-\textbf{Epochs} & \textbf{Combined Loss} & \textbf{$Acc_{mask}$} & \textbf{$Acc_{class}$} \\ \midrule
+\textbf{iterations} & \textbf{Combined Loss} & \textbf{$Acc_{mask}$} & \textbf{$Acc_{class}$} \\ \midrule
 1,000 & 3.73851 & 92.1165\% & 91.6981\% \\
 10,000 & 2.7172 & 95.4574\% & 93.5048\% \\
 20,000 & 2.53835 & 95.714\% & 93.7822\% \\
@@ -128,9 +128,9 @@ First, we conducted experiments on CAFFE with different epochs. The training res
 \end{tabular}
 \end{table}
 
-To avoid overfitting, we plot the $20,000$ epochs and $100,000$ epochs experiment loss as in \autoref{fig:testloss}, with a regression curve and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. After comparing the training evaluation score with the test score, we think the network converge at around $100,000$ epochs. If training continues, the over-fitting may happen.
+One way to avoid overfitting is to compare the accuracy in the training and the evaluation process. As shown in \autoref{fig:testloss}, experiment loss with the $20,000$ iterations and $100,000$ iterations are plotted with a regression curve, and Y-axis set as log scale. As can be seen, the loss is decreasing rapidly and converge at around $2.12$. After comparing the training accuracy score with the evaluation accuracy score, we think the network converge at around $100,000$ iterations. If training continues, the over-fitting may happen.
 
-In our experiment, we found the loss decreasing rate for different branches is different. As shown in \autoref{fig:testlossbranch}, the grid box's loss is much higher than the other two. So, we set $3:1:1$ weight for grid, masking and pixel classification tasks. The combined loss is shown in \autoref{eq:combineloss}.
+In the experiment, it is found that the loss decreasing rate for different branches is different. As shown in \autoref{fig:testlossbranch}, the grid box's loss is much higher than the other two. As a result, a configuration is employed with $3:1:1$ weight for the grid, the masking and the pixel classification tasks are employed. The combined loss is shown in \autoref{eq:combineloss}.
 
 \begin{equation}
 \label{eq:combineloss}
@@ -146,7 +146,7 @@ in which $w_1=\frac{3}{3+1+1}=0.6$, $w_2=w_3=\frac{1}{3+1+1}=0.2$.
 \label{fig:testlossbranch} 
 \end{figure}
 
-The accuracy curve of the multi-label pixel classification task and masking task are shown in \autoref{fig:testacc}. Notice that because they are close to each other when close to $1$, I use the Logit scale Y-axis in $(0,1)$.
+The accuracy curve of the multi-label pixel classification task and masking task are shown in \autoref{fig:testacc}. Notice that because they are close to each other when close to $1$, it uses the Logit scale Y-axis in $(0,1)$.
 
 \begin{figure}[ht]
 \centering
@@ -158,11 +158,11 @@ The accuracy curve of the multi-label pixel classification task and masking task
 \section{Rainy Condition}
 \label{sec:EX_rainy}
 
-To test the network performance under extreme weather, we pick out five samples. They have very hard-to-recognize features: 
+To test the network performance under rainy condition, five samples are picked out. They have very hard-to-recognize features: 
 
 \begin{table}[p]
 \centering
-\caption{Multi-class $F_1$ Score in Extreme Weather Condition}
+\caption{Multi-class $F_1$ Score in Rainy and Bad Illuminance Condition}
 \label{tab:rainyf1}
 \begin{tabular}{@{}lllllllll@{}}
 \toprule
@@ -238,7 +238,7 @@ To test the network performance under extreme weather, we pick out five samples.
     \item \texttt{scene\_4/20160805\_2122\_57/000241}, crossroad in night with complicated road markings, pedestrian and heavy reflection, as shown in \autoref{fig:complicated}.
 \end{enumerate}
 
-They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have many images captured under extreme weather condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
+They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have many images captured under rainy condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
 
 
 \section{Selection of Confidential Threshold}
@@ -318,9 +318,9 @@ A recommended value based on empirical data is $\theta \in (20,30)$.
 
 \section{Concluding Remarks}
 
-In this section, we discussed the experimental results of RVPG and especially talked about bad-weather condition. The network can achieve as high as $97.19\%$ accuracy and achieve the highest $99.73\%$ $F_1$ score under bad weather condition.
+This section discussed the experimental results of RVPGNet and especially talked about bad-weather condition. The network can achieve as high as $97.19\%$ accuracy and achieve the highest $99.73\%$ $F_1$ score under bad weather condition.
 
-In the next section, I will give a conclusion of my work and its highlights. Also, I will explain some disadvantages in my work and offer some directions for further research.
+The next section will give a conclusion of this dissertation's work and its highlights. Also, it will explain some disadvantages in this dissertation and offer some directions for further research.
 
 %=== END OF CHAPTER FIVE ===
 \end{spacing}

@@ -16,6 +16,7 @@
 \usepackage[nottoc,notlot,notlof]{tocbibind}
 \usepackage[export]{adjustbox}
 \usepackage[labelfont=bf, textfont=bf]{caption}
+\usepackage[titles]{tocloft}
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{amssymb}
@@ -32,36 +33,54 @@
 \usepackage[utf8]{inputenc}
 \usepackage{mathptmx} %Times Font
 
-%==== Header and Footer configure ====
-% Turn on the style
-% Clear the header and footer
+%==== HEADER AND FOOTER CONFIG ====
+% Use fancy pagestyle to set the footers and headers
 \fancypagestyle{plain}{
 \fancyhf{} % Clear header footer
-\fancyhead[R]{\bf \textsl{\leftmark} \vspace{0.1in}}
-\fancyfoot[R]{\thepage}
+\fancyhead[R]{\bf \small \textsl{\nouppercase{\leftmark}} \vspace{0.1in}}
+\fancyfoot[R]{\bf \thepage}
+\fancyfoot[L]{\small \textsl{Lane-Aware Image Enhancement for Lane Detection in Rain}}
 % Set the right side of the footer to be the page number
-\renewcommand{\headrulewidth}{2pt}
-}
-% For those Chapter* (Can't use \leftmark to call their chapter name directly)
-\fancypagestyle{addin}{
-\fancyhf{} % Clear header footer
-\fancyhead[R]{\bf \textsl{\leftmark} \vspace{0.1in}}
-% Set the right side of the footer to be the page number
-\fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
 }
 
 
-
-%==== Overall Config ====
+%==== DOCUMENT OVERALL CONFIG ====
 \setlength{\parindent}{0in}
 \setlength{\fboxsep}{0in}%
 \renewcommand{\arraystretch}{1.5}
 \setlength{\fboxrule}{0.5pt}%
 \pagestyle{plain}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}% Set the leftmark as the chapter mark
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+% LOF
+\setlength{\cftfigindent}{0pt}  % remove indentation from figures in lof
+\newlength{\figtmplen}
+\renewcommand{\cftfigpresnum}{\figurename\enspace}
+\renewcommand{\cftfigaftersnum}{:}
+\settowidth{\figtmplen}{\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{\figtmplen}
+\renewcommand\thefigure{\thechapter-\arabic{figure}}
+% LOT
+\setlength{\cfttabindent}{0pt}  % remove indentation from tables in lot
+\newlength{\tabtmplen}
+\renewcommand{\cfttabpresnum}{\tablename\enspace}
+\renewcommand{\cfttabaftersnum}{:}
+\settowidth{\tabtmplen}{\cfttabpresnum\cfttabaftersnum}
+\addtolength{\cfttabnumwidth}{\tabtmplen}
+\renewcommand\thetable{\thechapter-\arabic{table}}
+% Set the TOC
+\renewcommand{\cftdotsep}{0.3}
+\setlength{\cftbeforechapskip}{0.7em}
+\setlength{\cftbeforesecskip}{\cftbeforechapskip}
+% Equation
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
 
+
+
+%==== BEGIN DOCUMENT ====
 \begin{document}
 \fontdimen2\font=0.4em% inter word space
 %==== FRONT PART====
@@ -99,7 +118,6 @@
 %\endgroup
 
 %==== MAIN PART ====
-
 \pagenumbering{arabic}
 \include{Chapter1/Chapter1}
 \include{Chapter2/Chapter2}
@@ -121,7 +139,6 @@
 \newpage
 
 % The appendix
-% \include{Appendix/appendix}
 \include{Appendix/appendice}
 %==== END OF ALL ===
 \end{document}

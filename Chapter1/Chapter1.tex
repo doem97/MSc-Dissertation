@@ -5,16 +5,16 @@
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-In this chapter, I will give the background of the problem that I will focus on. In \autoref{sec:IN_background}, I will describe the scene where intelligent car driving and ADAS system are applied and state the importance of lane and road marking detection in the ADAS system. In \autoref{sec:IN_motivation}, I will explain why I want to solve such a problem and on which specific issues I will be focusing. In \autoref{sec:IN_objectives} I will give the objectives and the scope of my research. In \autoref{sec:IN_contribution} I will briefly introduce my contributions in this work. In \autoref{sec:IN_organisation} I will give the outline of the following chapters.
+This chapter describes the background of the problem that will be focused on. \autoref{sec:IN_background} will describe the scene where intelligent car driving and ADAS system are applied and state the importance of lane and road marking detection in the ADAS system. \autoref{sec:IN_motivation} will explain why such problems should be solved and on which specific issues this dissertation will be focusing. \autoref{sec:IN_objectives} will give the objectives and the scope of this dissertation. \autoref{sec:IN_contribution} will briefly introduce my contributions in this work. \autoref{sec:IN_organisation} will give the outline of the following chapters.
 
 \section{Background}
 \label{sec:IN_background}
 
-In this section, I will explain the background of my intended problems. I will describe how smart cars assist human drivers by using the Advanced-driver-assistance system (ADAS) system and how object-detection methods help the ADAS system perform better.
+This section will explain the background of the intended problems. It will describe how smart cars assist human drivers by using the Advanced-driver-assistance system (ADAS) system and how object-detection methods help the ADAS system perform better.
 
 The era of intelligent cars is coming, and the Advanced-driver-assistance system plays an essential role in it. Object detection technologies are used to improve the performance of Advanced-driver-assistance systems.
 
-Smart cars equipped with an Advanced-driver-assistance system are popular now. With smart driving and Eco-energy technology development, more and more companies began to produce and sell the newly designed, electric-driven, smart-driving assistant cars. Leading companies like TESLA, NIO, and QuantumScape made hundreds of thousands of cars every year (till 2020)~\cite{petranek2015we}. With these cars bought by more and more families, smart cars are no longer a concept for ordinary people. However, they become daily necessities for everyone, as an alternative to a traditional car. Compared with traditional mechanical fuel vehicles, new intelligent vehicles have many advantages. They are 'new' not only because they are driven by electric energy but also because they are equipped with intelligent driving assistance systems, usually called the Advanced-driver-assistance system (ADAS).
+Smart cars equipped with an Advanced-driver-assistance system are popular now. With smart driving and Eco-energy technology development, more and more companies began producing and selling the newly designed, electric-driven, smart-driving assistant cars. Leading companies like TESLA, NIO, and QuantumScape made hundreds of thousands of cars every year (till 2020)~\cite{petranek2015we}. With these cars bought by more and more families, smart cars are no longer a concept for ordinary people. However, they become daily necessities for everyone, as an alternative to a traditional car. Compared with traditional mechanical fuel vehicles, new intelligent vehicles have many advantages. They are 'new' not only because they are driven by electric energy but also because they are equipped with intelligent driving assistance systems, usually called the Advanced-driver-assistance system (ADAS).
 
 
 \begin{figure}[ht]
@@ -33,11 +33,11 @@ This dissertation work wants to solve the problems raised in the aforementioned 
 \section{Motivation}
 \label{sec:IN_motivation}
 
-This section will explain why I want to do such research by describing the specific problems that I want to solve. Example images in this section are selected from VPG database~\cite{lee2017vpgnet}.
+This section will explain why such research is essential. It describes the specific problems that will be solved. Example images in this section are selected from VPG data set~\cite{lee2017vpgnet}.
 
 There are several common lane detection issues in the aforementioned detection process. Two important ones are bad surrounding conditions and the curved road.
 
-First is extreme weather and bad illumination conditions. On rainy days, images captured by ADAS’s camera may be blurry or be stained by raindrops as in \autoref{fig:blurry}, and the water on the road may lead to reflection of lights, as shown in \autoref{fig:reflection}. At dusk, the sun is dim, and the scene is dark-some. The road markings and lane outlines cannot be distinguished from the background easily, as shown in~\autoref{fig:dusk} (in the dusk) and \autoref{fig:night} (in the night). With such distortions, the detection algorithm cannot see roads accurately. Consequently, taking measures to denoising is of vital importance. 
+First is rainy and lousy illumination conditions. On rainy days, images captured by ADAS’s camera may be blurry or be stained by raindrops as in \autoref{fig:blurry}, and the water on the road may lead to reflection of lights, as shown in \autoref{fig:reflection}. At dusk, the sun is dim, and the scene is dark-some. The road markings and lane outlines cannot be distinguished from the background easily, as shown in~\autoref{fig:dusk} (in the dusk) and \autoref{fig:night} (in the night). With such distortions, the detection algorithm cannot see roads accurately. Consequently, taking measures to denoising is of vital importance. 
 
 
 \begin{figure}[th]
@@ -71,7 +71,7 @@ First is extreme weather and bad illumination conditions. On rainy days, images 
         \label{fig:night} 
     \end{subfigure}
     % \end{adjustbox}
-    \caption{Extreme Weather and Bad Illumination Condition}
+    \caption{Rainy and Bad Illumination Condition}
 \end{figure}
 
 The second is the curved road. Traditional lane detection algorithms usually work well on the straight lane but will meet performance drop once the road turns quickly. The comparison of straight road and curved road can be seen in \autoref{fig:straight} and \autoref{fig:curved}.
@@ -94,27 +94,27 @@ The second is the curved road. Traditional lane detection algorithms usually wor
     \caption{Straight and Curved Lane}
 \end{figure}
 
-VPGNet~\cite{lee2017vpgnet} used vanishing point information to solve this problem. The vanishing point is the visual intersection of two parallel lines~\cite{barnard1983interpreting}, here it is treated as the unseen end of the road.  Inspired by the intuition that human eyes utilize the vanishing point to predict the road trending, VPGNet tried to feed this information into the neural network by the multi-task method. They use multi-task because features employed by VP task, like road curving angle and trending, may also be helpful in the detection of lanes and road markings. Based on this, we can expect that with VP information given, the Neural Network can converge better on the other two tasks (lane detection, road marking detection). But VPGNet’s VP feeding scheme is simple, not as efficient as expected. In this work, I proposed a new scheme to train with VP information.
+VPGNet~\cite{lee2017vpgnet} used vanishing point information to solve this problem. The vanishing point is the visual intersection of two parallel lines~\cite{barnard1983interpreting}, here it is treated as the unseen end of the road.  Inspired by the intuition that human eyes utilize the vanishing point to predict the road trending, VPGNet tried to feed this information into the neural network by the multi-task method. They use multi-task because features employed by VP task, like road curving angle and trending, may also be helpful in the detection of lanes and road markings. Based on this, we can expect that with VP information given, the Neural Network can converge better on the other two tasks (lane detection, road marking detection). However, VPGNet’s VP feeding scheme is simple, not as efficient as expected. In this dissertation, a new scheme to train with VP information was proposed.
 
-The motivation of this research work is to solve the above-mentioned problems. By solving those problems, the ADAS system can perform better in lane detection and road marking recognition, making auto-driving safer.
+The motivation of this research work is to solve the above-mentioned problems. The ADAS system can perform better in lane detection and road marking recognition by solving those problems, making auto-driving safer.
 
 \section{Objectives and Specifications}
 \label{sec:IN_objectives}
 
-This project aims at developing a Neural Network architecture that can detect the lanes and the road markings from the images. The images are captured by in-vehicle cameras. The input is 3-channel RGB image, and the output is a pixel-level classification of the objects in the target image. There are 17 classes of objects, as being listed in \autoref{tab:classes}. Besides, it will predict the vanishing point, which will also guide the curving lane's prediction. The architecture was implemented both in CAFFE and PyTorch.
+This project aims at developing a Neural Network architecture that can detect the lanes and the road markings from the images. The images are captured by in-vehicle cameras. The input is 3-channel RGB image, and the output is a pixel-level classification of the objects in the target image. There are 17 classes of objects, as being listed in \autoref{tab:classes}. Besides, it will predict the vanishing point, which will also guide the curving lane's prediction. The architecture was implemented both in Caffe and PyTorch.
 
 The training data mainly comes from two sources. The first is the VPG data set~\cite{lee2017vpgnet}, and the second is the Caltech data set~\cite{aly2008real}.
 
-\section{Major contribution of the Dissertation}
+\section{Major contributions of the Dissertation}
 \label{sec:IN_contribution}
 
-This dissertation researched a pixel-level lane detection and road marking classification Neural Network architecture based on the Fully Convolution Network and multi-task training method. It employs the vanishing points to improve the performance of the lane detection and road marking classification accuracy. The network is implemented in both CAFFE~\cite{jia2014caffe} framework in C++ and PyTorch~\cite{NEURIPS2019_9015} framework in Python3~\cite{python3}.
+This dissertation researched a pixel-level lane detection and road marking classification Neural Network architecture based on the Fully Convolution Network and multi-task training method. It employs the vanishing points to improve the performance of the lane detection and road marking classification accuracy. The network is implemented in both Caffe~\cite{jia2014Caffe} framework in C++ and PyTorch~\cite{NEURIPS2019_9015} framework in Python3~\cite{python3}.
 
-In the data pre-processing, I proposed a data format transition algorithm between two lane data set (VPG data set \cite{lee2017vpgnet} and Caltech data set \cite{aly2008real}). Thus the two data set can be translated into the same data format, by which format can be fed into either the CAFFE or the PyTorch framework. In the data post-processing, I proposed a multi-class visualization algorithm that gives each class distinguishable color and annotates each pixel with its corresponding color.
+In the data pre-processing, a data format transition algorithm between the two lane data sets (VPG data set \cite{lee2017vpgnet} and Caltech data set \cite{aly2008real}) was implemented. Thus the two data set can be translated into the same data format, by which format can be fed into either the Caffe or the PyTorch framework. A multi-class visualization algorithm is proposed in the data post-processing, which gives each class distinguishable colour and annotates each pixel with its corresponding colour.
 
-In the network architecture part, two brand new combination layers are described. One is the tilling layer which works as an alternative to the traditional concatenate layer with more efficiency. Another one is the 4-map combination layer which feeds the Vanishing Points to the model. The network is implemented in both CAFFE and PyTorch. 2-D Gaussian functions are also used to enhance the prediction of the vanishing points.
+In the network architecture part, two brand new combination layers are described. One is the tilling layer which works as an alternative to the traditional concatenate layer with more efficiency. Another one is the N-map combination layer which feeds the Vanishing Points to the model. The network is implemented in both Caffe and PyTorch. $2-D$ Gaussian functions are also used to enhance the prediction of the vanishing points.
 
-After the training process, I discussed the threshold of confidentiality, which will affect the model's efficiency when applied in practice.
+After the training process, the confidentiality threshold is discussed, which will affect the model's efficiency when applied in practice.
 
 \section{Organisation of the Dissertation}
 \label{sec:IN_organisation}
@@ -123,29 +123,21 @@ The following chapters will be organized into six chapters: Literature Review, V
 
 {\large\textbf{Chapter 2: Literature Review}}
 
-In the \autoref{cha:literature}, I will review some of the background theories and algorithms related to object detection in lane and road marking recognition. In \autoref{sec:LR_overview}, I will give an overview of the history of deep learning networks used in object detection. In \autoref{sec:LR_FCN}, I will describe the basic theory of Fully Convolution Network and its working mechanism. 
+\autoref{cha:literature} will review some of the background theories and algorithms related to object detection in lane and road marking recognition. \autoref{sec:LR_overview} will give an overview of the history of deep learning networks used in object detection. \autoref{sec:LR_FCN} will describe the basic theory of Fully Convolution Network and its working mechanism. 
 % In \autoref{sec:LR_objectdetection} I discussed the history of object detection algorithms and introduced some famous ones. 
 % In \autoref{sec:LR_vpinNN} I introduced Vanishing Point's concept and its usage in other lane detection tasks.
 
-{\large\textbf{Chapter 3: RVPG: Refined Vanishing Point Guided Lane Detection}}
+{\large\textbf{Chapter 3: Refined VP Guided Lane Detection Network: RVPGNet}}
 
-In the \autoref{cha:model}, I will introduce the network architecture of my proposed Neural Network and the detailed specifications in training. In \autoref{sec:MD_model}, I will introduce the main network structure and its multi-task configuration. In \autoref{sec:MD_CAFFE}, I will introduce the CAFFE implementation's training process, its environment configuration, and some user-defined layers used. In \autoref{sec:MD_PyTorch}, I will introduce the PyTorch implementation of this network and the data transition procedure. In the \autoref{sec:MD_2D}, I will introduce a new improvement to feed the training data: the 2-D Gaussian feeding. I will introduce the mathematical theory of 1-D and 2-D Gaussian functions and explain why the training should be more efficient in this way.
+\autoref{cha:model} will introduce the network architecture of my proposed Neural Network and the detailed specifications in training. \autoref{sec:MD_model} will introduce the main network structure and its multi-task configuration. \autoref{sec:MD_Caffe} will introduce the Caffe implementation's training process, its environment configuration, and some user-defined layers used. \autoref{sec:MD_PyTorch} will introduce the PyTorch implementation of this network and the data transition procedure. \autoref{sec:MD_2D} will introduce a new improvement to feed the training data: the $2-D$ Gaussian feeding. It will introduce the mathematical theory of $1-D$ and $2-D$ Gaussian functions and explain why the training should be more efficient in this way.
 
 {\large\textbf{Chapter 4: Experimental Results and Discussion}}
 
-In the \autoref{cha:experiments}, I will discuss the model's experiment results. I give the mathematical equations of the test metrics. After that, I will introduce a visualization tool that can be used to annotate the pixel-level classification images. Then, I will analyze the experimental outputs in a normal situation and rainy situation. Finally, I will discuss the confidential threshold selection of the prediction result.
+ \autoref{cha:experiments} will discuss the model's experiment results. It gives the mathematical equations of the test metrics. After that, it will introduce a visualization tool that can be used to annotate the pixel-level classification images. Then, the experimental outputs in a normal situation and rainy situation are analyzed. Finally, it will discuss the confidential threshold selection of the prediction result.
 
-{\large\textbf{Chapter 5: Conclusion and Recommendations}}
+{\large\textbf{Chapter 5: Conclusion and Recommendations for Future Work}}
 
-In the \autoref{cha:conclusion}, I will summarize my work. I will give the conclusion of experimental results and also the conclusion of work I have done. I also give some future work recommendations in the last section.
-
-{\large\textbf{Bibliography}}
-
-In the bibliography chapter, I give the references and bibliography used in this dissertation. All the related materials, including those not mentioned in the report but have been referred to, are listed.
-
-{\large\textbf{Appendix}}
-
-After the bibliography chapter is the Appendix Chapter, I give the source code and related source code links. Further research can be done with these codes as a start point.
+\autoref{cha:conclusion} will summarize the entire work. It will give the conclusion of experimental results and also the conclusion of work that has been done. It also gives some future work recommendations in the last section.
 
 \end{spacing}
 %=== END OF CHAPTER ONE ===

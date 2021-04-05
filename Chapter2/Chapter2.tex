@@ -1,19 +1,17 @@
 %=== CHAPTER TWO (2) ===
 %=== Literature Review ===
 
-\chapter{Literature Review}
+\chapter{A Literature Review}
 \label{cha:literature}
 \begin{spacing}{1.5}
 \setlength{\parskip}{0.3in}
 
-\section{Introduction}
-
-In this chapter, I will review the theory basis related to lane detection. In \autoref{sec:LR_overview}, I briefly review the development in the lane detection task from two perspectives: the classical one and the deep-learning one. In \autoref{sec:LR_NNB}, I compare the machine learning and different types of deep-learning and describe the neural network working mechanism from the foundation. I explain how the back-propagation/feed-forward/neutron-calculation works with clear diagrams. In \autoref{sec:LR_FCN}, I describe how the Fully Convolutional Network work and its advantage. Especially, I describe how the convolutional layer is related to neutrons, to which even many textbooks do not give the detail.
+This chapter will review the theory basis related to lane detection. \autoref{sec:LR_overview} briefly reviews the development in the lane detection area from two perspectives: the classical one and the deep-learning one. \autoref{sec:LR_NNB} compares the machine learning and different types of deep-learning and describe the neural network working mechanism from the foundation. This section also explains how the back-propagation/feed-forward/neutron-calculation works with clear diagrams. \autoref{sec:LR_FCN} describes how the Fully Convolutional Network work and its advantage. Especially, it describes how the convolutional layer is related to neutrons, to which even many textbooks do not give the detail.
 
 \section{An Overview}
 \label{sec:LR_overview}
 
-The lane detection method has been developed from classical ones to novel deep-learning-based ones in the past few years. In this section, I will give a brief review of the classical lane detection methods proposed and give a brief overview of the developments in object detection.
+The lane detection method has been developed from classical ones to novel deep-learning-based ones in the past few years. This section will give a brief review of the classical lane detection methods proposed and give a brief overview of the developments of object detection.
 
 \subsection{Classical Lane Detection}
 
@@ -221,13 +219,13 @@ The $\Phi (\cdot)$ is the activation function, which could be some non-linear fu
     \label{fig:activationfunc} 
 \end{figure}
 
-For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer represent the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the 2-D input space is transformed into a 3-D shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line)\footnote{This image is edited based on the Christopher Olah's origin version at  \url{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}. The author has posted many insightful images, and these images are used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}.}
+For example, as shown in~\autoref{fig:activationlayer}, the blue line and red line in the input layer represent the input data. The division line is a curve between the two classes. After the activation layer (\textit{Sigmoid} function), the $2-D$ input space is transformed into a $3-D$ shape so that the examples from two classes can be separated linearly (the black line in center image in~\autoref{fig:activationlayer} is the division line)\footnote{This image is edited based on the Christopher Olah's origin version at  \url{http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/}. The author has posted many insightful images, and these images are used by Y.Lecun and Yoshua.B in their publications~\cite{bengio2017deep, lecun2015deep}.}
 
 
 \begin{figure}[th]
 \centering
 \includegraphics[width=0.99\textwidth, fbox]{Chapter2/activation.pdf}
-\caption{Activation Kernal: Map to Nonlinear Data for Linear Decision~\cite{olah2014neural}}
+\caption{Activation Kernal for Linear Decision~\cite{olah2014neural}}
 \label{fig:activationlayer} 
 \end{figure}
 
@@ -345,12 +343,12 @@ Begin with a 1-channel $2-D$ convolution. $2-D$ convolution is given in~\autoref
 
 For clearer explanation, the process is shown in \autoref{fig:2dconv}, the $2-D$ convolutional kernel is the $Mat(1)$. Put the $Mat(1)$ at the upper-left corner and do pixel-wise adding. The sum of the result would become the upper-left element in the output matrix (The orange element in \autoref{fig:2dconv}).
 
-The convolution layer is constructed by the neurons described in~\autoref{subsec:neural_unit}. Each convolutional kernel are $(n \times n \times depth)$ matrix, in which $depth$ is the number of channels of the input image. For RGB image, $depth = 3$. \autoref{fig:convtoneuron} shows how the two things are related together. The kernel size in the diagram is $(n \times n \times 3)$. After flatten, the neuron function $\Phi(x)$ will get $(n \times n \times 3)$ weights, and produce $1$ output $\beta_1$. Usually, in one convolutional layer, there are more then one neurons, thus I also draw $\beta_2, \beta_3, ..., \beta_k$. They are generated by other neurons $\Phi_2(x), \Phi_3(x), ..., \Phi_k(x)$.
+The convolution layer is constructed by the neurons described in~\autoref{subsec:neural_unit}. Each convolutional kernel are $(n \times n \times depth)$ matrix, in which $depth$ is the number of channels of the input image. For RGB image, $depth = 3$. \autoref{fig:convtoneuron} shows how the two things are related together. The kernel size in the diagram is $(n \times n \times 3)$. After flatten, the neuron function $\Phi(x)$ will get $(n \times n \times 3)$ weights, and produce $1$ output $\beta_1$. Usually, in one convolutional layer, there are more then one neurons, thus the figure also contains $\beta_2, \beta_3, ..., \beta_k$. They are generated by other neurons $\Phi_2(x), \Phi_3(x), ..., \Phi_k(x)$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.99\textwidth, fbox]{Chapter2/convtoneuron.pdf}
-\caption{How the $2-D$ Convolutional Layer Related with Neuron}
+\caption{How $2-D$ Convolutional Layer Related with Neuron}
 \label{fig:convtoneuron} 
 \end{figure}
 
@@ -365,17 +363,17 @@ The convolution layer is constructed by the neurons described in~\autoref{subsec
 
 \subsection{Some Common Conception}
 
-\textbf{Image} refer to $2-D$ or $n-D$ matrix containing pixels, depends on the image presenting method (RGB, CMYK, HSB, and HSL etc.) In the following description, I will assume a RGB image is used. Each RGB image contains $(n \times m)$ pixels, and each pixel are represented by $(R,G,B)$ three channels (stands for (Red, Green, Blue)). Usually, in the digital image saving, each channel for each pixel saves an \textit{int}\footnote{For different standards, the saved data type is different, \texttt{uint8}, \texttt{uint32} and \texttt{float} are most common ones.} type value. For example, given a $(480 \times 640)$ RGB image, it contains $(480 * 640 * 3)=1,228,800$ \textit{int} values.
+\textbf{Image} refer to $2-D$ or $n-D$ matrix containing pixels, depends on the image presenting method (RGB, CMYK, HSB, and HSL etc.) In the following description, it is assumed that a RGB image is used. Each RGB image contains $(n \times m)$ pixels, and each pixel are represented by $(R,G,B)$ three channels (stands for (Red, Green, Blue)). Usually, in the digital image saving, each channel for each pixel saves an \textit{int}\footnote{For different standards, the saved data type is different, \texttt{uint8}, \texttt{uint32} and \texttt{float} are most common ones.} type value. For example, given a $(480 \times 640)$ RGB image, it contains $(480 * 640 * 3)=1,228,800$ \textit{int} values.
 
 \textbf{Receptive field size} is the area that a single pixel in output reflects in the input. As shown in \autoref{fig:convtoneuron}, after the convolutional layer, a $(n \times n)$ area will be mapped into only $1$ pixel. For pixel $\beta_1$, the receptive field size is $(n \times n)$.
 
 \section{Concluding Remarks}
 
-In this chapter, I first reviewed the history and recent progress in lane detection algorithms. Second, I introduced several machine learning types and their differences. Third, I introduced the main kinds of deep learnings and their differences. 
+This chapter first reviewed the history and recent progress in lane detection algorithms. Second, it introduced several machine learning types and their differences. Third, it introduced the main kinds of deep learnings and their differences. 
 
-After the introduction, I explained the theoretical basis of neural networks from the most basic structure: neurons to high-level structure: convolutional layers.
+After the introduction, neural networks' theoretical basis is described, from the most basic structure: neurons, to high-level structure: convolutional layers.
 
-In the next section, I will focus on the RVPG lane detection algorithm based on the FCN network.
+The following section will focus on the RVPGNet lane detection algorithm based on the FCN network.
 
 %=== END OF CHAPTER TWO ===
 \end{spacing}
