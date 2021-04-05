@@ -221,7 +221,7 @@ This 4-map scheme can avoid the single-point dilemma. The network is provided wi
 
 \subsection{Motivation}
 
-After implementation on the CAFFE, we move on to the PyTorch\footnote{\url{https://github.com/PrabhuSM16/VPGNet-Pytorch}}, a better place to conduct experiments. There are many four drawbacks in CAFFE: 
+After implementation on the CAFFE, we move on to the PyTorch\footnote{\raggedright \url{https://github.com/PrabhuSM16/VPGNet-Pytorch}}, a better place to conduct experiments. There are many four drawbacks in CAFFE: 
 
 \begin{enumerate}
 
@@ -263,7 +263,7 @@ As a result, using the 4-Tiling layer can reduce the computational resources nee
 \section{2-D Gaussian for VP Feeding}
 \label{sec:MD_2D}
 
-A better way to feed the vanishing point information to the network is the $2-D$ Gaussian. The formula of $1-D$ Gaussian is shown in \autoref{eq:1dgaussian}, in which $a,b,c \neq 0$ are constants.
+A better way to feed the vanishing point information to the network is the $2-D$ Gaussian{\interfootnotelinepenalty=10000 \footnote{\raggedright 2-D Gaussian is currently constructed with Numpy. Source code available on GitHub \url{https://github.com/PrabhuSM16/VPGNet-Pytorch}.}}. The formula of $1-D$ Gaussian is shown in \autoref{eq:1dgaussian}, in which $a,b,c \neq 0$ are constants.
 
 \begin{equation}
 \label{eq:1dgaussian}
@@ -294,7 +294,7 @@ The 2-D Gaussian is like conduct Gaussian distribution both on $X$-axis and $Y$-
 \label{fig:2dgaussian}
 \end{figure}
 
-We can set the mean value $(\mu_x,\mu_y)$ as the vanishing point coordinate $(x,y)$, and the variance $(\sigma_X,\sigma_Y)$ differ according to the viewpoint of the in-vehicle camera. Compared to the single frame or 4-Map scheme, the 2-D Gaussian can provide more context to the network; thus, the VP information is expected to be learned better\footnote{2-D Gaussian is currently constructed with Numpy. Source code available on GitHub \url{https://github.com/PrabhuSM16/VPGNet-Pytorch}.}.
+We can set the mean value $(\mu_x,\mu_y)$ as the vanishing point coordinate $(x,y)$, and the variance $(\sigma_X,\sigma_Y)$ differ according to the viewpoint of the in-vehicle camera. Compared to the single frame or 4-Map scheme, the 2-D Gaussian provides more context to the network; thus, the VP information will be learned better.
 
 \section{Concluding Remarks}
 
