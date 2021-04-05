@@ -127,6 +127,8 @@ VPG database & Scene 1 & 13387 & 8 & 9 \\
 \end{tabular}
 \end{table}
 
+First is the VPG data set, the mainly used data source in RVPGNet. It is recorded in Korean by Seokju Lee's team. In the VPG data set, the image is not labeled pixel-wise but labeled with grids in size of $(8 \times 8)$ pixels. This is to comply with the network output size. As can be seen in \autoref{fig:structure}. Because the size of ground-truth is set to be $(120 \times 160)$ , each pixel in the ground-truth represents $4 \times 4 = 16$ pixels from the original $(480 \times 640)$ RGB-image ($480/120 = 4, 640/160 =  4$). So, although re-scaling the pixel-level annotation to $(8\times 8)$ pixels will lose some resolution, it is in fact not obvious in the $(120 \times 160)$ ground-truth, as shown in \autoref{fig:gridbox}. There are a total of $18$ classes used in VPG data, as shown in \autoref{tab:classes}. The $1$st class is for background, and the other $17$ classes are lanes and road markings. This data set's label is saved in \texttt{.mat} file in MATLAB matrix format.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.99\textwidth, fbox]{Chapter3/gridbox.pdf}
@@ -134,10 +136,9 @@ VPG database & Scene 1 & 13387 & 8 & 9 \\
 \label{fig:gridbox} 
 \end{figure}
 
-First is the VPG data set, the mainly used data source in RVPGNet. It is recorded in Korean by Seokju Lee's team. In the VPG data set, the image is not labeled pixel-wise but labeled with grids in size of $(8 \times 8)$ pixels. This is to comply with the network output size. As can be seen in \autoref{fig:structure}, Because the size of ground-truth is set to be $(120 \times 160)$ , each pixel in the ground-truth represents $4 \times 4 = 16$ pixels from the original $(480 \times 640)$ RGB-image ($480/120 = 4, 640/160 =  4$). So, although re-scaling the pixel-level annotation to $(8\times 8)$ pixels will lose some resolution, it is in fact not obvious in the $(120 \times 160)$ ground-truth, as shown in \autoref{fig:gridbox}. There are a total of $18$ classes used in VPG data, as shown in \autoref{tab:classes}. The $1$st class is for background, and the other $17$ classes are lanes and road markings. This data set's label is saved in \texttt{.mat} file in MATLAB matrix format.
+Second is the Caltech-lanes Database, recorded with in-vehicle cameras in two cities: Cordova and Washington. Image from each city is divided into two groups, as shown in \autoref{tab:dataset}. It contains five classes of lanes only, and no road markings involved, as shown in \autoref{tab:caltech}
 
-
-\begin{table}[!ht]
+\begin{table}[ht]
 \centering
 \caption{Lane Classes in Caltech-lane Data Set}
 \label{tab:caltech}
@@ -170,12 +171,11 @@ Index & Lane Type          & Index & Road Marking Type   \\ \midrule
 \end{tabular}
 \end{table}%
 
-
-Second is the Caltech-lanes Database, recorded with in-vehicle cameras in two cities: Cordova and Washington. Image from each city is divided into two groups, as shown in \autoref{tab:dataset}. It contains five classes of lanes only, and no road markings involved, as shown in \autoref{tab:caltech}
-
 VPG data and Caltech data are saved in different formats. When they are fed into the RVPGNet, they will be transformed to a Caffe database format\footnote{the HDF5 format database and blob, as described in \url{https://Caffe.berkeleyvision.org/tutorial}}. I provide the script in \autoref{apx:extraction}.
 
 \subsection{Environment Configuration}
+
+The main trouble in using Caffe is the environment compiling, so in case anyone wants to reproduce the experimental results in Caffe, the compiling details are given in \autoref{tab:Caffeenv}.
 
 \begin{table}[ht]
 \centering
@@ -194,8 +194,6 @@ hdf5 & 1.10.4 & hb1b8bf9\_0 &  &  &  \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
-
-The main trouble in using Caffe is the environment compiling, so in case anyone wants to reproduce the experimental results in Caffe, the compiling details are given in \autoref{tab:Caffeenv}.
 
 My hardware environment is: Google Cloud Platform\footnote{\url{https://cloud.google.com/gcp}} n1-standard-4 (4 vCPUs, 15GB memory), $1 \times$ NVIDIA Tesla P4 GPU.
 

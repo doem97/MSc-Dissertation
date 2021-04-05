@@ -40,16 +40,16 @@ Neural Network is the most distinguished deep learning architecture based on Neu
 
 \subsection{Machine Learning}
 
-Compared with specific mathematical equations designed for different kinds of problems, conventional machine learning is based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on that \textit{experience} for any inputs, whether the new input data has been seen or unseen before.~\cite{mohri2018foundations}.
-
-The process of learning the features can be seen as a clustering operation. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. \autoref{fig:2dcluster} and \autoref{fig:3dcluster} shows the $2D$ and $3D$ clustering process. Clustering is to group data points into different clusters in the hyperspace and draw the hyperplane between such clusters. This hyperplane is the interface between classes. For example, in figure \autoref{fig:2dcluster}, two data groups were divided by a linear line. In figure \autoref{fig:3dcluster}, two groups of data were divided by a non-linear curved surface.
-
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.99\textwidth, fbox]{Chapter2/2dcluster.pdf}
+\includegraphics[width=0.7\textwidth, fbox]{Chapter2/2dcluster.pdf}
 \caption{$2D$ Clustering}
 \label{fig:2dcluster} 
 \end{figure}
+
+Compared with specific mathematical equations designed for different kinds of problems, conventional machine learning is based on \textit{experience}. \textit{Experience} here means that: the machine learning computational models can learn the features from a given data set (learn the \textit{experience} from input), and do prediction or classification based on that \textit{experience} for any inputs, whether the new input data has been seen or unseen before.~\cite{mohri2018foundations}.
+
+The process of learning the features can be seen as a clustering operation. Each input data can be mapped into a $n$-dimension vector, and each vector can be viewed as a point in the $n$-dimension hyperspace. \autoref{fig:2dcluster} and \autoref{fig:3dcluster} shows the $2D$ and $3D$ clustering process. Clustering is to group data points into different clusters in the hyperspace and draw the hyperplane between such clusters. This hyperplane is the interface between classes. For example, in figure \autoref{fig:2dcluster}, two data groups were divided by a linear line. In figure \autoref{fig:3dcluster}, two groups of data were divided by a non-linear curved surface.
 
 % \begin{figure}[ht]
 % \centering
@@ -98,7 +98,9 @@ The main drawback of conventional machine-learning techniques is that they can n
 
 Representation learning allows the machine to discover the best representation form of the raw data for machine learning training. Representation learning features that the algorithm can find and fit the best representation from the raw input data, no matter what format the input data is. Such representation of raw data is suitable for the further feature extraction~\cite{bengio2013representation}. For example, if the input is a gray-scale image, the output matrix would represent the position of edges and corners after the first representation layer.
 
-\begin{figure}[th]
+Based on representation learning, the concept of deep learning was initially being proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the feature vectors from the first layer but also can go deeper, get more abstract high-level features. For example, if the input is a gray-scale image, the first layer of deep learning is just like representation learning, extracting the position of edges and corners. The second layer of deep learning would extract the relative positions between the edges and corners, and the third layer of deep learning would treat edges and corners in similar shapes as a group. With the network go deeper, such high-level abstract features can be sensed. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep learning.
+
+\begin{figure}[ht]
     \centering
     \begin{subfigure}[b]{0.99\textwidth}
         \centering
@@ -122,8 +124,6 @@ Representation learning allows the machine to discover the best representation f
     \end{subfigure}%
     \caption{Comparison between Three Learning}
 \end{figure}
-
-Based on representation learning, the concept of deep learning was initially being proposed in a study on Artificial Neural Network (ANNs) \cite{hinton2006reducing}. Deep learning is a multi-layer and deeper version of representation learning. Deep learning can not only extract the feature vectors from the first layer but also can go deeper, get more abstract high-level features. For example, if the input is a gray-scale image, the first layer of deep learning is just like representation learning, extracting the position of edges and corners. The second layer of deep learning would extract the relative positions between the edges and corners, and the third layer of deep learning would treat edges and corners in similar shapes as a group. With the network go deeper, such high-level abstract features can be sensed. In 2006, with a deep learning architecture called deep belief network (DBN) \cite{hinton2006fast} being invented by Hinton, the machine learning community rekindled heated discussion over deep learning.
 
 Give an example to illustrate the difference between machine learning, representation learning, and deep learning. For a chemical substances classification task, the input is the percentage of each component in a chemical mixture. Researchers have to re-form and normalize the input data into a sparse data space when using machine learning algorithms like SVM. They should do multi-phase training for multi-classification (\autoref{fig:mldiagram}). When using representation learning methods, the input data can be raw data that has not been pre-processed (\autoref{fig:representdiagram}). Such raw data will be mapped to high-dimension space by non-linear network basic units (the Neurons). When using deep learning, the extracting layer goes deeper, thus can get more abstract features (\autoref{fig:dldiagram}).
 
