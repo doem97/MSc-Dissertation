@@ -37,7 +37,7 @@ This section will explain why such research is essential. It describes the speci
 
 There are several common lane detection issues in the aforementioned detection process. Two important ones are bad surrounding conditions and the curved road.
 
-First is rainy and lousy illumination conditions. On rainy days, images captured by ADAS’s camera may be blurry or be stained by raindrops as in \autoref{fig:blurry}, and the water on the road may lead to reflection of lights, as shown in \autoref{fig:reflection}. At dusk, the sun is dim, and the scene is dark-some. The road markings and lane outlines cannot be distinguished from the background easily, as shown in~\autoref{fig:dusk} (in the dusk) and \autoref{fig:night} (in the night). With such distortions, the detection algorithm cannot see roads accurately. Consequently, taking measures to denoising is of vital importance. 
+First is rainy and lousy illumination conditions. On rainy days, images captured by ADAS’s camera may be blurry or be stained by raindrops as in \autoref{fig:blurry}, and the water on the road may lead to reflection of lights, as shown in \autoref{fig:reflection}. At dusk, the sun is dim, and the scene is dark-some. The road markings and lane outlines cannot be distinguished from the background easily, as shown in~\autoref{fig:dusk} (in the dusk) and \autoref{fig:night} (in the night). With such distortions, the detection algorithm cannot see roads accurately. There are two approaches to address bad weather problem: 1) denoise the raindrops first in pre-processing and do detection later; 2) use domain-critical information to better guide the detector to see features native to this extreme weather case. In this dissertation, the second approach is applied.
 
 
 \begin{figure}[th]

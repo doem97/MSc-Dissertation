@@ -15,7 +15,9 @@ The lane detection method has been developed from classical ones to novel deep-l
 
 \subsection{Classical Lane Detection}
 
-There are several ways to get the information for lane detection and prediction usages, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high-resolution digital maps. \cite{hillel2014recent}. In this work, we focus on Monocular vision (Single camera).
+There are several ways to get the information for lane detection and prediction usages, such as Monocular vision, stereo, LIDAR, inertial measurement unit (IMU) combined with information obtained from global positioning system (GPS) and high-resolution digital maps. \cite{hillel2014recent}. This dissertation focuses on Monocular vision (Single camera).
+
+As classical approaches, some researchers used Inverse Perspective Mapping (IPM) to recover a bird's-eye-view image. The lane pictures captured by in-vehicle cameras have the problem of distorted perspective, thus a perspective transformation is needed to recover the overlooking perspective like in birds' eyes~\cite{luo2010low}. In a work in 2010, researchers used IPM to remove the fisheye distortion and implement obstacle detection~\cite{lin2010construction}. They developed a quick searching scheme to analyse the object in each direction utilizing a polar histogram. However, this method is limited at obstacle's shape; thus, not efficient in lane detection.
 
 In previous work, researchers found a relationship between wheeling and gaze direction when driving. Human employs the distant region to estimate the road curvature \cite{land1995parts}. Also, the gaze direction relies on the `tangent point' on the inside of each curve when driving on the curvature of the road ahead \cite{land1994we}. This gives possible to utilize the unseen vanishing point in lane prediction.
 
@@ -27,7 +29,7 @@ Object detection is the process to determine whether the instances of objects ex
 
 In recent years, with the DCNN like AlexNet \cite{krizhevsky2012imagenet} being brought up, deep learning has been driving significant progress in the object detection area. Later RCNN and its variants \cite{girshick2014rich, girshick2015fast, ren2015faster} integrates CNN with the region proposal selective search; GoogLeNet \cite{szegedy2015going} and VGGNet \cite{simonyan2014very} gained improvement with deeper encoder. With the network going deeper, computational efficiency becomes the main problem. More powerful network architectures such as ResNets \cite{he2016deep}, DenseNets \cite{huang2017densely}, and Inception \cite{ioffe2015batch} have been proposed, which combine path blocks to reduce the number of parameters while improving the accuracy. Most recently, DETR \cite{carion2020end} combined the CNN with transformer architecture, taking the object detection problem as a set-set mapping and achieved promising results on big-object detection.
 
-Lanes are thin and small objects; thus, general methods sometimes work poorly \cite{tang2020review}. There are some researches featured in picking out tiny items. U-Net \cite{ronneberger2015unet} extracts the feature map from the encoding path and attaches it with the decoding path, by which method the network can keep context for local features.
+Lanes are thin and small objects; thus, general methods sometimes work poorly \cite{tang2020review}. There are some researches featured in picking out tiny items. U-Net \cite{ronneberger2015unet} extracts the feature map from the encoding path and attach it to the decoding path (or in other words, the encoding and decoding paths are shortcut by a skip path), encourage the shorted layer to learn residuals instead of directly learning features. The U-Net is hot in segmentation area for its ability in contextual sensing and high-resolution segmentation, and is possible to be extended to object detection.
 
 Efforts to use the neural network in lane detection tasks have also been proved solid. Work \cite{borji2016vanishing} first used the CNN structure to predict the vanishing point, and VPGNet \cite{lee2017vpgnet} employed vanishing point information by multi-task method to enhance the prediction of the lanes.
 
@@ -139,7 +141,7 @@ Supervised learning is trained on labeled input and output~\cite{sen2020supervis
     \item Classification, when the label set $\{L_i\} = \mathbb{A}$, in which $\mathbb{A}$ is a set of discrete values $\{\alpha_1, \alpha_2, ...\}$ representing different classes.
 \end{enumerate}
 
-Unsupervised learning is to cluster unlabeled data set into different groups according to their feature\cite{meena2019survey}. It analyzes the bounding of a given vector set $\{D_1, D_2, ...,D_n\}$ (the training data), divide the set into $n$ groups $\{G_1, G_2, ..., G_n\}$, and tell if a new unseen data $d_i$ belongs to or not belongs to certain class $G_i$.
+ Unsupervised learning is to cluster unlabeled data set into different groups according to their statistical feature\cite{meena2019survey}. It analyzes the bounding of a given vector set $\{D_1, D_2, ...,D_n\}$ (the training data), finds the similarities in the observed attributes in the hyperspace, divides the set into $n$ groups $\{G_1, G_2, ..., G_n\}$, and tells if a new unseen data $d_i$ belongs to or not belongs to certain class $G_i$.
 
 \begin{figure}[ht]
 \centering
@@ -176,7 +178,7 @@ The function of input and output is as~\autoref{eq:neuralunit} shown.
     f(x)=b+V \cdot \Phi (c+W \vec{x})
 \end{equation}
 
-The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid} (\autoref{eq:sigmoid}), \textit{ReLU} (\autoref{eq:relu}) or \textit{Tanh} (\autoref{eq:tanh}). The image for the activation functions are shown in~\autoref{fig:activationfunc}. The activation function maps the input to another data space which is easier to perform classification. 
+The $\vec{x_i},i \in [1,n]$ is the input value of the neutron. Usually, those input values are the direct output of the previous neutron. The $W_i$ is the weights for each input, which is also called the parameter in deep learning. These weights are the primary values deep learning try to adjust in the learning process . The $c$, $b$, and $V$ are constants, they are offset for input, output, and the scaling factor for the output. The $\Phi (\cdot)$ is the activation function, which could be some non-linear functions like \textit{Sigmoid} (\autoref{eq:sigmoid}), \textit{ReLU} (\autoref{eq:relu}) or \textit{Tanh} (\autoref{eq:tanh}). The image for the activation functions are shown in~\autoref{fig:activationfunc}. The activation function maps the input to another data space which is easier to perform classification. 
 
 
 
@@ -341,7 +343,7 @@ Begin with a 1-channel $2-D$ convolution. $2-D$ convolution is given in~\autoref
     y[i,j]= \sum_m \sum_n h[m,n] \cdot x[i-m,j-n]
 \end{equation}
 
-For clearer explanation, the process is shown in \autoref{fig:2dconv}, the $2-D$ convolutional kernel is the $Mat(1)$. Put the $Mat(1)$ at the upper-left corner and do pixel-wise adding. The sum of the result would become the upper-left element in the output matrix (The orange element in \autoref{fig:2dconv}).
+For clearer explanation, the process is shown in \autoref{fig:2dconv}, the $2-D$ convolutional kernel is the $Mat(1)$. Put the $Mat(1)$ at the upper-left corner and do pixel-wise adding. The sum of the result would become the upper-left element in the output matrix (The orange element in \autoref{fig:2dconv}). In a nutshell, $2-D$ convolution is to identify intensity changes within a local neighbourhood of pixels. Then, a single pixel value encodes this information, thereby describing the local neighbourhood.
 
 The convolution layer is constructed by the neurons described in~\autoref{subsec:neural_unit}. Each convolutional kernel are $(n \times n \times depth)$ matrix, in which $depth$ is the number of channels of the input image. For RGB image, $depth = 3$. \autoref{fig:convtoneuron} shows how the two things are related together. The kernel size in the diagram is $(n \times n \times 3)$. After flatten, the neuron function $\Phi(x)$ will get $(n \times n \times 3)$ weights, and produce $1$ output $\beta_1$. Usually, in one convolutional layer, there are more then one neurons, thus the figure also contains $\beta_2, \beta_3, ..., \beta_k$. They are generated by other neurons $\Phi_2(x), \Phi_3(x), ..., \Phi_k(x)$.
 
@@ -365,7 +367,7 @@ The convolution layer is constructed by the neurons described in~\autoref{subsec
 
 \textbf{Image} refer to $2-D$ or $n-D$ matrix containing pixels, depends on the image presenting method (RGB, CMYK, HSB, and HSL etc.) In the following description, it is assumed that a RGB image is used. Each RGB image contains $(n \times m)$ pixels, and each pixel are represented by $(R,G,B)$ three channels (stands for (Red, Green, Blue)). Usually, in the digital image saving, each channel for each pixel saves an \textit{int}\footnote{For different standards, the saved data type is different, \texttt{uint8}, \texttt{uint32} and \texttt{float} are most common ones.} type value. For example, given a $(480 \times 640)$ RGB image, it contains $(480 * 640 * 3)=1,228,800$ \textit{int} values.
 
-\textbf{Receptive field size} is the area that a single pixel in output reflects in the input. As shown in \autoref{fig:convtoneuron}, after the convolutional layer, a $(n \times n)$ area will be mapped into only $1$ pixel. For pixel $\beta_1$, the receptive field size is $(n \times n)$.
+\textbf{Receptive field size} is the area that a single pixel in output reflects in the input. The size of receptive field is determined by the convolutional kernel size, the stride and the padding of kernel. A very simple example is shown in \autoref{fig:convtoneuron}: after the convolutional layer, a $(n \times n)$ area will be mapped into only $1$ pixel. For pixel $\beta_1$, the receptive field size is $(n \times n)$. If this process goes twice (the input image goes through two convolutional layers shown in \autoref{fig:convtoneuron}), single pixel in thee output will have receptive field of $(n \times n)^2=n^4$ pixels size.
 
 \section{Concluding Remarks}
 

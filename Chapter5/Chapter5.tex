@@ -31,12 +31,14 @@ Accuracy is given in \autoref{eq:acc}. The symbols in the equation means: TP for
 \label{fig:testtp} 
 \end{figure}
 
-The standard $F_1$ score is given in \autoref{eq:f1score}
+The standard $F_1$ score is given in \autoref{eq:f1score}. It can be presented as a function of recall (\autoref{eq:precision}) and precision (\autoref{eq:recall}), as shown in \autoref{eq:f1pr}:
 
-\begin{equation}
-\label{eq:f1score}
-    F_1=\frac{TP}{TP+\frac{1}{2}(FP+FN)}
-\end{equation}
+\begin{alignat}{2}
+    Precision &= \frac{TP}{TP+FP} \label{eq:precision}\\
+    Recall &= \frac{TP}{TP+FN} \label{eq:recall}\\
+    F_1 &= 2\cdot \frac{Precision \cdot Recall}{Precision + Recall} \label{eq:f1pr}\\
+     &=\frac{TP}{TP+\frac{1}{2}(FP+FN)} \label{eq:f1score}
+\end{alignat}
 
 Especially when there's no positive pixel in the ground truth, and the predicted feature map are all-negative, the $F_1$ score calculated by \autoref{eq:f1score} is zero. However, in this case, all the pixels are predicted precisely. So the $F_1$ score is setted as $1$ in this particular case.
 
@@ -231,11 +233,11 @@ To test the network performance under rainy condition, five samples are picked o
 \end{figure}
 
 \begin{enumerate}
-    \item \texttt{scene\_2/20160510\_1302\_22/000181}, the heavy reflection situation, as shown in \autoref{fig:heavylight}.
-    \item \texttt{scene\_3/20160809\_1423\_33/000091}, the camera is blurred by heavy rain, as shown in \autoref{fig:blurbyrain}.
+    \item \texttt{scene\_2/20160510\_1302\_22/000181}, the serious reflection situation. As shown in \autoref{fig:heavylight}, the road is fuzzy by reflections. Thus the lane and the road end is not clear.
+    \item \texttt{scene\_3/20160809\_1423\_33/000091}, the camera is blurred by heavy rain. As shown in \autoref{fig:blurbyrain}, rain drops blurred the sight, only outline of cars can be distinguished from background.
     \item \texttt{scene\_3/20160809\_1425\_34/000091}, the camera is blurred because the wiper has been just brushed on the glass, as shown in \autoref{fig:blurbywiper}.
-    \item \texttt{scene\_4/20160518\_2015\_42/000031}, the light intensity is very low in dark night, as shown in \autoref{lowluminance}.
-    \item \texttt{scene\_4/20160805\_2122\_57/000241}, crossroad in night with complicated road markings, pedestrian and heavy reflection, as shown in \autoref{fig:complicated}.
+    \item \texttt{scene\_4/20160518\_2015\_42/000031}, the light intensity is very low in dark night. As shown in \autoref{lowluminance}, the light source is only several street lamps in a very high place, and the entire scene is darksome. The lanes are blended into the background.
+    \item \texttt{scene\_4/20160805\_2122\_57/000241}, crossroad in night with complicated road markings, pedestrian and heavy reflection, as shown in \autoref{fig:complicated}. There are too many interferent, which will distract or mislead the network.
 \end{enumerate}
 
 They are mainly selected from the scene $2 \sim 4$, because the scene $1$ don't have many images captured under rainy condition. The network performance on these pictures are given in $F_1$ score in \autoref{tab:rainyf1}. The first row is picture name, the second and third row is the per-class $F_1$ score (left to right, up to down is $1-17$ classes in \autoref{tab:classes}), and the fourth row is the average $F_1$ score for multi-classes.
